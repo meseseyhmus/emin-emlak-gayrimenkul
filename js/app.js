@@ -27,8 +27,8 @@ const App = {
     container.innerHTML = listings.map((l, idx) => {
       const imgUrl = l.image || Utils.placeholderImage(600, 400, l.rooms);
       const badge = l.type === 'satilik'
-        ? '<span class="absolute left-0 top-0 bg-mint px-3 py-1.5 font-brand text-[10px] uppercase tracking-[0.023em] text-navy">SATILIK</span>'
-        : '<span class="absolute left-0 top-0 bg-white px-3 py-1.5 font-brand text-[10px] uppercase tracking-[0.023em] text-navy">KİRALIK</span>';
+        ? '<span class="absolute left-0 top-0 bg-mint px-3 py-1.5 font-brand text-[10px] uppercase tracking-[0.023em] text-navy font-bold">SATILIK</span>'
+        : '<span class="absolute left-0 top-0 bg-white px-3 py-1.5 font-brand text-[10px] uppercase tracking-[0.023em] text-navy font-bold">KİRALIK</span>';
 
       const locationStr = Utils.getLocationText(l.location);
 

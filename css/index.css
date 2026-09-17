@@ -61,22 +61,23 @@ html, body { background-color: var(--color-navy-black); }
 .btn-mint {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   background: var(--color-mint-vivo);
-  color: var(--color-pearl-white);
-  padding: 16px 24px;
+  color: #1a2238;
+  padding: 14px 24px;
   font-family: var(--font-brand);
   font-size: 14px;
   text-transform: uppercase;
   letter-spacing: var(--tracking-brand);
-  font-weight: 400;
+  font-weight: 600;
   border: none;
   border-radius: 0;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
   text-decoration: none;
 }
-.btn-mint:hover { background: var(--color-mint-ombra); }
+.btn-mint:hover { background: var(--color-mint-ombra); color: #ffffff; }
 
 /* ── Ghost Link Button ────────────────────── */
 .btn-ghost-link {

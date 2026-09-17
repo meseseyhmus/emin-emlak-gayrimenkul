@@ -104,8 +104,8 @@
         <div class="relative z-10 mx-auto w-full max-w-[1440px] px-6 lg:px-10">
           <div class="reveal max-w-[680px] pt-20">
             <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint flex items-center gap-3"><span class="h-px w-10 bg-mint"></span> Nusaybin'in Güvenilir Emlak Adresi</p>
-            <h1 class="mt-6 font-brand text-[54px] leading-[1.13] tracking-[1.24px] uppercase md:text-[80px] md:leading-[1] text-white">NUSAYBIN'DE<br>HAYALİNİZDEKİ<br><span class="text-mint">EVİ BULUN.</span></h1>
-            <p class="mt-8 max-w-lg font-body text-[16px] leading-[1.5] text-white/60">Doğru yatırım, doğru yaşam alanı ve bölgeyi tanıyan uzman bir ekip. Nusaybin'in en seçkin gayrimenkullerini keşfedin.</p>
+            <h1 class="mt-6 font-brand text-[38px] sm:text-[54px] leading-[1.1] tracking-[1.24px] uppercase md:text-[80px] md:leading-[1] text-white">NUSAYBİN'DE<br>HAYALİNİZDEKİ<br><span class="text-mint">EVİ BULUN.</span></h1>
+            <p class="mt-8 max-w-lg font-body text-[15px] sm:text-[16px] leading-[1.6] text-white/70">Doğru yatırım, doğru yaşam alanı ve bölgeyi tanıyan uzman bir ekip. Nusaybin'in en seçkin gayrimenkullerini keşfedin.</p>
             <div class="mt-10 flex flex-wrap gap-4">
               <a href="ilanlar.html" class="btn-mint">İlanları Keşfet <iconify-icon icon="lucide:arrow-right"></iconify-icon></a>
               <a href="iletisim.html" class="btn-outline on-dark">Bize Ulaşın</a>
@@ -119,30 +119,30 @@
         <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
           <form action="ilanlar.html" method="GET" class="flex flex-col gap-4 md:flex-row md:items-end">
             <label class="flex-1">
-              <span class="block font-brand text-[12px] uppercase tracking-[0.023em] text-navy/50 mb-2">İlan Tipi</span>
-              <select name="type" class="w-full border border-ash bg-white px-4 py-3.5 font-brand text-[14px] uppercase tracking-[0.023em] text-navy outline-none">
-                <option value="">Tümü</option>
+              <span class="block font-brand text-[12px] uppercase tracking-[0.023em] text-navy/60 mb-2 font-semibold">İlan Tipi</span>
+              <select name="type" class="w-full border border-ash/40 bg-white px-4 py-3.5 font-brand text-[14px] uppercase tracking-[0.023em] text-navy outline-none focus:border-mint">
+                <option value="">Tümü (Satılık / Kiralık)</option>
                 <option value="satilik">Satılık</option>
                 <option value="kiralik">Kiralık</option>
               </select>
             </label>
             <label class="flex-1">
-              <span class="block font-brand text-[12px] uppercase tracking-[0.023em] text-navy/50 mb-2">Kategori</span>
-              <select name="category" class="w-full border border-ash bg-white px-4 py-3.5 font-brand text-[14px] uppercase tracking-[0.023em] text-navy outline-none">
-                <option value="">Tümü</option>
+              <span class="block font-brand text-[12px] uppercase tracking-[0.023em] text-navy/60 mb-2 font-semibold">Kategori</span>
+              <select name="category" class="w-full border border-ash/40 bg-white px-4 py-3.5 font-brand text-[14px] uppercase tracking-[0.023em] text-navy outline-none focus:border-mint">
+                <option value="">Tümü (Daire, Arsa, İş Yeri...)</option>
                 <option value="daire">Daire</option>
-                <option value="mustakil">Müstakil</option>
-                <option value="arsa">Arsa</option>
-                <option value="isyeri">İş Yeri</option>
+                <option value="mustakil">Müstakil Ev</option>
+                <option value="arsa">Arsa / Tarla</option>
+                <option value="isyeri">İş Yeri / Dükkan</option>
               </select>
             </label>
             <label class="flex-1">
-              <span class="block font-brand text-[12px] uppercase tracking-[0.023em] text-navy/50 mb-2">Konum</span>
-              <select class="w-full border border-ash bg-white px-4 py-3.5 font-brand text-[14px] uppercase tracking-[0.023em] text-navy outline-none">
+              <span class="block font-brand text-[12px] uppercase tracking-[0.023em] text-navy/60 mb-2 font-semibold">Konum</span>
+              <select class="w-full border border-ash/40 bg-white px-4 py-3.5 font-brand text-[14px] uppercase tracking-[0.023em] text-navy outline-none focus:border-mint">
                 <option>Nusaybin, Mardin</option>
               </select>
             </label>
-            <button type="submit" class="btn-mint md:self-end">Ara <iconify-icon icon="lucide:search"></iconify-icon></button>
+            <button type="submit" class="btn-mint h-[50px] w-full md:w-auto px-8 md:self-end">İlan Ara <iconify-icon icon="lucide:search" class="text-base"></iconify-icon></button>
           </form>
         </div>
       </section>
@@ -153,7 +153,7 @@
           <div class="flex items-end justify-between mb-12">
             <div>
               <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint">Seçkin Portföy</p>
-              <h2 class="mt-3 font-brand text-[40px] leading-[1.19] tracking-[0.92px] uppercase">Öne Çıkan İlanlar</h2>
+              <h2 class="mt-3 font-brand text-[32px] sm:text-[40px] leading-[1.19] tracking-[0.92px] uppercase">Öne Çıkan İlanlar</h2>
             </div>
             <a href="ilanlar.html" class="btn-ghost-link on-dark hidden sm:inline-flex">Tüm İlanları Gör <iconify-icon icon="lucide:arrow-right"></iconify-icon></a>
           </div>
@@ -169,7 +169,7 @@
           <div class="grid items-start gap-16 lg:grid-cols-[.7fr_1.3fr]">
             <div>
               <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">Neden Emin Emlak?</p>
-              <h2 class="mt-4 font-brand text-[40px] leading-[1.19] tracking-[0.92px] uppercase text-navy">Bir Evden<br>Fazlası.</h2>
+              <h2 class="mt-4 font-brand text-[32px] sm:text-[40px] leading-[1.19] tracking-[0.92px] uppercase text-navy">Bir Evden<br>Fazlası.</h2>
               <p class="mt-6 font-body text-[16px] leading-[1.6] text-steel">Nusaybin'i, mahallelerini ve fırsatlarını yakından biliyoruz. Hayalinizdeki mülke giden yolda yanınızdayız.</p>
             </div>
             <div class="grid gap-6 sm:grid-cols-3">
@@ -190,7 +190,6 @@
               </article>
             </div>
           </div>
-          
         </div>
       </section>
 
@@ -199,12 +198,12 @@
         <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
           <div class="relative overflow-hidden bg-mint px-8 py-14 md:px-16">
             <div class="relative z-10 max-w-xl">
-              <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-navy/50">Ücretsiz Danışmanlık</p>
-              <h2 class="mt-4 font-brand text-[40px] leading-[1.19] tracking-[0.92px] uppercase text-navy md:text-[54px] md:leading-[1.13]">Mülkünüzün Gerçek Değerini Öğrenin.</h2>
-              <p class="mt-5 font-body text-[16px] leading-[1.5] text-navy/65">Uzman ekibimizden ücretsiz değerleme ve yatırım danışmanlığı alın.</p>
-              <a href="iletisim.html" class="mt-8 inline-flex items-center gap-2 bg-navy px-6 py-4 font-brand text-[14px] uppercase tracking-[0.023em] text-white transition hover:bg-pure-black">Ücretsiz Değerleme <iconify-icon icon="lucide:arrow-right"></iconify-icon></a>
+              <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-navy/70 font-semibold">Ücretsiz Danışmanlık</p>
+              <h2 class="mt-4 font-brand text-[32px] sm:text-[40px] leading-[1.19] tracking-[0.92px] uppercase text-navy md:text-[54px] md:leading-[1.13]">Mülkünüzün Gerçek Değerini Öğrenin.</h2>
+              <p class="mt-5 font-body text-[16px] leading-[1.5] text-navy/80">Uzman ekibimizden ücretsiz değerleme ve yatırım danışmanlığı alın.</p>
+              <a href="iletisim.html" class="mt-8 inline-flex items-center gap-2 bg-navy px-6 py-4 font-brand text-[14px] uppercase tracking-[0.023em] text-white font-semibold transition hover:bg-black">Ücretsiz Değerleme <iconify-icon icon="lucide:arrow-right"></iconify-icon></a>
             </div>
-            <iconify-icon icon="lucide:home" class="absolute -right-6 -bottom-10 text-[200px] text-navy/8"></iconify-icon>
+            <iconify-icon icon="lucide:home" class="absolute -right-6 -bottom-10 text-[200px] text-navy/10"></iconify-icon>
           </div>
         </div>
       </section>
@@ -219,21 +218,24 @@
             <img src="assets/logo.png" alt="Emin Emlak Logo" class="h-9 w-auto object-contain">
             <span><strong class="block font-brand text-sm uppercase tracking-[0.023em]">EMİN EMLAK</strong><small class="block font-brand text-[10px] uppercase tracking-[0.12em] text-mint">Nusaybin · Mardin</small></span>
           </a>
-          <p class="mt-6 max-w-xs font-body text-[14px] leading-[1.6] text-white/35">Mardin'in güvenilir emlak adresi. Hayalinizdeki mülke giden yolda uzman ekibimizle yanınızdayız.</p>
+          <p class="mt-6 max-w-xs font-body text-[14px] leading-[1.6] text-white/45">Mardin'in güvenilir emlak adresi. Hayalinizdeki mülke giden yolda uzman ekibimizle yanınızdayız.</p>
         </div>
         <div class="flex flex-col gap-8 sm:flex-row md:gap-16">
           <div>
             <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint mb-4">İletişim</p>
-            <p class="font-body text-[14px] text-white/45" id="footer-address">Nusaybin, Mardin</p>
-            <p class="mt-2 font-body text-[14px] text-white/45" id="footer-phone">0555 013 7647</p>
+            <p class="font-body text-[14px] text-white/60" id="footer-address">Nusaybin, Mardin</p>
+            <p class="mt-2 font-body text-[14px] text-white/60" id="footer-phone">0555 013 7647</p>
           </div>
           <div>
             <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint mb-4">Bizi Takip Edin</p>
-            <a href="https://instagram.com/emin.emlakmardin" target="_blank" class="font-body text-[14px] text-white/45 hover:text-mint transition"><iconify-icon icon="lucide:instagram" class="text-xl align-middle"></iconify-icon></a>
+            <a href="https://instagram.com/emin.emlakmardin" target="_blank" class="flex items-center gap-2 font-body text-[14px] text-white/60 hover:text-mint transition">
+              <iconify-icon icon="lucide:instagram" class="text-xl"></iconify-icon>
+              <span>@emin.emlakmardin</span>
+            </a>
           </div>
         </div>
       </div>
-      <div class="mx-auto mt-12 max-w-[1440px] border-t border-graphite/40 pt-6 font-brand text-[10px] uppercase tracking-[0.023em] text-white/25">© 2024 Emin Emlak. Tüm Hakları Saklıdır.</div>
+      <div class="mx-auto mt-12 max-w-[1440px] border-t border-graphite/40 pt-6 font-brand text-[10px] uppercase tracking-[0.023em] text-white/35">© 2024 Emin Emlak. Tüm Hakları Saklıdır.</div>
     </footer>
   </div>
 
@@ -248,28 +250,12 @@
       if(settings.phone) document.getElementById('footer-phone').textContent = settings.phone;
       if(settings.address) document.getElementById('footer-address').textContent = settings.address;
 
-      
-
       App.renderTailwindFeaturedListings();
     });
   </script>
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);">
-      <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
-    </a>
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);">
+    <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
+  </a>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
