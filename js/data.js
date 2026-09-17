@@ -1,4 +1,4 @@
-﻿/* =============================================
+/* =============================================
    EMIN EMLAK - Data Manager (API Version)
    ============================================= */
 
@@ -67,7 +67,7 @@ const DataManager = {
   },
 
   // Delete a listing
-  async async updateListing(listing) { return this.addListing(listing); },
+  async updateListing(listing) { return this.addListing(listing); },
 
   async deleteListing(id) {
     try {
