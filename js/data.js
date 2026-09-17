@@ -1,5 +1,5 @@
 /* =============================================
-   EMIN EMLAK - Data Manager (API Version)
+   EMIN EMLAK - Data Manager (API & Fallback)
    ============================================= */
 
 const DataManager = {
@@ -7,43 +7,60 @@ const DataManager = {
     listings: [],
     settings: {}
   },
-  
+
   // Base URL for API
   API_URL: window.location.origin + '/api',
 
-  // Initialize data - fetch from SQL API
+  // Initialize data - fetch from SQL API with static JSON fallback
   async init() {
     try {
       const [listingsRes, settingsRes] = await Promise.all([
-        fetch(`${this.API_URL}/listings`),
-        fetch(`${this.API_URL}/settings`)
+        fetch(`${this.API_URL}/listings`).catch(() => null),
+        fetch(`${this.API_URL}/settings`).catch(() => null)
       ]);
-      
-      if (listingsRes.ok) {
+
+      if (listingsRes && listingsRes.ok) {
         this._data.listings = await listingsRes.json();
       }
-      if (settingsRes.ok) {
+      if (settingsRes && settingsRes.ok) {
         this._data.settings = await settingsRes.json();
       }
     } catch (e) {
-      console.error('API Veri yüklenemedi:', e);
+      console.warn('API Veri yüklenemedi, yerel veriye geçiliyor:', e);
     }
+
+    // Fallback to local listings.json if API returned empty array or failed
+    if (!this._data.listings || this._data.listings.length === 0) {
+      try {
+        const localRes = await fetch('data/listings.json');
+        if (localRes.ok) {
+          const localData = await localRes.json();
+          this._data.listings = localData.listings || [];
+          if (!this._data.settings || Object.keys(this._data.settings).length === 0) {
+            this._data.settings = localData.settings || {};
+          }
+        }
+      } catch (err) {
+        console.error('Yerel veri yükleme hatası:', err);
+      }
+    }
+
     return this._data;
   },
 
   // Get all listings
   getAllListings() {
-    return this._data.listings;
+    return this._data.listings || [];
   },
 
   // Get featured listings
   getFeaturedListings() {
-    return this._data.listings.filter(l => l.featured && l.status === 'active');
+    return (this._data.listings || []).filter(l => l.featured && l.status === 'active');
   },
 
   // Get listing by ID
   getListing(id) {
-    return this._data.listings.find(l => l.id === id);
+    return (this._data.listings || []).find(l => String(l.id) === String(id));
   },
 
   // Add or update a listing
@@ -56,7 +73,6 @@ const DataManager = {
       });
       const result = await response.json();
       if (result.success) {
-        // Refresh local data
         await this.init();
         return true;
       }
@@ -76,7 +92,7 @@ const DataManager = {
       });
       const result = await response.json();
       if (result.success) {
-        this._data.listings = this._data.listings.filter(l => l.id !== id);
+        this._data.listings = this._data.listings.filter(l => String(l.id) !== String(id));
         return true;
       }
     } catch (e) {
@@ -84,7 +100,7 @@ const DataManager = {
     }
     return false;
   },
-  
+
   // Get all messages
   async getMessages() {
     try {
@@ -115,7 +131,7 @@ const DataManager = {
 
   // Settings
   getSettings() {
-    return this._data.settings;
+    return this._data.settings || {};
   },
 
   async updateSettings(settings) {
@@ -135,7 +151,7 @@ const DataManager = {
     return false;
   },
 
-  // Auth (Mock)
+  // Auth
   login(password) {
     if (password === 'admin123') {
       sessionStorage.setItem('admin_auth', 'true');
@@ -152,4 +168,3 @@ const DataManager = {
     sessionStorage.removeItem('admin_auth');
   }
 };
-

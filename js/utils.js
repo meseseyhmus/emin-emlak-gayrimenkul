@@ -56,9 +56,28 @@ const Utils = {
 
   // Sanitize HTML
   sanitize(str) {
+    if (str === null || str === undefined) return '';
     const div = document.createElement('div');
-    div.textContent = str;
+    div.textContent = String(str);
     return div.innerHTML;
+  },
+
+  // Get human readable location text
+  getLocationText(loc) {
+    if (!loc) return 'Nusaybin, Mardin';
+    if (typeof loc === 'string') {
+      try {
+        const parsed = JSON.parse(loc);
+        if (typeof parsed === 'object' && parsed !== null) {
+          return `${parsed.neighborhood || parsed.district || ''}${parsed.city ? ', ' + parsed.city : ''}`.replace(/^,\s*/, '') || 'Nusaybin';
+        }
+      } catch (e) {}
+      return loc;
+    }
+    if (typeof loc === 'object') {
+      return `${loc.neighborhood || loc.district || ''}${loc.city ? ', ' + loc.city : ''}`.replace(/^,\s*/, '') || 'Nusaybin';
+    }
+    return 'Nusaybin, Mardin';
   },
 
   // Get URL parameter
