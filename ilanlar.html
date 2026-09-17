@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
@@ -164,14 +164,7 @@
       const panel = document.getElementById('filter-panel');
       document.getElementById('open-filter-btn')?.addEventListener('click', () => panel?.classList.toggle('hidden'));
 
-      // Mobile menu
-      const mobileBtn = document.getElementById('mobile-menu-btn');
-      const mobileNav = document.getElementById('mobile-nav');
-      if(mobileBtn && mobileNav) {
-        mobileBtn.addEventListener('click', () => {
-          mobileNav.classList.toggle('hidden');
-        });
-      }
+
 
       const clearBtn = document.getElementById('clear-filters-btn');
       if (clearBtn) {
@@ -206,4 +199,5 @@
   </a>
 </body>
 </html>
+
 
