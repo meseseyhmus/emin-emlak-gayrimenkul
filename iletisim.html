@@ -33,7 +33,7 @@
           <a href="iletisim.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-mint transition">İletişim</a>
                 </nav>
         <a href="https://instagram.com/emin.emlakmardin" target="_blank" class="btn-outline on-dark hidden sm:inline-flex" style="padding:10px 18px;font-size:12px;margin-right:12px"><iconify-icon icon="lucide:instagram" class="text-lg"></iconify-icon></a>
-        <button id="mobile-menu-btn" class="flex h-10 w-10 items-center justify-center border border-graphite text-white/70 lg:hidden"><iconify-icon icon="lucide:menu" class="text-xl"></iconify-icon></button>
+        <button id="mobile-menu-btn" onclick="document.getElementById('mobile-nav').classList.toggle('hidden')" class="flex h-10 w-10 items-center justify-center border border-graphite text-white/70 lg:hidden" aria-label="Menüyü Aç/Kapat"><iconify-icon icon="lucide:menu" class="text-xl pointer-events-none"></iconify-icon></button>
       </div>
       <!-- Mobile nav -->
       <nav id="mobile-nav" class="hidden border-t border-graphite/40 bg-navy-deep px-6 py-4 lg:hidden">
@@ -176,6 +176,7 @@
     </a>
 </body>
 </html>
+
 
 
 
