@@ -35,6 +35,14 @@
         <a href="https://instagram.com/emin.emlakmardin" target="_blank" class="btn-outline on-dark hidden sm:inline-flex" style="padding:10px 18px;font-size:12px;margin-right:12px"><iconify-icon icon="lucide:instagram" class="text-lg"></iconify-icon></a>
         <button id="mobile-menu-btn" class="flex h-10 w-10 items-center justify-center border border-graphite text-white/70 lg:hidden"><iconify-icon icon="lucide:menu" class="text-xl"></iconify-icon></button>
       </div>
+      <!-- Mobile nav -->
+      <nav id="mobile-nav" class="hidden border-t border-graphite/40 bg-navy-deep px-6 py-4 lg:hidden">
+        <a href="ilanlar.html" class="block py-2 font-brand text-sm uppercase tracking-[0.023em] text-white/60">İlanlar</a>
+        <a href="satilik.html" class="block py-2 font-brand text-sm uppercase tracking-[0.023em] text-white/60">Satılık</a>
+        <a href="kiralik.html" class="block py-2 font-brand text-sm uppercase tracking-[0.023em] text-white/60">Kiralık</a>
+        <a href="hakkimizda.html" class="block py-2 font-brand text-sm uppercase tracking-[0.023em] text-white/60">Hakkımızda</a>
+        <a href="iletisim.html" class="block py-2 font-brand text-sm uppercase tracking-[0.023em] text-white/60">İletişim</a>
+      </nav>
     </header>
 
     <main>
@@ -152,7 +160,14 @@
           setTimeout(() => success.classList.add('hidden'), 4000);
         });
       }
-      document.getElementById('mobile-menu-btn')?.addEventListener('click', () => document.querySelector('nav.hidden')?.classList.toggle('hidden'));
+            // Mobile menu
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileNav = document.getElementById('mobile-nav');
+      if(mobileBtn && mobileNav) {
+        mobileBtn.addEventListener('click', () => {
+          mobileNav.classList.toggle('hidden');
+        });
+      }
     });
   </script>
     <!-- WhatsApp Floating Button -->
@@ -161,6 +176,7 @@
     </a>
 </body>
 </html>
+
 
 
 

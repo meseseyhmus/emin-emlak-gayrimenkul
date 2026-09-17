@@ -160,14 +160,15 @@
 
       const panel = document.getElementById('filter-panel');
       document.getElementById('open-filter-btn')?.addEventListener('click', () => panel.classList.toggle('hidden'));
-      document.getElementById('mobile-menu-btn')?.addEventListener('click', () => document.getElementById('mobile-nav').classList.toggle('hidden'));
-      
-      const filterPrice = document.getElementById('filterPrice');
-      const priceLabel = document.getElementById('priceLabel');
-      filterPrice.addEventListener('input', (e) => {
-        const val = parseInt(e.target.value);
-        priceLabel.textContent = val >= 20000000 ? "Tümü" : Utils.formatPriceShort(val) + " Altı";
-      });
+            // Mobile menu
+      const mobileBtn = document.getElementById('mobile-menu-btn');
+      const mobileNav = document.getElementById('mobile-nav');
+      if(mobileBtn && mobileNav) {
+        mobileBtn.addEventListener('click', () => {
+          mobileNav.classList.toggle('hidden');
+        });
+      }
+    });
 
       document.getElementById('clear-filters-btn').addEventListener('click', () => {
         document.getElementById('filterType').value = '';
@@ -193,6 +194,7 @@
     </a>
 </body>
 </html>
+
 
 
 
