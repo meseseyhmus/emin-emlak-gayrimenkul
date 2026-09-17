@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="view-transition" content="same-origin">
+  <title>Emin Emlak — Nusaybin'de Hayalinizdeki Evi Bulun</title>
+  <meta name="description" content="Emin Emlak ile Nusaybin ve Mardin'de satılık, kiralık ev, arsa, daire ve dükkan ilanlarını keşfedin.">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = { theme: { extend: {
+      fontFamily: { brand: ['Barlow Condensed','sans-serif'], body: ['Inter','sans-serif'] },
+      colors: { mint: '#7ECA9C', 'mint-dark': '#5EAD80', navy: '#202a44', 'navy-deep': '#1a2238', marble: '#f5f5f5', graphite: '#494949', steel: '#7d7d7d', ash: '#969696', anvil: '#313131' }
+    }}}
+  </script>
+  
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <div class="min-h-screen bg-navy text-white font-body">
+
+    <!-- ── Navigation Bar ── -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-navy-deep border-b border-graphite/40">
+      <div class="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-10">
+        <a href="index.html" class="flex items-center gap-3">
+          <img src="assets/logo.jpeg" alt="Emin Emlak Logo" class="h-12 w-auto object-contain" onerror="this.style.display='none'">
+          <span><strong class="block font-brand text-sm uppercase tracking-[0.023em]">EMİN EMLAK</strong><small class="block font-brand text-[10px] uppercase tracking-[0.12em] text-mint">Nusaybin · Mardin</small></span>
+        </a>
+        <nav class="hidden items-center gap-8 lg:flex">
+          <a href="ilanlar.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">İlanlar</a>
+          <a href="satilik.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">Satılık</a>
+          <a href="kiralik.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">Kiralık</a>
+          <a href="hakkimizda.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">Hakkımızda</a>
+          <a href="iletisim.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">İletişim</a>
+        </nav>
+        <a href="https://instagram.com/emin.emlakmardin" target="_blank" class="btn-outline on-dark hidden sm:inline-flex" style="padding:10px 18px;font-size:12px"><iconify-icon icon="lucide:instagram" class="text-lg"></iconify-icon></a>
+        <button id="mobile-menu-btn" class="flex h-10 w-10 items-center justify-center border border-graphite text-white/70 lg:hidden"><iconify-icon icon="lucide:menu" class="text-xl"></iconify-icon></button>
+      </div>
+      <!-- Mobile nav -->
+      <nav id="mobile-nav" class="hidden border-t border-graphite/40 bg-navy-deep px-6 py-4 lg:hidden">
+        <a href="ilanlar.html" class="block py-2 font-brand text-sm uppercase tracking-[0.023em] text-white/60">İlanlar</a>
+        <a href="satilik.html" class="block py-2 font-brand text-sm uppercase tracking-[0.023em] text-white/60">Satılık</a>
+        <a href="kiralik.html" class="block py-2 font-brand text-sm uppercase tracking-[0.023em] text-white/60">Kiralık</a>
+        <a href="hakkimizda.html" class="block py-2 font-brand text-sm uppercase tracking-[0.023em] text-white/60">Hakkımızda</a>
+        <a href="iletisim.html" class="block py-2 font-brand text-sm uppercase tracking-[0.023em] text-white/60">İletişim</a>
+      </nav>
+    </header>
+
+    <main id="top" style="view-transition-name:main-content">
+
+      <!-- ── HERO STAGE ── -->
+      <section class="relative flex min-h-[100vh] items-center overflow-hidden bg-navy">
+        <video autoplay loop muted playsinline class="absolute inset-0 h-full w-full object-cover opacity-40">
+          <source src="assets/video_door.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/80 to-transparent"></div>
+        <div class="relative z-10 mx-auto w-full max-w-[1440px] px-6 lg:px-10">
+          <div class="reveal max-w-[680px] pt-20">
+            <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint flex items-center gap-3"><span class="h-px w-10 bg-mint"></span> Nusaybin'in Güvenilir Emlak Adresi</p>
+            <h1 class="mt-6 font-brand text-[54px] leading-[1.13] tracking-[1.24px] uppercase md:text-[80px] md:leading-[1] text-white">NUSAYBIN'DE<br>HAYALİNİZDEKİ<br><span class="text-mint">EVİ BULUN.</span></h1>
+            <p class="mt-8 max-w-lg font-body text-[16px] leading-[1.5] text-white/60">Doğru yatırım, doğru yaşam alanı ve bölgeyi tanıyan uzman bir ekip. Nusaybin'in en seçkin gayrimenkullerini keşfedin.</p>
+            <div class="mt-10 flex flex-wrap gap-4">
+              <a href="ilanlar.html" class="btn-mint">İlanları Keşfet <iconify-icon icon="lucide:arrow-right"></iconify-icon></a>
+              <a href="iletisim.html" class="btn-outline on-dark">Bize Ulaşın</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── SEARCH BAND (marble surface) ── -->
+      <section class="bg-marble py-12">
+        <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+          <form action="ilanlar.html" method="GET" class="flex flex-col gap-4 md:flex-row md:items-end">
+            <label class="flex-1">
+              <span class="block font-brand text-[12px] uppercase tracking-[0.023em] text-navy/50 mb-2">İlan Tipi</span>
+              <select name="type" class="w-full border border-ash bg-white px-4 py-3.5 font-brand text-[14px] uppercase tracking-[0.023em] text-navy outline-none">
+                <option value="">Tümü</option>
+                <option value="satilik">Satılık</option>
+                <option value="kiralik">Kiralık</option>
+              </select>
+            </label>
+            <label class="flex-1">
+              <span class="block font-brand text-[12px] uppercase tracking-[0.023em] text-navy/50 mb-2">Kategori</span>
+              <select name="category" class="w-full border border-ash bg-white px-4 py-3.5 font-brand text-[14px] uppercase tracking-[0.023em] text-navy outline-none">
+                <option value="">Tümü</option>
+                <option value="daire">Daire</option>
+                <option value="mustakil">Müstakil</option>
+                <option value="arsa">Arsa</option>
+                <option value="isyeri">İş Yeri</option>
+              </select>
+            </label>
+            <label class="flex-1">
+              <span class="block font-brand text-[12px] uppercase tracking-[0.023em] text-navy/50 mb-2">Konum</span>
+              <select class="w-full border border-ash bg-white px-4 py-3.5 font-brand text-[14px] uppercase tracking-[0.023em] text-navy outline-none">
+                <option>Nusaybin, Mardin</option>
+              </select>
+            </label>
+            <button type="submit" class="btn-mint md:self-end">Ara <iconify-icon icon="lucide:search"></iconify-icon></button>
+          </form>
+        </div>
+      </section>
+
+      <!-- ── FEATURED LISTINGS (dark stage) ── -->
+      <section class="bg-navy py-20">
+        <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+          <div class="flex items-end justify-between mb-12">
+            <div>
+              <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint">Seçkin Portföy</p>
+              <h2 class="mt-3 font-brand text-[40px] leading-[1.19] tracking-[0.92px] uppercase">Öne Çıkan İlanlar</h2>
+            </div>
+            <a href="ilanlar.html" class="btn-ghost-link on-dark hidden sm:inline-flex">Tüm İlanları Gör <iconify-icon icon="lucide:arrow-right"></iconify-icon></a>
+          </div>
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3" id="featuredListings">
+            <!-- JS Rendered -->
+          </div>
+        </div>
+      </section>
+
+      <!-- ── WHY US (white surface) ── -->
+      <section class="bg-white py-20">
+        <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+          <div class="grid items-start gap-16 lg:grid-cols-[.7fr_1.3fr]">
+            <div>
+              <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">Neden Emin Emlak?</p>
+              <h2 class="mt-4 font-brand text-[40px] leading-[1.19] tracking-[0.92px] uppercase text-navy">Bir Evden<br>Fazlası.</h2>
+              <p class="mt-6 font-body text-[16px] leading-[1.6] text-steel">Nusaybin'i, mahallelerini ve fırsatlarını yakından biliyoruz. Hayalinizdeki mülke giden yolda yanınızdayız.</p>
+            </div>
+            <div class="grid gap-6 sm:grid-cols-3">
+              <article class="border border-ash/40 p-6">
+                <iconify-icon icon="lucide:map-pinned" class="text-[32px] text-mint"></iconify-icon>
+                <h3 class="mt-8 font-brand text-[18px] uppercase tracking-[0.023em] text-navy">Bölge Uzmanlığı</h3>
+                <p class="mt-3 font-body text-[14px] leading-[1.6] text-steel">Nusaybin ve Mardin piyasasını yakından tanıyoruz.</p>
+              </article>
+              <article class="border border-ash/40 p-6">
+                <iconify-icon icon="lucide:shield-check" class="text-[32px] text-mint"></iconify-icon>
+                <h3 class="mt-8 font-brand text-[18px] uppercase tracking-[0.023em] text-navy">Güvenli Süreç</h3>
+                <p class="mt-3 font-body text-[14px] leading-[1.6] text-steel">Şeffaf ve güvenilir danışmanlık hizmeti.</p>
+              </article>
+              <article class="border border-ash/40 p-6">
+                <iconify-icon icon="lucide:sparkles" class="text-[32px] text-mint"></iconify-icon>
+                <h3 class="mt-8 font-brand text-[18px] uppercase tracking-[0.023em] text-navy">Kişisel Hizmet</h3>
+                <p class="mt-3 font-body text-[14px] leading-[1.6] text-steel">İhtiyacınıza özel, uçtan uca destek.</p>
+              </article>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ── CTA BAND (dark stage with mint) ── -->
+      <section class="bg-navy py-20">
+        <div class="mx-auto max-w-[1440px] px-6 lg:px-10">
+          <div class="relative overflow-hidden bg-mint px-8 py-14 md:px-16">
+            <div class="relative z-10 max-w-xl">
+              <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-navy/50">Ücretsiz Danışmanlık</p>
+              <h2 class="mt-4 font-brand text-[40px] leading-[1.19] tracking-[0.92px] uppercase text-navy md:text-[54px] md:leading-[1.13]">Mülkünüzün Gerçek Değerini Öğrenin.</h2>
+              <p class="mt-5 font-body text-[16px] leading-[1.5] text-navy/65">Uzman ekibimizden ücretsiz değerleme ve yatırım danışmanlığı alın.</p>
+              <a href="iletisim.html" class="mt-8 inline-flex items-center gap-2 bg-navy px-6 py-4 font-brand text-[14px] uppercase tracking-[0.023em] text-white transition hover:bg-pure-black">Ücretsiz Değerleme <iconify-icon icon="lucide:arrow-right"></iconify-icon></a>
+            </div>
+            <iconify-icon icon="lucide:home" class="absolute -right-6 -bottom-10 text-[200px] text-navy/8"></iconify-icon>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ── FOOTER (navy-deep surface) ── -->
+    <footer class="bg-navy-deep border-t border-graphite/40 px-6 py-14 lg:px-10">
+      <div class="mx-auto flex max-w-[1440px] flex-col justify-between gap-10 md:flex-row">
+        <div>
+          <a href="index.html" class="flex items-center gap-3">
+            <img src="assets/logo.jpeg" alt="Emin Emlak Logo" class="h-9 w-auto object-contain">
+            <span><strong class="block font-brand text-sm uppercase tracking-[0.023em]">EMİN EMLAK</strong><small class="block font-brand text-[10px] uppercase tracking-[0.12em] text-mint">Nusaybin · Mardin</small></span>
+          </a>
+          <p class="mt-6 max-w-xs font-body text-[14px] leading-[1.6] text-white/35">Mardin'in güvenilir emlak adresi. Hayalinizdeki mülke giden yolda uzman ekibimizle yanınızdayız.</p>
+        </div>
+        <div class="flex flex-col gap-8 sm:flex-row md:gap-16">
+          <div>
+            <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint mb-4">İletişim</p>
+            <p class="font-body text-[14px] text-white/45" id="footer-address">Nusaybin, Mardin</p>
+            <p class="mt-2 font-body text-[14px] text-white/45" id="footer-phone">0555 013 7647</p>
+          </div>
+          <div>
+            <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint mb-4">Bizi Takip Edin</p>
+            <a href="https://instagram.com/emin.emlakmardin" target="_blank" class="font-body text-[14px] text-white/45 hover:text-mint transition"><iconify-icon icon="lucide:instagram" class="text-xl align-middle"></iconify-icon></a>
+          </div>
+        </div>
+      </div>
+      <div class="mx-auto mt-12 max-w-[1440px] border-t border-graphite/40 pt-6 font-brand text-[10px] uppercase tracking-[0.023em] text-white/25">© 2024 Emin Emlak. Tüm Hakları Saklıdır.</div>
+    </footer>
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await DataManager.init();
+      
+      const settings = DataManager.getSettings();
+      if(settings.phone) document.getElementById('footer-phone').textContent = settings.phone;
+      if(settings.address) document.getElementById('footer-address').textContent = settings.address;
+
+      
+
+      App.renderTailwindFeaturedListings();
+      
+      // Mobile menu
+      document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+        document.getElementById('mobile-nav').classList.toggle('hidden');
+      });
+    });
+  </script>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);">
+      <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
+    </a>
+</body>
+</html>
+
+
+
+
+
+
+

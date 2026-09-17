@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>İletişim — Emin Emlak | Nusaybin / Mardin</title>
+  <meta name="description" content="Emin Emlak Nusaybin ofisimizle iletişime geçin. Gayrimenkul alım, satım ve kiralama süreçleriniz için bize ulaşın.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: {
+      fontFamily: { brand: ['Barlow Condensed','sans-serif'], body: ['Inter','sans-serif'] },
+      colors: { mint: '#7ECA9C', 'mint-dark': '#5EAD80', navy: '#202a44', 'navy-deep': '#1a2238', marble: '#f5f5f5', graphite: '#494949', steel: '#7d7d7d', ash: '#969696', anvil: '#313131' }
+    }}}
+  </script>
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <div class="min-h-screen font-body">
+
+    <!-- ── Navigation ── -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-navy-deep border-b border-graphite/40">
+      <div class="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-10">
+        <a href="index.html" class="flex items-center gap-3"><img src="assets/logo.jpeg" alt="Emin Emlak Logo" class="h-12 w-auto object-contain" onerror="this.style.display='none'"><span><strong class="block font-brand text-sm uppercase tracking-[0.023em] text-white">EMİN EMLAK</strong><small class="block font-brand text-[10px] uppercase tracking-[0.12em] text-mint">Nusaybin · Mardin</small></span></a>
+        <nav class="hidden items-center gap-8 lg:flex">
+          <a href="ilanlar.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">İlanlar</a>
+          <a href="satilik.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">Satılık</a>
+          <a href="kiralik.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">Kiralık</a>
+          <a href="hakkimizda.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">Hakkımızda</a>
+          <a href="iletisim.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-mint transition">İletişim</a>
+                </nav>
+        <a href="https://instagram.com/emin.emlakmardin" target="_blank" class="btn-outline on-dark hidden sm:inline-flex" style="padding:10px 18px;font-size:12px;margin-right:12px"><iconify-icon icon="lucide:instagram" class="text-lg"></iconify-icon></a>
+        <button id="mobile-menu-btn" class="flex h-10 w-10 items-center justify-center border border-graphite text-white/70 lg:hidden"><iconify-icon icon="lucide:menu" class="text-xl"></iconify-icon></button>
+      </div>
+    </header>
+
+    <main>
+      <!-- ── Header band (marble) ── -->
+      <section class="bg-marble border-b border-ash/30 px-6 pt-28 pb-14 lg:px-10">
+        <div class="mx-auto max-w-[1440px] reveal">
+          <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">Bizimle İletişime Geçin</p>
+          <h1 class="mt-3 font-brand text-[40px] leading-[1.19] tracking-[0.92px] uppercase text-navy md:text-[54px] md:leading-[1.13]">Yeni Bir Başlangıç İçin<br>Bize Ulaşın.</h1>
+          <p class="mt-4 max-w-2xl font-body text-[16px] leading-[1.5] text-steel">Nusaybin'de hayalinizdeki evi bulmak veya mülkünüze doğru değeri biçmek için uzman ekibimizle görüşün.</p>
+        </div>
+      </section>
+
+      <!-- ── Contact content (white surface) ── -->
+      <section class="bg-white py-16 px-6 lg:px-10">
+        <div class="mx-auto max-w-[1440px] grid gap-12 lg:grid-cols-[1fr_400px]">
+
+          <!-- Contact form -->
+          <div class="reveal">
+            <h2 class="font-brand text-[27px] uppercase tracking-[0.62px] text-navy">Mesaj Gönderin</h2>
+            <p class="mt-2 mb-8 font-body text-[14px] text-steel">Sorularınızı ve taleplerinizi bize iletebilirsiniz. En kısa sürede dönüş yapacağız.</p>
+            
+            <form id="contact-form" class="space-y-5">
+              <div class="grid gap-5 sm:grid-cols-2">
+                <label class="block">
+                  <span class="mb-2 block font-brand text-[12px] uppercase tracking-[0.023em] text-steel">Adınız Soyadınız</span>
+                  <input required type="text" id="contact-name" class="w-full border border-ash/40 bg-white px-4 py-3.5 font-body text-[14px] text-navy outline-none transition focus:border-mint">
+                </label>
+                <label class="block">
+                  <span class="mb-2 block font-brand text-[12px] uppercase tracking-[0.023em] text-steel">Telefon Numaranız</span>
+                  <input required type="tel" id="contact-phone" class="w-full border border-ash/40 bg-white px-4 py-3.5 font-body text-[14px] text-navy outline-none transition focus:border-mint">
+                </label>
+              </div>
+              <label class="block">
+                <span class="mb-2 block font-brand text-[12px] uppercase tracking-[0.023em] text-steel">Konu</span>
+                <select required id="contact-subject" class="w-full border border-ash/40 bg-white px-4 py-3.5 font-body text-[14px] text-navy outline-none transition focus:border-mint">
+                  <option value="Gayrimenkul Alımı">Gayrimenkul Alımı</option>
+                  <option value="Gayrimenkul Satışı">Gayrimenkul Satışı</option>
+                  <option value="Kiralama">Kiralama</option>
+                  <option value="Ücretsiz Değerleme">Ücretsiz Değerleme</option>
+                  <option value="Diğer">Diğer</option>
+                </select>
+              </label>
+              <label class="block">
+                <span class="mb-2 block font-brand text-[12px] uppercase tracking-[0.023em] text-steel">Mesajınız</span>
+                <textarea required id="contact-message" rows="5" class="w-full resize-none border border-ash/40 bg-white px-4 py-3.5 font-body text-[14px] text-navy outline-none transition focus:border-mint"></textarea>
+              </label>
+              <button type="submit" class="btn-mint w-full justify-center">Mesajı Gönder</button>
+              <p id="contact-success" class="mt-4 text-center font-brand text-[14px] uppercase tracking-[0.023em] text-green-600 hidden">Mesajınız başarıyla gönderildi!</p>
+            </form>
+          </div>
+
+          <!-- Info cards -->
+          <div class="reveal delay-1 flex flex-col gap-6">
+            <div class="border border-ash/40 p-6 flex items-start gap-5">
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center bg-mint/10"><iconify-icon icon="lucide:map-pin" class="text-xl text-mint"></iconify-icon></div>
+              <div><h3 class="font-brand text-[16px] uppercase tracking-[0.023em] text-navy">Ofisimiz</h3><p class="mt-2 font-body text-[14px] leading-[1.6] text-steel" id="contact-page-address">Nusaybin, Mardin</p></div>
+            </div>
+            <div class="border border-ash/40 p-6 flex items-start gap-5">
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center bg-mint/10"><iconify-icon icon="lucide:phone" class="text-xl text-mint"></iconify-icon></div>
+              <div><h3 class="font-brand text-[16px] uppercase tracking-[0.023em] text-navy">Telefon</h3><p class="mt-2 font-body text-[14px] leading-[1.6] text-steel" id="contact-page-phone">0555 013 7647</p></div>
+            </div>
+            <div class="border border-ash/40 p-6 flex items-start gap-5">
+              <div class="flex h-12 w-12 shrink-0 items-center justify-center bg-mint/10"><iconify-icon icon="lucide:instagram" class="text-xl text-mint"></iconify-icon></div>
+              <div><h3 class="font-brand text-[16px] uppercase tracking-[0.023em] text-navy">Sosyal Medya</h3><a href="https://instagram.com/emin.emlakmardin" target="_blank" class="mt-2 inline-block font-body text-[14px] leading-[1.6] text-steel hover:text-mint transition">@emin.emlakmardin</a></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="bg-navy-deep border-t border-graphite/40 px-6 py-14 lg:px-10">
+      <div class="mx-auto flex max-w-[1440px] flex-col justify-between gap-10 md:flex-row">
+        <div>
+          <a href="index.html" class="flex items-center gap-3"><img src="assets/logo.jpeg" alt="Emin Emlak Logo" class="h-9 w-auto object-contain"><span><strong class="block font-brand text-sm uppercase tracking-[0.023em] text-white">EMİN EMLAK</strong><small class="block font-brand text-[10px] uppercase tracking-[0.12em] text-mint">Nusaybin · Mardin</small></span></a>
+          <p class="mt-6 max-w-xs font-body text-[14px] leading-[1.6] text-white/35">Mardin'in güvenilir emlak adresi.</p>
+        </div>
+        <div>
+          <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint mb-4">İletişim</p>
+          <p class="font-body text-[14px] text-white/45" id="footer-address">Nusaybin, Mardin</p>
+          <p class="mt-2 font-body text-[14px] text-white/45" id="footer-phone">0555 013 7647</p>
+        </div>
+      </div>
+      <div class="mx-auto mt-12 max-w-[1440px] border-t border-graphite/40 pt-6 font-brand text-[10px] uppercase tracking-[0.023em] text-white/25">© 2024 Emin Emlak. Tüm Hakları Saklıdır.</div>
+    </footer>
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/data.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await DataManager.init();
+      const settings = DataManager.getSettings();
+      if(settings.phone) {
+        document.getElementById('footer-phone').textContent = settings.phone;
+        document.getElementById('contact-page-phone').textContent = settings.phone;
+      }
+      if(settings.address) {
+        document.getElementById('footer-address').textContent = settings.address;
+        document.getElementById('contact-page-address').textContent = settings.address;
+      }
+
+      const contactForm = document.getElementById('contact-form');
+      if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const name = document.getElementById('contact-name').value;
+          const phone = document.getElementById('contact-phone').value;
+          const subject = document.getElementById('contact-subject').value;
+          const content = document.getElementById('contact-message').value;
+          DataManager.addMessage({ name, phone, subject, content });
+          contactForm.reset();
+          const success = document.getElementById('contact-success');
+          success.classList.remove('hidden');
+          setTimeout(() => success.classList.add('hidden'), 4000);
+        });
+      }
+      document.getElementById('mobile-menu-btn')?.addEventListener('click', () => document.querySelector('nav.hidden')?.classList.toggle('hidden'));
+    });
+  </script>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);">
+      <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
+    </a>
+</body>
+</html>
+
+
+
+
+
+

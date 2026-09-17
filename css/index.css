@@ -1,0 +1,178 @@
+/* =============================================
+   EMIN EMLAK — DESIGN SYSTEM (Lamborghini-inspired)
+   DESIGN.md tokens applied: mint Vivo, 0px radius,
+   no shadows, surface-contrast separation, uppercase type
+   ============================================= */
+
+:root {
+  /* Colors */
+  --color-mint-vivo: #7ECA9C;
+  --color-mint-ombra: #5EAD80;
+  --color-navy-black: #202a44;
+  --color-pure-black: #000000;
+  --color-navy-deep: #1a2238;
+  --color-pearl-white: #ffffff;
+  --color-marble-gray: #f5f5f5;
+  --color-graphite-border: #494949;
+  --color-steel-mid: #7d7d7d;
+  --color-ash-border: #969696;
+  --color-anvil: #313131;
+
+  /* Typography */
+  --font-brand: 'Barlow Condensed', 'Rajdhani', 'Bebas Neue', ui-sans-serif, system-ui, sans-serif;
+  --tracking-brand: 0.0230em;
+
+  /* Spacing */
+  --spacing-8: 8px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+
+  /* Layout */
+  --page-max-width: 1440px;
+  --section-gap: 80px;
+  --card-padding: 24px;
+  --element-gap: 24px;
+}
+
+* { scroll-behavior: smooth; box-sizing: border-box; }
+html, body { background-color: var(--color-navy-black); }
+
+/* ── Surfaces ─────────────────────────────── */
+.surface-dark   { background-color: var(--color-navy-black); color: var(--color-pearl-white); }
+.surface-deep   { background-color: var(--color-navy-deep); color: var(--color-pearl-white); }
+.surface-black  { background-color: var(--color-pure-black); color: var(--color-pearl-white); }
+.surface-white  { background-color: var(--color-pearl-white); color: var(--color-navy-black); }
+.surface-marble { background-color: var(--color-marble-gray); color: var(--color-navy-black); }
+
+/* ── Typography ───────────────────────────── */
+.brand-type {
+  font-family: var(--font-brand);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-brand);
+  font-weight: 400;
+}
+
+/* ── mint CTA Button ────────────────────── */
+.btn-mint {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-mint-vivo);
+  color: var(--color-pearl-white);
+  padding: 16px 24px;
+  font-family: var(--font-brand);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-brand);
+  font-weight: 400;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  text-decoration: none;
+}
+.btn-mint:hover { background: var(--color-mint-ombra); }
+
+/* ── Ghost Link Button ────────────────────── */
+.btn-ghost-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: var(--font-brand);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-brand);
+  font-weight: 400;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  text-decoration: none;
+}
+.btn-ghost-link.on-dark  { color: var(--color-pearl-white); }
+.btn-ghost-link.on-light { color: var(--color-navy-black); }
+.btn-ghost-link:hover { color: var(--color-mint-vivo); }
+
+/* ── Outlined Button ──────────────────────── */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 1px solid var(--color-steel-mid);
+  padding: 14px 24px;
+  font-family: var(--font-brand);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-brand);
+  font-weight: 400;
+  border-radius: 0;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+}
+.btn-outline.on-dark  { color: var(--color-pearl-white); }
+.btn-outline.on-light { color: var(--color-navy-black); }
+.btn-outline:hover { border-color: var(--color-mint-vivo); color: var(--color-mint-vivo); }
+
+/* ── Animations ───────────────────────────── */
+.reveal { animation: rise .7s both; }
+.delay-1 { animation-delay: .15s; }
+.delay-2 { animation-delay: .30s; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(20px) }
+  to { opacity: 1; transform: translateY(0) }
+}
+
+/* ── Listing Cards (hard-edged) ───────────── */
+.listing { transition: border-color 0.25s ease; border: 1px solid var(--color-graphite-border); }
+.listing:hover { border-color: var(--color-mint-vivo); }
+.listing:hover img { transform: scale(1.04); }
+.listing img { transition: transform .6s ease; }
+
+/* ── Admin Sidebar ────────────────────────── */
+.sidebar-link { transition: all .25s ease; }
+.sidebar-link:hover, .sidebar-link.active {
+  background: rgba(255, 192, 0, .12);
+  color: var(--color-mint-vivo);
+}
+.metric-card { transition: border-color .25s ease; border: 1px solid var(--color-graphite-border); }
+.metric-card:hover { border-color: var(--color-mint-vivo); }
+.table-row { transition: background .2s ease; }
+.table-row:hover { background: rgba(255,255,255,.04); }
+
+/* ── Hairline Dividers ────────────────────── */
+.hairline { border-color: var(--color-graphite-border); }
+.hairline-light { border-color: var(--color-ash-border); }
+
+/* ── View Transitions ─────────────────────── */
+@view-transition { navigation: auto }
+::view-transition { background-color: var(--color-navy-black); }
+::view-transition-old(main-content) { animation: .25s ease-out both fade-out; }
+::view-transition-new(main-content) { animation: .25s ease-in .1s both fade-in; }
+@keyframes fade-out { from { opacity: 1 } to { opacity: 0 } }
+@keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+
+/* ── Form inputs (dark surface) ───────────── */
+.input-dark {
+  width: 100%;
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--color-graphite-border);
+  border-radius: 0;
+  padding: 14px 16px;
+  color: var(--color-pearl-white);
+  font-family: var(--font-brand);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-brand);
+  outline: none;
+  transition: border-color .2s ease;
+}
+.input-dark:focus { border-color: var(--color-mint-vivo); }
+.input-dark::placeholder { color: var(--color-steel-mid); text-transform: uppercase; }

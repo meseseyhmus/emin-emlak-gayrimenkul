@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>İlan Detayı | Emin Emlak</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: {
+      fontFamily: { brand: ['Barlow Condensed','sans-serif'], body: ['Inter','sans-serif'] },
+      colors: { mint: '#7ECA9C', 'mint-dark': '#5EAD80', navy: '#202a44', 'navy-deep': '#1a2238', marble: '#f5f5f5', graphite: '#494949', steel: '#7d7d7d', ash: '#969696', anvil: '#313131' }
+    }}}
+  </script>
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+  <div class="min-h-screen font-body">
+
+    <!-- ── Navigation ── -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-navy-deep border-b border-graphite/40">
+      <div class="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-6 lg:px-10">
+        <a href="index.html" class="flex items-center gap-3"><img src="assets/logo.jpeg" alt="Emin Emlak Logo" class="h-12 w-auto object-contain" onerror="this.style.display='none'"><span><strong class="block font-brand text-sm uppercase tracking-[0.023em] text-white">EMİN EMLAK</strong><small class="block font-brand text-[10px] uppercase tracking-[0.12em] text-mint">Nusaybin · Mardin</small></span></a>
+        <nav class="hidden items-center gap-8 lg:flex">
+          <a href="ilanlar.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">İlanlar</a>
+          <a href="satilik.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">Satılık</a>
+          <a href="kiralik.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">Kiralık</a>
+          <a href="hakkimizda.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">Hakkımızda</a>
+          <a href="iletisim.html" class="font-brand text-[13px] uppercase tracking-[0.023em] text-white/60 transition hover:text-mint">İletişim</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="hidden pt-16" id="main-content">
+
+      <!-- ── Header (marble surface) ── -->
+      <section class="bg-marble border-b border-ash/30 px-6 py-10 lg:px-10">
+        <div class="mx-auto max-w-[1440px] reveal">
+          <a href="ilanlar.html" class="mb-5 inline-flex items-center gap-2 font-brand text-[12px] uppercase tracking-[0.023em] text-steel transition hover:text-mint"><iconify-icon icon="lucide:arrow-left"></iconify-icon> Tüm İlanlara Dön</a>
+          <div class="flex items-center gap-3 font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark"><span class="h-px w-8 bg-mint"></span> <span id="detail-type-cat"></span></div>
+          <h1 class="mt-4 font-brand text-[40px] leading-[1.19] tracking-[0.92px] uppercase text-navy md:text-[54px] md:leading-[1.13]" id="detail-title"></h1>
+          <p class="mt-4 flex items-center gap-2 font-body text-[14px] text-steel"><iconify-icon icon="lucide:map-pin" class="text-mint"></iconify-icon> <span id="detail-location"></span></p>
+        </div>
+      </section>
+
+      <!-- ── Image gallery (white surface) ── -->
+      <section class="bg-white px-6 py-10 lg:px-10">
+        <div class="mx-auto max-w-[1440px] reveal delay-1 grid gap-3 lg:grid-cols-[1.65fr_.35fr] lg:grid-rows-2 lg:h-[570px]" id="detail-images-grid">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- ── Content area (alternating surfaces) ── -->
+      <section class="bg-marble px-6 py-16 lg:px-10">
+        <div class="mx-auto max-w-[1440px] grid items-start gap-12 lg:grid-cols-[1fr_370px]">
+
+          <!-- Left column -->
+          <div>
+            <section class="border-b border-ash/30 pb-12">
+              <div class="mb-7 flex items-end justify-between">
+                <div><p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">İlan Detayları</p><h2 class="mt-3 font-brand text-[27px] uppercase tracking-[0.62px] text-navy">Mülk Özellikleri</h2></div>
+                <span class="font-brand text-[12px] uppercase tracking-[0.023em] text-ash" id="detail-id"></span>
+              </div>
+              <div class="grid grid-cols-2 gap-px overflow-hidden border border-ash/40 bg-ash/20 sm:grid-cols-4" id="detail-specs">
+                <!-- Rendered by JS -->
+              </div>
+            </section>
+
+                        <section class="border-b border-ash/30 py-12 hidden" id="detail-video-section">
+              <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">Sanal Tur</p>
+              <h2 class="mt-3 font-brand text-[27px] uppercase tracking-[0.62px] text-navy">Tanıtım Videosu</h2>
+              <div class="mt-7" id="detail-video-container">
+                <!-- Video Iframe -->
+              </div>
+            </section>
+
+            <section class="border-b border-ash/30 py-12" id="detail-features-section">
+              <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">Yaşam Konforu</p>
+              <h2 class="mt-3 font-brand text-[27px] uppercase tracking-[0.62px] text-navy">Öne Çıkan Özellikler</h2>
+              <div class="mt-7 grid gap-4 sm:grid-cols-2" id="detail-features"></div>
+            </section>
+
+            <section class="py-12">
+              <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">Mülk Hakkında</p>
+              <h2 class="mt-3 font-brand text-[27px] uppercase tracking-[0.62px] text-navy">Açıklama</h2>
+              <p class="mt-6 max-w-3xl font-body text-[16px] leading-[1.7] text-steel" id="detail-desc"></p>
+            </section>
+          </div>
+
+          <!-- Right sidebar -->
+          <aside class="lg:sticky lg:top-20">
+            <div class="border border-ash/40 bg-white p-6">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark" id="detail-aside-type"></p>
+                  <p class="mt-3 font-brand text-[32px] leading-[1.38] tracking-[0.74px] text-navy" id="detail-price"></p>
+                </div>
+                <span class="bg-mint px-3 py-1.5 font-brand text-[10px] uppercase tracking-[0.023em] text-navy hidden" id="detail-badge">Fırsat</span>
+              </div>
+
+              <div class="my-7 border-t border-ash/30"></div>
+
+              <div class="flex items-center gap-4">
+                <div class="flex h-12 w-12 items-center justify-center bg-mint font-brand text-[16px] font-bold text-navy">EE</div>
+                <div>
+                  <p class="font-body text-[12px] text-steel">Gayrimenkul Danışmanı</p>
+                  <strong class="mt-1 block font-brand text-[14px] uppercase tracking-[0.023em] text-navy">Emin Emlak Ekibi</strong>
+                </div>
+              </div>
+              <a id="whatsapp-agent-link" target="_blank" href="#" class="mt-7 flex w-full items-center justify-center gap-2 bg-[#25D366] py-4 font-brand text-[14px] uppercase tracking-[0.023em] text-white transition hover:bg-[#1da851]"><iconify-icon icon="lucide:message-circle" class="text-xl"></iconify-icon> WhatsApp'tan Bilgi Al</a>
+              <a id="phone-agent-link" href="#" class="mt-3 flex w-full items-center justify-center gap-2 border border-ash/40 py-3.5 font-brand text-[14px] uppercase tracking-[0.023em] text-navy transition hover:border-mint hover:text-mint"><iconify-icon icon="lucide:phone"></iconify-icon> <span id="aside-phone"></span></a>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- ── Related listings (white surface) ── -->
+      <section class="bg-white px-6 py-16 lg:px-10">
+        <div class="mx-auto max-w-[1440px]">
+          <div class="flex items-end justify-between">
+            <div><p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">Size Uygun Olabilir</p><h2 class="mt-3 font-brand text-[27px] uppercase tracking-[0.62px] text-navy">Benzer İlanlar</h2></div>
+          </div>
+          <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" id="relatedListingsGrid">
+            <!-- JS Rendered -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="bg-navy-deep border-t border-graphite/40 px-6 py-14 lg:px-10">
+      <div class="mx-auto flex max-w-[1440px] flex-col justify-between gap-10 md:flex-row">
+        <div>
+          <a href="index.html" class="flex items-center gap-3"><img src="assets/logo.jpeg" alt="Emin Emlak Logo" class="h-9 w-auto object-contain"><span><strong class="block font-brand text-sm uppercase tracking-[0.023em] text-white">EMİN EMLAK</strong><small class="block font-brand text-[10px] uppercase tracking-[0.12em] text-mint">Nusaybin · Mardin</small></span></a>
+        </div>
+        <div>
+          <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint mb-4">İletişim</p>
+          <p class="font-body text-[14px] text-white/45" id="footer-address">Nusaybin, Mardin</p>
+          <p class="mt-2 font-body text-[14px] text-white/45" id="footer-phone">0555 013 7647</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await DataManager.init();
+      const settings = DataManager.getSettings();
+      if(settings.phone) document.getElementById('footer-phone').textContent = settings.phone;
+      if(settings.address) document.getElementById('footer-address').textContent = settings.address;
+      App.renderTailwindDetail();
+    });
+  </script>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);">
+      <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
+    </a>
+</body>
+</html>
+
+
+
+
+
+
+

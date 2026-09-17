@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>İlan Ekle/Düzenle | Admin Paneli</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+  <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+  <div class="min-h-screen bg-[#0A0A12] font-sans text-white grid-glow">
+    <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-40 flex w-64 -translate-x-full flex-col border-r border-white/10 bg-[#0E0E18] px-4 py-6 transition-transform lg:translate-x-0">
+      <div class="flex items-center gap-3 px-3">
+        <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500 text-xl font-extrabold text-black">E</span>
+        <div><strong class="block text-sm tracking-tight">EMİN EMLAK</strong><small class="text-[9px] uppercase tracking-[.24em] text-amber-400">Yönetim Paneli</small></div>
+      </div>
+      <div class="mt-10 px-3 text-[10px] font-semibold uppercase tracking-[.22em] text-white/30">Ana menü</div>
+      <nav class="mt-3 space-y-1">
+        <a href="dashboard.html" class="sidebar-link flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-white/55"><iconify-icon icon="lucide:layout-dashboard" class="text-lg"></iconify-icon> Dashboard</a>
+        <a href="ilanlar.html" class="sidebar-link active flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium"><iconify-icon icon="lucide:building-2" class="text-lg"></iconify-icon> İlanlar</a>
+        <a href="mesajlar.html" class="sidebar-link flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-white/55"><iconify-icon icon="lucide:inbox" class="text-lg"></iconify-icon> Mesajlar</a>
+        <a href="ayarlar.html" class="sidebar-link flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-white/55"><iconify-icon icon="lucide:settings-2" class="text-lg"></iconify-icon> Ayarlar</a>
+      </nav>
+    </aside>
+
+    <div class="lg:pl-64">
+      <header class="sticky top-0 z-30 flex h-20 items-center border-b border-white/10 bg-[#0A0A12] px-5 sm:px-8">
+        <button id="mobile-menu-btn" class="mr-4 flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white/70 lg:hidden"><iconify-icon icon="lucide:menu" class="text-xl"></iconify-icon></button>
+        <h1 class="text-xl font-bold tracking-tight" id="page-title">Yeni İlan Ekle</h1>
+      </header>
+
+      <main class="mx-auto max-w-[1000px] px-5 py-8 sm:px-8">
+        <form id="listing-form" class="space-y-8">
+          <section class="glass rounded-2xl p-6 md:p-8">
+            <h2 class="text-lg font-bold mb-6">Temel Bilgiler</h2>
+            <div class="grid gap-5 md:grid-cols-2">
+              <label class="block md:col-span-2">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">İlan Başlığı</span>
+                <input required type="text" id="title" class="w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+              </label>
+              
+              <label class="block">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">İlan Tipi</span>
+                <select required id="type" class="w-full rounded-lg border border-white/10 bg-[#191927] px-4 py-3.5 text-sm text-white outline-none">
+                  <option value="satilik">Satılık</option>
+                  <option value="kiralik">Kiralık</option>
+                </select>
+              </label>
+
+              <label class="block">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Kategori</span>
+                <select required id="category" class="w-full rounded-lg border border-white/10 bg-[#191927] px-4 py-3.5 text-sm text-white outline-none">
+                  <option value="daire">Daire</option>
+                  <option value="mustakil">Müstakil Ev</option>
+                  <option value="arsa">Arsa</option>
+                  <option value="isyeri">İş Yeri</option>
+                </select>
+              </label>
+
+              <label class="block">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Fiyat (₺)</span>
+                <input required type="number" id="price" min="0" class="w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+              </label>
+
+              <label class="block">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">İlan Durumu</span>
+                <select id="status" class="w-full rounded-lg border border-white/10 bg-[#191927] px-4 py-3.5 text-sm text-white outline-none">
+                  <option value="active">Aktif</option>
+                  <option value="draft">Taslak</option>
+                </select>
+              </label>
+
+              <label class="block md:col-span-2 flex items-center gap-3 rounded-lg border border-white/10 bg-white/[.04] p-4 cursor-pointer">
+                <input type="checkbox" id="featured" class="h-5 w-5 accent-amber-500">
+                <span class="text-sm font-semibold">Öne Çıkan İlan Olarak İşaretle (Anasayfada Gösterilir)</span>
+              </label>
+            </div>
+          </section>
+
+          <section class="glass rounded-2xl p-6 md:p-8">
+            <h2 class="text-lg font-bold mb-6">Detaylar & Konum</h2>
+            <div class="grid gap-5 md:grid-cols-2">
+              <label class="block">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Şehir/İlçe</span>
+                <input required type="text" id="city" value="Mardin, Nusaybin" class="w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+              </label>
+
+              <label class="block">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Mahalle</span>
+                <input required type="text" id="neighborhood" class="w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+              </label>
+
+              <label class="block">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Oda Sayısı</span>
+                <select id="rooms" class="w-full rounded-lg border border-white/10 bg-[#191927] px-4 py-3.5 text-sm text-white outline-none">
+                  <option value="-">-</option>
+                  <option value="1+0">1+0</option>
+                  <option value="1+1">1+1</option>
+                  <option value="2+1">2+1</option>
+                  <option value="3+1">3+1</option>
+                  <option value="4+1">4+1</option>
+                  <option value="5+1">5+1 ve üzeri</option>
+                </select>
+              </label>
+
+              <label class="block">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Brüt Alan (m²)</span>
+                <input required type="number" id="area" min="0" class="w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+              </label>
+
+              <label class="block">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Bulunduğu Kat</span>
+                <input type="text" id="floor" class="w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+              </label>
+
+              <label class="block md:col-span-2">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Açıklama</span>
+                <textarea required id="description" rows="5" class="w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400 resize-y"></textarea>
+              </label>
+
+              <label class="block md:col-span-2">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Özellikler (Virgülle ayırın, Örn: Asansör, Otopark, Balkon)</span>
+                <input type="text" id="features" class="w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+              </label>
+            </div>
+          </section>
+
+          <section class="glass rounded-2xl p-6 md:p-8">
+            <div class="mb-4 rounded-lg bg-blue-500/10 p-4 border border-blue-500/20 text-sm text-blue-200">
+              <strong class="text-blue-400 block mb-1">Vercel (Canlı Yayın) Notu:</strong>
+              Sunucuya doğrudan dosya yüklemek yerine medya dosyalarınızın linklerini (URL) ekleyin. Resimlerinizi HızlıResim vb. servislere, videolarınızı YouTube'a yükleyip linklerini yapıştırabilirsiniz.
+            </div>
+            <h2 class="text-lg font-bold mb-6">Medya & Görseller</h2>
+            <div class="grid gap-5 md:grid-cols-2">
+              <label class="block md:col-span-2">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Ana Resim (Zorunlu)</span>
+                <div class="flex items-center gap-4">
+                  <input required type="file" id="image" accept="image/*" class="w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-500 file:text-black hover:file:bg-amber-400">
+                  <img id="imagePreview" src="" class="hidden h-16 w-16 object-cover rounded-lg border border-white/20">
+                </div>
+                <input type="hidden" id="imageBase64" value="">
+              </label>
+              
+              <label class="block md:col-span-2">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Ek Resimler (İsteğe Bağlı - Maksimum 4 adet)</span>
+                <input type="file" id="imageUrls" accept="image/*" multiple class="w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white/10 file:text-white hover:file:bg-white/20">
+                <div id="extraImagesPreview" class="mt-4 flex gap-3 flex-wrap"></div>
+                <input type="hidden" id="extraImagesBase64" value="">
+              </label>
+
+              <label class="block md:col-span-2">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Video Linki (YouTube veya MP4 - İsteğe Bağlı)</span>
+                <input type="url" id="videoUrl" placeholder="Örn: https://www.youtube.com/watch?v=..." class="w-full rounded-lg border border-white/10 bg-white/[.04] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+              </label>
+            </div>
+          </section>
+
+          <div class="flex items-center gap-4 border-t border-white/10 pt-8 pb-16">
+            <button type="submit" class="rounded-lg bg-amber-500 px-8 py-3.5 font-bold text-black transition hover:bg-amber-400">İlanı Kaydet</button>
+            <a href="ilanlar.html" class="rounded-lg border border-white/15 px-6 py-3.5 font-semibold text-white/70 hover:border-white/40 hover:text-white">İptal</a>
+          </div>
+        </form>
+      </main>
+    </div>
+  </div>
+  
+  <script src="../js/utils.js"></script>
+  <script src="../js/data.js"></script>
+  <script src="../js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await DataManager.init();
+      AdminApp.initListingForm();
+      
+      const sidebar = document.getElementById('admin-sidebar');
+      document.getElementById('mobile-menu-btn')?.addEventListener('click', () => sidebar.classList.toggle('-translate-x-full'));
+    });
+  </script>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);">
+      <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
+    </a>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Giriş | Emin Emlak</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="../css/index.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+  <div class="admin-login">
+    <div class="hero-bg"><div class="hero-bg-grid"></div><div class="hero-bg-glow hero-bg-glow-1" style="opacity:0.15;"></div></div>
+    <div class="admin-login-box">
+      <img src="../assets/logo.jpeg" alt="Logo" style="height:40px;width:auto;object-fit:contain;">
+      <h1 style="font-size:var(--font-size-2xl);margin-bottom:var(--space-2);">Emin Emlak</h1>
+      <p style="color:var(--neutral-500);margin-bottom:var(--space-8);font-size:var(--font-size-sm);">Admin Paneli Girişi</p>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <input type="password" class="form-input" id="loginPassword" placeholder="Şifre giriniz" required autofocus style="text-align:center;font-size:var(--font-size-lg);letter-spacing:4px;">
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg w-full" style="margin-top:var(--space-4);">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Giriş Yap
+        </button>
+      </form>
+      <p id="loginError" style="color:var(--error);font-size:var(--font-size-sm);margin-top:var(--space-4);display:none;">Hatalı şifre! Tekrar deneyin.</p>
+      <a href="../index.html" style="display:inline-block;margin-top:var(--space-6);font-size:var(--font-size-sm);color:var(--neutral-500);">← Siteye Dön</a>
+    </div>
+  </div>
+  <script src="../js/utils.js"></script>
+  <script src="../js/data.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      await DataManager.init();
+      if (DataManager.isLoggedIn()) window.location.href = 'dashboard.html';
+    });
+    function handleLogin(e) {
+      e.preventDefault();
+      const pw = document.getElementById('loginPassword').value;
+      if (DataManager.login(pw)) {
+        window.location.href = 'dashboard.html';
+      } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('loginPassword').value = '';
+        document.getElementById('loginPassword').focus();
+      }
+    }
+  </script>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);">
+      <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
+    </a>
+</body>
+</html>
+
+
+
