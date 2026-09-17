@@ -14,14 +14,31 @@ if (isPostgres) {
   });
   console.log('Veritabanı: PostgreSQL (Bulut)');
 } else {
-  const sqlite3 = require('sqlite3').verbose();
-  const dbPath = path.resolve(__dirname, 'data', 'database.sqlite');
-  const dbDir = path.dirname(dbPath);
-  if (!fs.existsSync(dbDir)) fs.mkdirSync(dbDir, { recursive: true });
-  sqliteDb = new sqlite3.Database(dbPath, (err) => {
-    if (err) console.error('SQLite bağlantı hatası:', err.message);
-    else console.log('Veritabanı: SQLite (Yerel)');
-  });
+  let sqlite3;
+  try {
+    sqlite3 = require('sqlite3').verbose();
+  } catch(e) {
+    console.error('sqlite3 modülü yüklenemedi. Sunucusuz ortamda olabilirsiniz.');
+  }
+  
+  if (sqlite3) {
+    const dbPath = path.resolve(__dirname, 'data', 'database.sqlite');
+    const dbDir = path.dirname(dbPath);
+    if (!fs.existsSync(dbDir)) fs.mkdirSync(dbDir, { recursive: true });
+    sqliteDb = new sqlite3.Database(dbPath, (err) => {
+      if (err) console.error('SQLite bağlantı hatası:', err.message);
+      else console.log('Veritabanı: SQLite (Yerel)');
+    });
+  } else {
+    // Dummy DB for Vercel without Postgres
+    sqliteDb = {
+      all: (sql, params, cb) => cb(null, []),
+      run: (sql, params, cb) => {
+        const err = new Error("PostgreSQL URL bulunamadı, veritabanı salt okunur modda.");
+        if(cb) cb(err);
+      }
+    };
+  }
 }
 
 function formatPgQuery(sql) {

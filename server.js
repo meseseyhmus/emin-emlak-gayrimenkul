@@ -129,12 +129,12 @@ app.post('/api/messages', async (req, res) => {
   }
 });
 
-// Fallback for Vercel/SPA routing if needed
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
+// Start server if not running in a serverless environment like Vercel
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+}
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+// Export the app for Vercel
+module.exports = app;
