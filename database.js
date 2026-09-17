@@ -1,5 +1,4 @@
 const { Pool } = require('pg');
-const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 const fs = require('fs');
 
@@ -15,6 +14,7 @@ if (isPostgres) {
   });
   console.log('Veritabanı: PostgreSQL (Bulut)');
 } else {
+  const sqlite3 = require('sqlite3').verbose();
   const dbPath = path.resolve(__dirname, 'data', 'database.sqlite');
   const dbDir = path.dirname(dbPath);
   if (!fs.existsSync(dbDir)) fs.mkdirSync(dbDir, { recursive: true });
