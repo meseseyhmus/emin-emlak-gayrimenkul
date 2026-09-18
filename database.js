@@ -17,10 +17,10 @@ if (isPostgres) {
   let sqlite3;
   try {
     sqlite3 = require('sqlite3').verbose();
-  } catch(e) {
+  } catch (e) {
     console.error('sqlite3 modülü yüklenemedi. Sunucusuz ortamda olabilirsiniz.');
   }
-  
+
   if (sqlite3) {
     const dbPath = path.resolve(__dirname, 'data', 'database.sqlite');
     const dbDir = path.dirname(dbPath);
@@ -35,7 +35,7 @@ if (isPostgres) {
       all: (sql, params, cb) => cb(null, []),
       run: (sql, params, cb) => {
         const err = new Error("PostgreSQL URL bulunamadı, veritabanı salt okunur modda.");
-        if(cb) cb(err);
+        if (cb) cb(err);
       }
     };
   }
@@ -48,7 +48,7 @@ function formatPgQuery(sql) {
 
 const db = {
   isPostgres,
-  
+
   // SELECT sorguları için
   async query(sql, params = []) {
     if (isPostgres) {
@@ -63,7 +63,7 @@ const db = {
       });
     }
   },
-  
+
   // INSERT / UPDATE / DELETE sorguları için
   async execute(sql, params = []) {
     if (isPostgres) {
@@ -98,18 +98,26 @@ async function initDB() {
         title TEXT,
         price INTEGER,
         type VARCHAR(50),
+        category VARCHAR(50),
         status VARCHAR(50),
         bedrooms INTEGER,
         bathrooms INTEGER,
         squareMeters INTEGER,
         location TEXT,
+        city TEXT,
+        neighborhood TEXT,
+        rooms VARCHAR(50),
+        area INTEGER,
+        floor VARCHAR(50),
+        description TEXT,
         agentName VARCHAR(255),
         agentPhone VARCHAR(50),
         image TEXT,
         imageUrls TEXT,
         videoUrl TEXT,
         features TEXT,
-        featured INTEGER DEFAULT 0
+        featured INTEGER DEFAULT 0,
+        createdAt VARCHAR(255)
       )
     `);
 
@@ -126,7 +134,7 @@ async function initDB() {
         read INTEGER DEFAULT 0
       )
     `);
-    
+
     console.log('Tablolar kontrol edildi/oluşturuldu.');
   } catch (err) {
     console.error('Tablo oluşturma hatası:', err);

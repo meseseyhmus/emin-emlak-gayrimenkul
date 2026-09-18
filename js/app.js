@@ -6,8 +6,8 @@ const App = {
   initFiltersFromUrl() {
     const type = this.getParam('type');
     const category = this.getParam('category');
-    if(type) { const s = document.getElementById('filterType'); if(s) s.value = type; }
-    if(category) { const s = document.getElementById('filterCategory'); if(s) s.value = category; }
+    if (type) { const s = document.getElementById('filterType'); if (s) s.value = type; }
+    if (category) { const s = document.getElementById('filterCategory'); if (s) s.value = category; }
   },
 
   // ── Featured Listings (index.html) — 3-column grid ──
@@ -36,7 +36,7 @@ const App = {
         <article class="listing group relative overflow-hidden bg-navy-deep reveal ${idx > 0 ? 'delay-1' : ''}">
           <a href="ilan-detay.html?id=${l.id}" class="block">
             <div class="relative h-64 overflow-hidden">
-              <img loading="lazy" src="${imgUrl}" alt="${Utils.sanitize(l.title)}" class="h-full w-full object-cover">
+              <img loading="lazy" src="${imgUrl}" alt="" class="h-full w-full object-cover" onerror="this.onerror=null; this.src='${Utils.placeholderImage(600, 400, l.rooms || 'Emlak')}';">
               ${badge}
             </div>
             <div class="p-6">
@@ -78,9 +78,9 @@ const App = {
       return titleMatch || locStr.includes(searchInput) || featMatch;
     });
 
-    if (sort === 'price_asc') listings.sort((a,b) => a.price - b.price);
-    else if (sort === 'price_desc') listings.sort((a,b) => b.price - a.price);
-    else listings.sort((a,b) => b.id - a.id);
+    if (sort === 'price_asc') listings.sort((a, b) => a.price - b.price);
+    else if (sort === 'price_desc') listings.sort((a, b) => b.price - a.price);
+    else listings.sort((a, b) => b.id - a.id);
 
     const countEl = document.getElementById('resultsCount');
     if (countEl) countEl.textContent = `${listings.length} İlan Bulundu`;
@@ -102,7 +102,7 @@ const App = {
         <article class="listing reveal group overflow-hidden border border-ash/40 transition">
           <a href="ilan-detay.html?id=${l.id}" class="block">
             <div class="relative h-56 overflow-hidden">
-              <img loading="lazy" src="${imgUrl}" alt="${Utils.sanitize(l.title)}" class="h-full w-full object-cover">
+              <img loading="lazy" src="${imgUrl}" alt="" class="h-full w-full object-cover" onerror="this.onerror=null; this.src='${Utils.placeholderImage(400, 300, l.rooms || 'Emlak')}';">
               ${badge}
             </div>
             <div class="p-6">
@@ -157,13 +157,13 @@ const App = {
     const settings = DataManager.getSettings();
     const phone = settings.phone || '0555 013 7647';
     const phoneClean = phone.replace(/\s+/g, '');
-    
+
     const waLink = document.getElementById('whatsapp-agent-link');
     if (waLink) waLink.href = `https://wa.me/${phoneClean}?text=${encodeURIComponent(listing.title + ' ilanı ile ilgili bilgi almak istiyorum.')}`;
-    
+
     const phoneLink = document.getElementById('phone-agent-link');
     if (phoneLink) phoneLink.href = `tel:${phoneClean}`;
-    
+
     if (document.getElementById('aside-phone')) document.getElementById('aside-phone').textContent = phone;
 
     // Image Gallery
@@ -172,7 +172,7 @@ const App = {
 
     let galleryHTML = `
       <div class="group relative overflow-hidden lg:row-span-2">
-        <img src="${mainImg}" class="h-full min-h-[390px] w-full object-cover transition duration-700 group-hover:scale-[1.03]" onerror="this.src='${Utils.placeholderImage(800,600,listing.rooms)}'">
+        <img src="${mainImg}" class="h-full min-h-[390px] w-full object-cover transition duration-700 group-hover:scale-[1.03]" onerror="this.src='${Utils.placeholderImage(800, 600, listing.rooms)}'">
       </div>
     `;
 
@@ -242,7 +242,7 @@ const App = {
       relatedGrid.innerHTML = related.map(l => `
         <a href="ilan-detay.html?id=${l.id}" class="group overflow-hidden border border-ash/40 transition hover:border-mint">
           <div class="relative h-48 overflow-hidden">
-            <img src="${l.image || Utils.placeholderImage(400,300,l.rooms)}" class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]">
+            <img src="${l.image || Utils.placeholderImage(400, 300, l.rooms)}" class="h-full w-full object-cover transition duration-500 group-hover:scale-[1.03]">
           </div>
           <div class="p-5">
             <h3 class="font-brand text-[14px] uppercase tracking-[0.023em] text-navy">${Utils.sanitize(l.title)}</h3>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
@@ -35,6 +35,72 @@
       </header>
 
       <main class="mx-auto max-w-[1000px] px-5 py-8 sm:px-8">
+
+        <!-- ======= Sahibinden İçe Aktarma Bölümü ======= -->
+        <section id="sahibinden-import" class="mb-8 rounded-2xl border border-amber-500/20 bg-gradient-to-br from-amber-500/[.06] to-orange-500/[.04] p-6 md:p-8">
+          <div class="flex items-center gap-3 mb-5">
+            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-lg font-bold text-black">
+              <iconify-icon icon="lucide:download"></iconify-icon>
+            </span>
+            <div>
+              <h2 class="text-lg font-bold">Sahibinden'den İçe Aktar</h2>
+              <p class="text-xs text-white/45">İlan linkini yapıştırın, veriler otomatik doldurulsun</p>
+            </div>
+          </div>
+
+          <!-- URL Mode -->
+          <div class="flex flex-col sm:flex-row gap-3 mb-3">
+            <input type="url" id="sahibinden-url" placeholder="https://www.sahibinden.com/ilan/..." class="flex-1 rounded-lg border border-white/10 bg-white/[.06] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400 placeholder:text-white/25">
+            <button type="button" id="sahibinden-fetch-btn" class="flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 px-6 py-3.5 text-sm font-bold text-black transition hover:from-amber-400 hover:to-orange-400 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed">
+              <iconify-icon icon="lucide:zap" class="text-base"></iconify-icon>
+              Verileri Çek
+            </button>
+          </div>
+
+          <!-- Loading indicator -->
+          <div id="sahibinden-loading" class="hidden flex items-center gap-3 rounded-lg bg-amber-500/10 border border-amber-500/20 p-4 mb-3">
+            <div class="h-5 w-5 animate-spin rounded-full border-2 border-amber-400 border-t-transparent"></div>
+            <span class="text-sm text-amber-200">Sahibinden'den veriler çekiliyor...</span>
+          </div>
+
+          <!-- Success indicator -->
+          <div id="sahibinden-success" class="hidden flex items-center gap-3 rounded-lg bg-emerald-500/10 border border-emerald-500/20 p-4 mb-3">
+            <iconify-icon icon="lucide:check-circle" class="text-xl text-emerald-400"></iconify-icon>
+            <span class="text-sm text-emerald-200">Veriler başarıyla çekildi! Formu kontrol edip kaydedin.</span>
+          </div>
+
+          <!-- Error / Blocked indicator -->
+          <div id="sahibinden-error" class="hidden rounded-lg bg-red-500/10 border border-red-500/20 p-4 mb-3">
+            <div class="flex items-center gap-3 mb-2">
+              <iconify-icon icon="lucide:alert-triangle" class="text-xl text-red-400"></iconify-icon>
+              <span id="sahibinden-error-text" class="text-sm text-red-200"></span>
+            </div>
+            <p id="sahibinden-error-tip" class="text-xs text-white/40 ml-8"></p>
+          </div>
+
+          <!-- Fallback: Paste HTML mode -->
+          <details id="sahibinden-paste-section" class="group" open>
+            <summary class="cursor-pointer text-xs font-semibold text-amber-400 hover:text-amber-300 transition flex items-center gap-1.5 py-1">
+              <iconify-icon icon="lucide:chevron-right" class="text-sm transition group-open:rotate-90"></iconify-icon>
+              Güvenlik engeli mi var? Sayfa kaynağını yapıştırın
+            </summary>
+            <div class="mt-3 space-y-3 rounded-xl border border-amber-500/20 bg-black/30 p-4">
+              <p class="text-xs text-white/60 leading-relaxed">
+                <strong class="text-amber-400">💡 Kolay Çözüm:</strong> Sahibinden güvenlik duvarını geçmek için ilanı tarayıcınızda açın:<br>
+                1. İlan sayfasında sağ tık → <strong class="text-white">"Sayfa kaynağını görüntüle"</strong> (veya <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-amber-300">Ctrl+U</kbd>) yapın.<br>
+                2. Açılan tüm kaynak kodunu seçip kopyalayın (<kbd class="px-1.5 py-0.5 rounded bg-white/10 text-amber-300">Ctrl+A</kbd> → <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-amber-300">Ctrl+C</kbd>).<br>
+                3. Aşağıdaki kutuya yapıştırıp (<kbd class="px-1.5 py-0.5 rounded bg-white/10 text-amber-300">Ctrl+V</kbd>) butonuna basın.
+              </p>
+              <textarea id="sahibinden-html" rows="5" placeholder="Sahibinden ilanının sayfa kaynak kodunu (HTML) buraya yapıştırın..." class="w-full rounded-lg border border-white/15 bg-white/[.04] px-4 py-3 text-xs text-white outline-none focus:border-amber-400 resize-y font-mono"></textarea>
+              <button type="button" id="sahibinden-parse-btn" class="flex items-center gap-2 rounded-lg border border-amber-500/40 bg-amber-500/20 px-6 py-3 text-sm font-bold text-amber-300 transition hover:bg-amber-500/30">
+                <iconify-icon icon="lucide:scan-text" class="text-lg"></iconify-icon>
+                HTML'den Verileri Otomatik Çıkar
+              </button>
+            </div>
+          </details>
+        </section>
+
+        <!-- ======= İlan Formu ======= -->
         <form id="listing-form" class="space-y-8">
           <section class="glass rounded-2xl p-6 md:p-8">
             <h2 class="text-lg font-bold mb-6">Temel Bilgiler</h2>
@@ -83,7 +149,7 @@
           </section>
 
           <section class="glass rounded-2xl p-6 md:p-8">
-            <h2 class="text-lg font-bold mb-6">Detaylar & Konum</h2>
+            <h2 class="text-lg font-bold mb-6">Detaylar &amp; Konum</h2>
             <div class="grid gap-5 md:grid-cols-2">
               <label class="block">
                 <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Şehir/İlçe</span>
@@ -135,7 +201,7 @@
               <strong class="text-blue-400 block mb-1">Vercel (Canlı Yayın) Notu:</strong>
               Sunucuya doğrudan dosya yüklemek yerine medya dosyalarınızın linklerini (URL) ekleyin. Resimlerinizi HızlıResim vb. servislere, videolarınızı YouTube'a yükleyip linklerini yapıştırabilirsiniz.
             </div>
-            <h2 class="text-lg font-bold mb-6">Medya & Görseller</h2>
+            <h2 class="text-lg font-bold mb-6">Medya &amp; Görseller</h2>
             <div class="grid gap-5 md:grid-cols-2">
               <label class="block md:col-span-2">
                 <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/45">Ana Resim (Zorunlu)</span>
@@ -176,6 +242,7 @@
     document.addEventListener('DOMContentLoaded', async () => {
       await DataManager.init();
       AdminApp.initListingForm();
+      AdminApp.initSahibindenImporter();
       
       const sidebar = document.getElementById('admin-sidebar');
       document.getElementById('mobile-menu-btn')?.addEventListener('click', () => sidebar.classList.toggle('-translate-x-full'));
@@ -187,8 +254,3 @@
     </a>
 </body>
 </html>
-
-
-
-
-
