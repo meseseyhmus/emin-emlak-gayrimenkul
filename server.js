@@ -49,14 +49,39 @@ app.post('/api/settings', async (req, res) => {
 app.get('/api/listings', async (req, res) => {
   try {
     const rows = await db.query('SELECT * FROM listings');
-    const listings = rows.map(r => ({
+    let listings = rows.map(r => ({
       ...r,
       features: JSON.parse(r.features || '[]'),
       imageUrls: JSON.parse(r.imageUrls || '[]'),
       featured: r.featured === 1
     }));
+
+    // Fallback to static JSON if database is empty on serverless environment (e.g. Vercel)
+    if (!listings || listings.length === 0) {
+      try {
+        const fs = require('fs');
+        const jsonPath = path.join(__dirname, 'data', 'listings.json');
+        if (fs.existsSync(jsonPath)) {
+          const raw = fs.readFileSync(jsonPath, 'utf8');
+          const parsed = JSON.parse(raw);
+          listings = parsed.listings || [];
+        }
+      } catch (e) {
+        console.error('Fallback read error:', e);
+      }
+    }
+
     res.json(listings);
   } catch (err) {
+    try {
+      const fs = require('fs');
+      const jsonPath = path.join(__dirname, 'data', 'listings.json');
+      if (fs.existsSync(jsonPath)) {
+        const raw = fs.readFileSync(jsonPath, 'utf8');
+        const parsed = JSON.parse(raw);
+        return res.json(parsed.listings || []);
+      }
+    } catch (e) {}
     res.status(500).json({ error: err.message });
   }
 });
