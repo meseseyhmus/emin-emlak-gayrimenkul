@@ -166,29 +166,84 @@ const App = {
 
     if (document.getElementById('aside-phone')) document.getElementById('aside-phone').textContent = phone;
 
-    // Image Gallery
-    const mainImg = listing.image || Utils.placeholderImage(800, 600, listing.rooms);
-    const extraImages = listing.imageUrls || [];
-
-    let galleryHTML = `
-      <div class="group relative overflow-hidden lg:row-span-2">
-        <img src="${mainImg}" class="h-full min-h-[390px] w-full object-cover transition duration-700 group-hover:scale-[1.03]" onerror="this.src='${Utils.placeholderImage(800, 600, listing.rooms)}'">
-      </div>
-    `;
-
-    if (extraImages.length > 0) {
-      const topExtra = extraImages.slice(0, 2);
-      topExtra.forEach(url => {
-        galleryHTML += `
-          <div class="group relative overflow-hidden hidden lg:block">
-            <img src="${url}" class="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]">
-          </div>
-        `;
+    // Image Gallery & Slider
+    const imageList = [];
+    if (listing.image) imageList.push(listing.image);
+    if (Array.isArray(listing.images)) {
+      listing.images.forEach(img => {
+        if (img && !imageList.includes(img)) imageList.push(img);
+      });
+    }
+    if (Array.isArray(listing.imageUrls)) {
+      listing.imageUrls.forEach(img => {
+        if (img && !imageList.includes(img)) imageList.push(img);
       });
     }
 
+    if (imageList.length === 0) {
+      imageList.push(Utils.placeholderImage(800, 600, listing.rooms));
+    }
+
+    window.sliderImages = imageList;
+    window.currentSlideIndex = 0;
+
+    let galleryHTML = `
+      <div class="relative overflow-hidden rounded-xl bg-navy-deep shadow-xl border border-graphite/40">
+        <!-- Main Image View -->
+        <div class="relative h-[380px] sm:h-[480px] md:h-[580px] lg:h-[620px] w-full overflow-hidden flex items-center justify-center bg-black/90 group">
+          <img id="slider-main-img" 
+               src="${imageList[0]}" 
+               alt="${Utils.sanitize(listing.title)}" 
+               class="h-full w-full object-contain transition-opacity duration-300 select-none cursor-pointer"
+               onclick="App.openLightbox(window.currentSlideIndex)"
+               onerror="this.onerror=null; this.src='${Utils.placeholderImage(800, 600, listing.rooms)}'">
+
+          <!-- Navigation Controls -->
+          ${imageList.length > 1 ? `
+            <button onclick="App.prevSlide()" 
+                    class="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-navy/80 text-white border border-white/20 backdrop-blur-md transition-all duration-200 hover:bg-mint hover:text-navy hover:scale-110 shadow-lg"
+                    aria-label="Önceki Fotoğraf">
+              <iconify-icon icon="lucide:chevron-left" class="text-2xl sm:text-3xl pointer-events-none"></iconify-icon>
+            </button>
+
+            <button onclick="App.nextSlide()" 
+                    class="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 flex h-11 w-11 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-navy/80 text-white border border-white/20 backdrop-blur-md transition-all duration-200 hover:bg-mint hover:text-navy hover:scale-110 shadow-lg"
+                    aria-label="Sonraki Fotoğraf">
+              <iconify-icon icon="lucide:chevron-right" class="text-2xl sm:text-3xl pointer-events-none"></iconify-icon>
+            </button>
+          ` : ''}
+
+          <!-- Top Overlay Controls -->
+          <div class="absolute top-4 right-4 z-20 flex items-center gap-2.5">
+            <span id="slider-counter" class="rounded-full bg-navy/90 px-4 py-1.5 font-brand text-xs uppercase tracking-wider text-mint border border-mint/40 backdrop-blur-md shadow-md font-bold">
+              1 / ${imageList.length} Fotoğraf
+            </span>
+            <button onclick="App.openLightbox(window.currentSlideIndex)" class="flex h-9 w-9 items-center justify-center rounded-full bg-navy/90 text-white border border-white/20 backdrop-blur-md transition hover:bg-mint hover:text-navy shadow-md" title="Tam Ekran Büyüt">
+              <iconify-icon icon="lucide:maximize-2" class="text-base pointer-events-none"></iconify-icon>
+            </button>
+          </div>
+        </div>
+
+        <!-- Thumbnail Navigation Strip -->
+        ${imageList.length > 1 ? `
+          <div class="bg-navy/95 p-3 border-t border-graphite/40 overflow-x-auto custom-scrollbar flex gap-2.5 items-center scroll-smooth" id="slider-thumbnails">
+            ${imageList.map((img, i) => `
+              <button onclick="App.goToSlide(${i})" 
+                      id="thumb-${i}"
+                      class="relative h-16 w-24 sm:h-20 sm:w-28 flex-shrink-0 overflow-hidden rounded-md border-2 transition-all duration-200 ${i === 0 ? 'border-mint scale-105 shadow-md' : 'border-transparent opacity-50 hover:opacity-100'}">
+                <img src="${img}" class="h-full w-full object-cover" loading="lazy" onerror="this.onerror=null; this.src='${Utils.placeholderImage(400, 300, listing.rooms)}'">
+              </button>
+            `).join('')}
+          </div>
+        ` : ''}
+      </div>
+    `;
+
     const galleryGrid = document.getElementById('detail-images-grid');
-    if (galleryGrid) galleryGrid.innerHTML = galleryHTML;
+    if (galleryGrid) {
+      galleryGrid.className = 'mx-auto max-w-[1440px] reveal delay-1';
+      galleryGrid.innerHTML = galleryHTML;
+    }
 
     // Video Section
     const videoSection = document.getElementById('detail-video-section');
@@ -252,5 +307,124 @@ const App = {
         </a>
       `).join('');
     }
+  },
+
+  // ── Slider Methods ──
+  goToSlide(index) {
+    if (!window.sliderImages || window.sliderImages.length === 0) return;
+    if (index < 0) index = window.sliderImages.length - 1;
+    if (index >= window.sliderImages.length) index = 0;
+
+    window.currentSlideIndex = index;
+    const mainImg = document.getElementById('slider-main-img');
+    const counter = document.getElementById('slider-counter');
+
+    if (mainImg) {
+      mainImg.style.opacity = '0.3';
+      setTimeout(() => {
+        mainImg.src = window.sliderImages[index];
+        mainImg.style.opacity = '1';
+      }, 120);
+    }
+
+    if (counter) {
+      counter.textContent = `${index + 1} / ${window.sliderImages.length} Fotoğraf`;
+    }
+
+    window.sliderImages.forEach((_, i) => {
+      const thumb = document.getElementById(`thumb-${i}`);
+      if (thumb) {
+        if (i === index) {
+          thumb.className = 'relative h-16 w-24 sm:h-20 sm:w-28 flex-shrink-0 overflow-hidden rounded-md border-2 transition-all duration-200 border-mint scale-105 shadow-md';
+          thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        } else {
+          thumb.className = 'relative h-16 w-24 sm:h-20 sm:w-28 flex-shrink-0 overflow-hidden rounded-md border-2 transition-all duration-200 border-transparent opacity-50 hover:opacity-100';
+        }
+      }
+    });
+  },
+
+  nextSlide() {
+    this.goToSlide((window.currentSlideIndex || 0) + 1);
+  },
+
+  prevSlide() {
+    this.goToSlide((window.currentSlideIndex || 0) - 1);
+  },
+
+  openLightbox(index) {
+    let modal = document.getElementById('lightbox-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'lightbox-modal';
+      modal.className = 'fixed inset-0 z-[100] flex flex-col justify-between bg-black/95 p-4 sm:p-6 backdrop-blur-xl transition-all duration-300';
+      modal.innerHTML = `
+        <div class="flex w-full items-center justify-between font-brand text-sm uppercase tracking-wider text-white border-b border-white/10 pb-3">
+          <span id="lightbox-counter" class="text-mint font-bold text-base">1 / 1</span>
+          <button onclick="App.closeLightbox()" class="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-red-500 hover:text-white" title="Kapat">
+            <iconify-icon icon="lucide:x" class="text-2xl pointer-events-none"></iconify-icon>
+          </button>
+        </div>
+        <div class="relative flex h-[82vh] w-full items-center justify-center my-auto">
+          <button onclick="App.lightboxPrev()" class="absolute left-2 sm:left-6 z-10 flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-black/70 text-white border border-white/20 transition hover:bg-mint hover:text-navy shadow-2xl">
+            <iconify-icon icon="lucide:chevron-left" class="text-3xl sm:text-4xl pointer-events-none"></iconify-icon>
+          </button>
+          <img id="lightbox-img" src="" class="max-h-full max-w-full object-contain rounded-lg shadow-2xl transition-all duration-300 select-none">
+          <button onclick="App.lightboxNext()" class="absolute right-2 sm:right-6 z-10 flex h-12 w-12 sm:h-16 sm:w-16 items-center justify-center rounded-full bg-black/70 text-white border border-white/20 transition hover:bg-mint hover:text-navy shadow-2xl">
+            <iconify-icon icon="lucide:chevron-right" class="text-3xl sm:text-4xl pointer-events-none"></iconify-icon>
+          </button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    window.lightboxIndex = index || 0;
+    this.updateLightbox();
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  },
+
+  updateLightbox() {
+    const img = document.getElementById('lightbox-img');
+    const counter = document.getElementById('lightbox-counter');
+    if (img && window.sliderImages) {
+      img.src = window.sliderImages[window.lightboxIndex];
+    }
+    if (counter && window.sliderImages) {
+      counter.textContent = `${window.lightboxIndex + 1} / ${window.sliderImages.length} Fotoğraf`;
+    }
+  },
+
+  lightboxNext() {
+    if (!window.sliderImages) return;
+    window.lightboxIndex = (window.lightboxIndex + 1) % window.sliderImages.length;
+    this.updateLightbox();
+    this.goToSlide(window.lightboxIndex);
+  },
+
+  lightboxPrev() {
+    if (!window.sliderImages) return;
+    window.lightboxIndex = (window.lightboxIndex - 1 + window.sliderImages.length) % window.sliderImages.length;
+    this.updateLightbox();
+    this.goToSlide(window.lightboxIndex);
+  },
+
+  closeLightbox() {
+    const modal = document.getElementById('lightbox-modal');
+    if (modal) modal.classList.add('hidden');
+    document.body.style.overflow = 'auto';
   }
 };
+
+// Global Keyboard Navigation for Slider & Lightbox
+document.addEventListener('keydown', (e) => {
+  const lightbox = document.getElementById('lightbox-modal');
+  if (lightbox && !lightbox.classList.contains('hidden')) {
+    if (e.key === 'ArrowLeft') App.lightboxPrev();
+    if (e.key === 'ArrowRight') App.lightboxNext();
+    if (e.key === 'Escape') App.closeLightbox();
+  } else if (document.getElementById('slider-main-img')) {
+    if (e.key === 'ArrowLeft') App.prevSlide();
+    if (e.key === 'ArrowRight') App.nextSlide();
+  }
+});

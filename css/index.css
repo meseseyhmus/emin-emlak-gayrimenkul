@@ -177,3 +177,18 @@ html, body { background-color: var(--color-navy-black); }
 }
 .input-dark:focus { border-color: var(--color-mint-vivo); }
 .input-dark::placeholder { color: var(--color-steel-mid); text-transform: uppercase; }
+
+/* ── Custom Scrollbar for Slider Thumbnails ── */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(26, 34, 56, 0.8);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #494949;
+  border-radius: 3px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #7ECA9C;
+}
