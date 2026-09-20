@@ -7,14 +7,14 @@ const cheerio = require('cheerio');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const rootDir = process.cwd();
+// Use __dirname to reliably locate static files regardless of where the node process was started from
+const rootDir = __dirname;
 
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
 // Serve static frontend files from project root
 app.use(express.static(rootDir));
-app.use(express.static(__dirname));
 
 // =======================
 // API ENDPOINTS
