@@ -51,8 +51,8 @@ app.get('/api/listings', async (req, res) => {
     const rows = await db.query('SELECT * FROM listings');
     let listings = rows.map(r => ({
       ...r,
-      features: JSON.parse(r.features || '[]'),
-      imageUrls: JSON.parse(r.imageUrls || '[]'),
+      features: typeof r.features === 'string' ? JSON.parse(r.features || '[]') : (r.features || []),
+      imageUrls: typeof r.imageUrls === 'string' ? JSON.parse(r.imageUrls || '[]') : (r.imageUrls || []),
       featured: r.featured === 1
     }));
 
@@ -60,26 +60,41 @@ app.get('/api/listings', async (req, res) => {
     if (!listings || listings.length === 0) {
       try {
         const fs = require('fs');
-        const jsonPath = path.join(__dirname, 'data', 'listings.json');
-        if (fs.existsSync(jsonPath)) {
-          const raw = fs.readFileSync(jsonPath, 'utf8');
-          const parsed = JSON.parse(raw);
-          listings = parsed.listings || [];
+        const possiblePaths = [
+          path.join(process.cwd(), 'data', 'listings.json'),
+          path.join(__dirname, 'data', 'listings.json'),
+          path.join(__dirname, '..', 'data', 'listings.json')
+        ];
+        for (const jsonPath of possiblePaths) {
+          if (fs.existsSync(jsonPath)) {
+            const raw = fs.readFileSync(jsonPath, 'utf8');
+            const parsed = JSON.parse(raw);
+            if (parsed.listings && parsed.listings.length > 0) {
+              listings = parsed.listings;
+              break;
+            }
+          }
         }
       } catch (e) {
         console.error('Fallback read error:', e);
       }
     }
 
-    res.json(listings);
+    res.json(listings || []);
   } catch (err) {
     try {
       const fs = require('fs');
-      const jsonPath = path.join(__dirname, 'data', 'listings.json');
-      if (fs.existsSync(jsonPath)) {
-        const raw = fs.readFileSync(jsonPath, 'utf8');
-        const parsed = JSON.parse(raw);
-        return res.json(parsed.listings || []);
+      const possiblePaths = [
+        path.join(process.cwd(), 'data', 'listings.json'),
+        path.join(__dirname, 'data', 'listings.json'),
+        path.join(__dirname, '..', 'data', 'listings.json')
+      ];
+      for (const jsonPath of possiblePaths) {
+        if (fs.existsSync(jsonPath)) {
+          const raw = fs.readFileSync(jsonPath, 'utf8');
+          const parsed = JSON.parse(raw);
+          return res.json(parsed.listings || []);
+        }
       }
     } catch (e) {}
     res.status(500).json({ error: err.message });

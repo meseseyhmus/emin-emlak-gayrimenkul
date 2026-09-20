@@ -171,10 +171,18 @@
   <script src="../js/utils.js"></script>
   <script src="../js/data.js"></script>
   <script>
+    function getAdminDashboardUrl() {
+      const path = window.location.pathname;
+      if (path.endsWith('/admin') || path.endsWith('/admin/')) {
+        return '/admin/dashboard.html';
+      }
+      return 'dashboard.html';
+    }
+
     document.addEventListener('DOMContentLoaded', async () => {
       await DataManager.init();
       if (DataManager.isLoggedIn()) {
-        window.location.href = 'dashboard.html';
+        window.location.href = getAdminDashboardUrl();
       }
       init3DBackground();
       init3DTilt();
@@ -196,7 +204,7 @@
       e.preventDefault();
       const pw = document.getElementById('loginPassword').value;
       if (DataManager.login(pw)) {
-        window.location.href = 'dashboard.html';
+        window.location.href = getAdminDashboardUrl();
       } else {
         const errorEl = document.getElementById('loginError');
         errorEl.classList.remove('hidden');

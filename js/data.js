@@ -29,10 +29,10 @@ const DataManager = {
       console.warn('API Veri yüklenemedi, yerel veriye geçiliyor:', e);
     }
 
-    // Fallback to local listings.json if API returned empty array or failed
+    // Fallback to root /data/listings.json if API returned empty array or failed
     if (!this._data.listings || this._data.listings.length === 0) {
       try {
-        const localRes = await fetch('data/listings.json');
+        const localRes = await fetch('/data/listings.json');
         if (localRes.ok) {
           const localData = await localRes.json();
           this._data.listings = localData.listings || [];
@@ -44,6 +44,22 @@ const DataManager = {
         console.error('Yerel veri yükleme hatası:', err);
       }
     }
+
+    // Merge with client-side localStorage fallback for Vercel persistence
+    try {
+      const stored = localStorage.getItem('emin_custom_listings');
+      if (stored) {
+        const customListings = JSON.parse(stored);
+        customListings.forEach(c => {
+          const idx = this._data.listings.findIndex(l => String(l.id) === String(c.id));
+          if (idx >= 0) {
+            this._data.listings[idx] = { ...this._data.listings[idx], ...c };
+          } else {
+            this._data.listings.unshift(c);
+          }
+        });
+      }
+    } catch (err) {}
 
     return this._data;
   },
@@ -63,8 +79,31 @@ const DataManager = {
     return (this._data.listings || []).find(l => String(l.id) === String(id));
   },
 
+  _saveToLocalStorage(listing) {
+    try {
+      let stored = JSON.parse(localStorage.getItem('emin_custom_listings') || '[]');
+      const idx = stored.findIndex(l => String(l.id) === String(listing.id));
+      if (idx >= 0) stored[idx] = { ...stored[idx], ...listing };
+      else stored.unshift(listing);
+      localStorage.setItem('emin_custom_listings', JSON.stringify(stored));
+    } catch (e) {}
+  },
+
+  _removeFromLocalStorage(id) {
+    try {
+      let stored = JSON.parse(localStorage.getItem('emin_custom_listings') || '[]');
+      stored = stored.filter(l => String(l.id) !== String(id));
+      localStorage.setItem('emin_custom_listings', JSON.stringify(stored));
+    } catch (e) {}
+  },
+
   // Add or update a listing
   async addListing(listing) {
+    this._saveToLocalStorage(listing);
+    const idx = (this._data.listings || []).findIndex(l => String(l.id) === String(listing.id));
+    if (idx >= 0) this._data.listings[idx] = { ...this._data.listings[idx], ...listing };
+    else (this._data.listings = this._data.listings || []).unshift(listing);
+
     try {
       const response = await fetch(`${this.API_URL}/listings`, {
         method: 'POST',
@@ -77,28 +116,30 @@ const DataManager = {
         return true;
       }
     } catch (e) {
-      console.error('İlan eklenemedi:', e);
+      console.warn('API kaydedilemedi, yerel hafızaya yazıldı:', e);
     }
-    return false;
+    return true;
   },
 
   // Delete a listing
   async updateListing(listing) { return this.addListing(listing); },
 
   async deleteListing(id) {
+    this._removeFromLocalStorage(id);
+    this._data.listings = (this._data.listings || []).filter(l => String(l.id) !== String(id));
+
     try {
       const response = await fetch(`${this.API_URL}/listings/${id}`, {
         method: 'DELETE'
       });
       const result = await response.json();
       if (result.success) {
-        this._data.listings = this._data.listings.filter(l => String(l.id) !== String(id));
         return true;
       }
     } catch (e) {
-      console.error('İlan silinemedi:', e);
+      console.warn('API silme başarısız, yerel hafızadan silindi:', e);
     }
-    return false;
+    return true;
   },
 
   // Get all messages
