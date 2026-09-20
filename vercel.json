@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "cleanUrls": true,
   "builds": [
     {
       "src": "server.js",
@@ -20,6 +21,10 @@
     {
       "src": "assets/**",
       "use": "@vercel/static"
+    },
+    {
+      "src": "data/**",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
@@ -28,8 +33,28 @@
       "dest": "/server.js"
     },
     {
-      "src": "/admin/(.*)",
-      "dest": "/admin/$1"
+      "src": "/admin/?$",
+      "dest": "/admin/index.html"
+    },
+    {
+      "src": "/admin/dashboard/?$",
+      "dest": "/admin/dashboard.html"
+    },
+    {
+      "src": "/admin/ilanlar/?$",
+      "dest": "/admin/ilanlar.html"
+    },
+    {
+      "src": "/admin/ilan-ekle/?$",
+      "dest": "/admin/ilan-ekle.html"
+    },
+    {
+      "src": "/admin/mesajlar/?$",
+      "dest": "/admin/mesajlar.html"
+    },
+    {
+      "src": "/admin/ayarlar/?$",
+      "dest": "/admin/ayarlar.html"
     },
     {
       "src": "/(.*)",

@@ -474,6 +474,14 @@ app.post('/api/scrape-sahibinden', async (req, res) => {
   }
 });
 
+// Fallback route handlers for admin pages
+app.get(['/admin', '/admin/'], (req, res) => res.sendFile(path.join(__dirname, 'admin', 'index.html')));
+app.get(['/admin/dashboard', '/admin/dashboard.html'], (req, res) => res.sendFile(path.join(__dirname, 'admin', 'dashboard.html')));
+app.get(['/admin/ilanlar', '/admin/ilanlar.html'], (req, res) => res.sendFile(path.join(__dirname, 'admin', 'ilanlar.html')));
+app.get(['/admin/ilan-ekle', '/admin/ilan-ekle.html'], (req, res) => res.sendFile(path.join(__dirname, 'admin', 'ilan-ekle.html')));
+app.get(['/admin/mesajlar', '/admin/mesajlar.html'], (req, res) => res.sendFile(path.join(__dirname, 'admin', 'mesajlar.html')));
+app.get(['/admin/ayarlar', '/admin/ayarlar.html'], (req, res) => res.sendFile(path.join(__dirname, 'admin', 'ayarlar.html')));
+
 // Start server if not running in a serverless environment like Vercel
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
