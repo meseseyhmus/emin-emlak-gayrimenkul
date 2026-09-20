@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 
-Sitemap: https://eminemlakgayrimenkul.vercel.app/sitemap.xml
+Sitemap: https://eminemlakgayrimenkulnusaybin.com/sitemap.xml

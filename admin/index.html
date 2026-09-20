@@ -3,57 +3,369 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Giriş | Emin Emlak</title>
+  <title>Admin Giriş | Emin Emlak Gayrimenkul</title>
   <meta name="robots" content="noindex, nofollow">
-  <link rel="stylesheet" href="../css/index.css">
-  <link rel="stylesheet" href="../css/animations.css">
-  <link rel="stylesheet" href="../css/admin.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Outfit', 'sans-serif']
+          },
+          colors: {
+            brand: {
+              gold: '#F59E0B',
+              goldLight: '#FBBF24',
+              goldDark: '#D97706',
+              darkBg: '#05070B',
+              cardBg: '#0C1017'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #05070b;
+      overflow: hidden;
+      user-select: none;
+    }
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .glass-card {
+      background: rgba(12, 16, 23, 0.75);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.8),
+                  0 0 40px rgba(245, 158, 11, 0.12),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+    }
+    .glass-card:hover {
+      box-shadow: 0 40px 80px -15px rgba(0, 0, 0, 0.9),
+                  0 0 50px rgba(245, 158, 11, 0.22),
+                  inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    }
+    .glow-btn {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .glow-btn:hover {
+      background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+      box-shadow: 0 6px 28px rgba(245, 158, 11, 0.55);
+      transform: translateY(-2px);
+    }
+    .glow-btn:active {
+      transform: translateY(1px);
+    }
+    .input-glow:focus-within {
+      border-color: #F59E0B;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    }
+  </style>
 </head>
-<body>
-  <div class="admin-login">
-    <div class="hero-bg"><div class="hero-bg-grid"></div><div class="hero-bg-glow hero-bg-glow-1" style="opacity:0.15;"></div></div>
-    <div class="admin-login-box">
-      <img src="../assets/logo.png" alt="Logo" style="height:40px;width:auto;object-fit:contain;">
-      <h1 style="font-size:var(--font-size-2xl);margin-bottom:var(--space-2);">Emin Emlak</h1>
-      <p style="color:var(--neutral-500);margin-bottom:var(--space-8);font-size:var(--font-size-sm);">Admin Paneli Girişi</p>
-      <form id="loginForm" onsubmit="handleLogin(event)">
-        <div class="form-group">
-          <input type="password" class="form-input" id="loginPassword" placeholder="Şifre giriniz" required autofocus style="text-align:center;font-size:var(--font-size-lg);letter-spacing:4px;">
+<body class="flex items-center justify-center min-h-screen text-white relative font-sans">
+
+  <!-- 3D Canvas Background -->
+  <div id="canvas-container"></div>
+
+  <!-- Ambient Light Gradients -->
+  <div class="fixed top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+  <div class="fixed bottom-1/4 right-1/4 w-96 h-96 bg-yellow-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+
+  <!-- Login Card Container with 3D Tilt -->
+  <div class="relative z-10 w-full max-w-md px-4 py-8">
+    <div id="tilt-card" class="glass-card rounded-3xl p-8 sm:p-10 text-center relative overflow-hidden">
+      
+      <!-- Top Decorative Accent -->
+      <div class="absolute -top-12 -left-12 w-32 h-32 bg-amber-500/20 rounded-full blur-2xl"></div>
+
+      <!-- Logo & Branding -->
+      <div class="inline-flex items-center justify-center h-16 w-16 rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-black shadow-lg shadow-amber-500/30 mb-5 relative group">
+        <span class="font-display font-black text-3xl tracking-tight">E</span>
+        <div class="absolute inset-0 rounded-2xl bg-amber-400/30 blur-md group-hover:blur-lg transition-all"></div>
+      </div>
+
+      <h1 class="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-white mb-1">
+        EMİN EMLAK
+      </h1>
+      <p class="text-xs uppercase tracking-[0.25em] font-semibold text-amber-400 mb-8">
+        YÖNETİM PANELİ GİRİŞİ
+      </p>
+
+      <!-- Form -->
+      <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-5 text-left">
+        <div>
+          <label for="loginPassword" class="block text-xs font-semibold uppercase tracking-wider text-white/50 mb-2">
+            Yönetici Şifresi
+          </label>
+          <div class="relative input-glow rounded-xl border border-white/10 bg-black/40 transition">
+            <input 
+              type="password" 
+              id="loginPassword" 
+              placeholder="••••••••" 
+              required 
+              autofocus 
+              class="w-full bg-transparent px-4 py-3.5 text-center text-lg tracking-widest text-white outline-none placeholder:text-white/20 placeholder:tracking-normal font-mono"
+            >
+            <button 
+              type="button" 
+              onclick="togglePassword()" 
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-amber-400 transition p-1"
+              aria-label="Şifreyi Göster/Gizle"
+            >
+              <iconify-icon id="eyeIcon" icon="lucide:eye" class="text-lg"></iconify-icon>
+            </button>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-lg w-full" style="margin-top:var(--space-4);">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+
+        <!-- Error Feedback -->
+        <div id="loginError" class="hidden rounded-xl bg-red-500/15 border border-red-500/30 p-3 text-center">
+          <p class="text-xs font-medium text-red-300 flex items-center justify-center gap-2">
+            <iconify-icon icon="lucide:alert-circle" class="text-base"></iconify-icon>
+            Hatalı şifre! Lütfen tekrar deneyin.
+          </p>
+        </div>
+
+        <button type="submit" class="glow-btn w-full py-4 rounded-xl font-display font-bold text-black text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+          <iconify-icon icon="lucide:lock" class="text-base"></iconify-icon>
           Giriş Yap
         </button>
       </form>
-      <p id="loginError" style="color:var(--error);font-size:var(--font-size-sm);margin-top:var(--space-4);display:none;">Hatalı şifre! Tekrar deneyin.</p>
-      <a href="../index.html" style="display:inline-block;margin-top:var(--space-6);font-size:var(--font-size-sm);color:var(--neutral-500);">← Siteye Dön</a>
+
+      <!-- Footer Link -->
+      <div class="mt-8 pt-6 border-t border-white/10 flex items-center justify-between text-xs">
+        <a href="../index.html" class="text-white/40 hover:text-amber-400 transition flex items-center gap-1.5 font-medium">
+          <iconify-icon icon="lucide:arrow-left" class="text-sm"></iconify-icon>
+          Siteye Dön
+        </a>
+        <span class="text-white/20">v2.0 · Security Secured</span>
+      </div>
+
     </div>
   </div>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);" aria-label="WhatsApp İletişim">
+    <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
+  </a>
+
   <script src="../js/utils.js"></script>
   <script src="../js/data.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       await DataManager.init();
-      if (DataManager.isLoggedIn()) window.location.href = 'dashboard.html';
+      if (DataManager.isLoggedIn()) {
+        window.location.href = 'dashboard.html';
+      }
+      init3DBackground();
+      init3DTilt();
     });
+
+    function togglePassword() {
+      const input = document.getElementById('loginPassword');
+      const icon = document.getElementById('eyeIcon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.setAttribute('icon', 'lucide:eye-off');
+      } else {
+        input.type = 'password';
+        icon.setAttribute('icon', 'lucide:eye');
+      }
+    }
+
     function handleLogin(e) {
       e.preventDefault();
       const pw = document.getElementById('loginPassword').value;
       if (DataManager.login(pw)) {
         window.location.href = 'dashboard.html';
       } else {
-        document.getElementById('loginError').style.display = 'block';
+        const errorEl = document.getElementById('loginError');
+        errorEl.classList.remove('hidden');
         document.getElementById('loginPassword').value = '';
         document.getElementById('loginPassword').focus();
+        
+        // Shake card
+        const card = document.getElementById('tilt-card');
+        card.style.animation = 'shake 0.4s ease';
+        setTimeout(() => card.style.animation = '', 400);
       }
     }
+
+    /* =============================================
+       3D THREE.JS REAL ESTATE ANIMATED SCENE
+       ============================================= */
+    let scene, camera, renderer, buildingsGroup, particleSystem;
+    let mouseX = 0, mouseY = 0;
+    let targetX = 0, targetY = 0;
+
+    function init3DBackground() {
+      const container = document.getElementById('canvas-container');
+
+      scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x05070b, 0.025);
+
+      camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.set(0, 15, 35);
+      camera.lookAt(0, 5, 0);
+
+      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+      scene.add(ambientLight);
+
+      const goldLight = new THREE.PointLight(0xf59e0b, 2.5, 100);
+      goldLight.position.set(15, 25, 10);
+      scene.add(goldLight);
+
+      const blueLight = new THREE.PointLight(0x3b82f6, 1.5, 100);
+      blueLight.position.set(-20, 10, -10);
+      scene.add(blueLight);
+
+      // Create 3D Building Wireframes / Blocks representing real estate portfolio
+      buildingsGroup = new THREE.Group();
+      
+      const gridHelper = new THREE.GridHelper(120, 40, 0xf59e0b, 0x1e293b);
+      gridHelper.position.y = -2;
+      scene.add(gridHelper);
+
+      // Generate Stylized 3D Buildings
+      const buildingMaterial = new THREE.MeshStandardMaterial({
+        color: 0x0c1017,
+        roughness: 0.2,
+        metalness: 0.8,
+        wireframe: false
+      });
+
+      const wireframeMaterial = new THREE.LineBasicMaterial({
+        color: 0xf59e0b,
+        transparent: true,
+        opacity: 0.35
+      });
+
+      for (let i = 0; i < 45; i++) {
+        const height = Math.random() * 18 + 4;
+        const width = Math.random() * 4 + 2;
+        const depth = Math.random() * 4 + 2;
+
+        const geometry = new THREE.BoxGeometry(width, height, depth);
+        const building = new THREE.Mesh(geometry, buildingMaterial);
+
+        // Position grid
+        const posX = (Math.random() - 0.5) * 80;
+        const posZ = (Math.random() - 0.5) * 80 - 10;
+        building.position.set(posX, height / 2 - 2, posZ);
+
+        // Wireframe edges
+        const edges = new THREE.EdgesGeometry(geometry);
+        const line = new THREE.LineSegments(edges, wireframeMaterial);
+        building.add(line);
+
+        buildingsGroup.add(building);
+      }
+
+      scene.add(buildingsGroup);
+
+      // Glowing Particles
+      const particlesGeo = new THREE.BufferGeometry();
+      const count = 350;
+      const positions = new Float32Array(count * 3);
+
+      for (let i = 0; i < count * 3; i += 3) {
+        positions[i] = (Math.random() - 0.5) * 100;
+        positions[i + 1] = Math.random() * 40;
+        positions[i + 2] = (Math.random() - 0.5) * 100;
+      }
+
+      particlesGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+      const particleMat = new THREE.PointsMaterial({
+        size: 0.6,
+        color: 0xf59e0b,
+        transparent: true,
+        opacity: 0.7,
+        blending: THREE.AdditiveBlending
+      });
+
+      particleSystem = new THREE.Points(particlesGeo, particleMat);
+      scene.add(particleSystem);
+
+      // Mouse Listener
+      window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX - window.innerWidth / 2) * 0.0015;
+        mouseY = (e.clientY - window.innerHeight / 2) * 0.0015;
+      });
+
+      window.addEventListener('resize', onWindowResize);
+
+      animate();
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Smooth camera lerp
+      targetX += (mouseX - targetX) * 0.05;
+      targetY += (mouseY - targetY) * 0.05;
+
+      camera.position.x = Math.sin(targetX) * 35;
+      camera.position.z = Math.cos(targetX) * 35;
+      camera.position.y = 15 + targetY * 10;
+      camera.lookAt(0, 6, 0);
+
+      // Rotate building city scene slowly
+      if (buildingsGroup) buildingsGroup.rotation.y += 0.001;
+      if (particleSystem) particleSystem.rotation.y += 0.0005;
+
+      renderer.render(scene, camera);
+    }
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    /* 3D Card Tilt Effect */
+    function init3DTilt() {
+      const card = document.getElementById('tilt-card');
+      window.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        const tiltX = (y / (rect.height / 2)) * -10;
+        const tiltY = (x / (rect.width / 2)) * 10;
+
+        card.style.transform = `perspective(1000px) rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale3d(1.02, 1.02, 1.02)`;
+      });
+
+      window.addEventListener('mouseleave', () => {
+        card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+      });
+    }
   </script>
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);">
-      <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
-    </a>
 </body>
 </html>
-
-
-

@@ -1,79 +1,510 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard | Admin Paneli</title>
+  <title>İlan Yönetim Paneli | Emin Emlak Gayrimenkul</title>
+  <meta name="robots" content="noindex, nofollow">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script>tailwind.config={theme:{extend:{fontFamily:{sans:['Inter','sans-serif']}}}}</script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            display: ['Outfit', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
   <link rel="stylesheet" href="../css/index.css">
+  <style>
+    body { background-color: #080B11; color: #F3F4F6; }
+    .glass-panel {
+      background: rgba(15, 22, 35, 0.7);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .active-tab {
+      background: rgba(245, 158, 11, 0.15);
+      border-color: rgba(245, 158, 11, 0.5);
+      color: #FBBF24;
+    }
+  </style>
 </head>
-<body>
+<body class="font-sans antialiased selection:bg-amber-500 selection:text-black">
 
-  <div class="min-h-screen bg-[#0A0A12] font-sans text-white grid-glow" data-sd-id="1">
-    <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-40 flex w-64 -translate-x-full flex-col border-r border-white/10 bg-[#0E0E18] px-4 py-6 transition-transform lg:translate-x-0" data-sd-id="2">
-      <div class="flex items-center gap-3 px-3" data-sd-id="3">
-        <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-amber-500 text-xl font-extrabold text-black" data-sd-id="4">E</span>
-        <div data-sd-id="5"><strong class="block text-sm tracking-tight">EMİN EMLAK</strong><small class="text-[9px] uppercase tracking-[.24em] text-amber-400">Yönetim Paneli</small></div>
+  <div class="min-h-screen flex flex-col lg:flex-row">
+    
+    <!-- Sidebar -->
+    <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-40 flex w-64 -translate-x-full flex-col border-r border-white/10 bg-[#0A0E17] px-4 py-6 transition-transform lg:static lg:translate-x-0">
+      
+      <!-- Brand -->
+      <div class="flex items-center gap-3 px-3 mb-8">
+        <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-xl font-black text-black shadow-lg shadow-amber-500/20">E</span>
+        <div>
+          <strong class="block text-sm font-bold tracking-tight text-white font-display">EMİN EMLAK</strong>
+          <small class="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-400">GAYRİMENKUL PANELİ</small>
+        </div>
       </div>
-      <div class="mt-10 px-3 text-[10px] font-semibold uppercase tracking-[.22em] text-white/30" data-sd-id="6">Ana menü</div>
-      <nav class="mt-3 space-y-1" data-sd-id="7">
-        <a id="sidebar-dashboard-link" href="#dashboard" class="sidebar-link active flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium" data-sd-id="8"><iconify-icon icon="lucide:layout-dashboard" class="text-lg"></iconify-icon> Dashboard</a>
-        <a id="sidebar-listings-link" href="#listings" class="sidebar-link flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-white/55" data-sd-id="9"><iconify-icon icon="lucide:building-2" class="text-lg"></iconify-icon> İlanlar <span class="ml-auto rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] text-amber-400" data-sd-id="10">128</span></a>
-        <a id="sidebar-messages-link" href="#messages" class="sidebar-link flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-white/55" data-sd-id="11"><iconify-icon icon="lucide:inbox" class="text-lg"></iconify-icon> Mesajlar <span class="ml-auto rounded-full bg-amber-500 px-2 py-0.5 text-[10px] font-bold text-black" data-sd-id="12">8</span></a>
-        <a id="sidebar-reports-link" href="#reports" class="sidebar-link flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-white/55" data-sd-id="13"><iconify-icon icon="lucide:bar-chart-3" class="text-lg"></iconify-icon> Raporlar</a>
-        <a id="sidebar-settings-link" href="#settings" class="sidebar-link flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-white/55" data-sd-id="14"><iconify-icon icon="lucide:settings-2" class="text-lg"></iconify-icon> Ayarlar</a>
+
+      <!-- Navigation -->
+      <div class="px-3 text-[10px] font-bold uppercase tracking-[0.22em] text-white/30 mb-2">Yönetim Menüsü</div>
+      <nav class="space-y-1.5 flex-1">
+        <a href="dashboard.html" class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30">
+          <iconify-icon icon="lucide:layout-dashboard" class="text-lg"></iconify-icon>
+          İlan Yönetimi
+        </a>
+        <a href="ilan-ekle.html" class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition">
+          <iconify-icon icon="lucide:plus-circle" class="text-lg text-amber-400"></iconify-icon>
+          Yeni İlan Ekle
+        </a>
+        <a href="ilanlar.html" class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition">
+          <iconify-icon icon="lucide:building-2" class="text-lg"></iconify-icon>
+          Tüm Portföy
+          <span id="sidebar-listing-count" class="ml-auto rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] text-amber-400 font-bold">0</span>
+        </a>
+        <a href="mesajlar.html" class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition">
+          <iconify-icon icon="lucide:inbox" class="text-lg"></iconify-icon>
+          Gelen Mesajlar
+          <span id="sidebar-message-count" class="ml-auto rounded-full bg-blue-500/20 px-2 py-0.5 text-[10px] text-blue-300 font-bold">0</span>
+        </a>
+        <a href="ayarlar.html" class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition">
+          <iconify-icon icon="lucide:settings" class="text-lg"></iconify-icon>
+          Firma Ayarları
+        </a>
       </nav>
-      <div class="mt-auto rounded-2xl border border-amber-400/20 bg-amber-500/10 p-4" data-sd-id="15"><iconify-icon icon="lucide:sparkles" class="text-2xl text-amber-400"></iconify-icon><p class="mt-3 text-sm font-semibold" data-sd-id="16">Premium hesap</p><p class="mt-1 text-xs leading-5 text-white/45" data-sd-id="17">Tüm yönetim araçlarına erişiminiz açık.</p><button class="mt-4 w-full rounded-lg bg-amber-500 py-2 text-xs font-bold text-black hover:bg-amber-400" data-sd-id="18">Planı Yönet</button></div>
-      <div class="mt-5 border-t border-white/10 pt-5" data-sd-id="19"><button id="sidebar-profile-btn" class="flex w-full items-center gap-3 rounded-xl p-2 text-left hover:bg-white/[.05]" data-sd-id="20"><span class="flex h-9 w-9 items-center justify-center rounded-full bg-amber-500 font-bold text-black" data-sd-id="21">EE</span><span class="min-w-0" data-sd-id="22"><strong class="block truncate text-sm">Emin Emlak</strong><small class="text-xs text-white/40">Yönetici</small></span><iconify-icon icon="lucide:chevrons-up-down" class="ml-auto text-white/35"></iconify-icon></button></div>
+
+      <!-- External Quick Link -->
+      <div class="mt-6 pt-4 border-t border-white/10">
+        <a href="../index.html" target="_blank" class="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-3 text-xs font-semibold text-white/70 hover:border-amber-400 hover:text-amber-400 transition">
+          <span class="flex items-center gap-2">
+            <iconify-icon icon="lucide:globe" class="text-base text-amber-400"></iconify-icon>
+            Siteyi Canlı Gör
+          </span>
+          <iconify-icon icon="lucide:external-link" class="text-sm"></iconify-icon>
+        </a>
+      </div>
+
+      <!-- User Info / Logout -->
+      <div class="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <span class="flex h-9 w-9 items-center justify-center rounded-full bg-amber-500 font-bold text-black text-xs">EE</span>
+          <div>
+            <strong class="block text-xs font-bold text-white">Emin Meşe</strong>
+            <small class="text-[10px] text-white/40">Yönetici</small>
+          </div>
+        </div>
+        <button onclick="handleLogout()" class="text-white/40 hover:text-red-400 transition p-2" title="Çıkış Yap">
+          <iconify-icon icon="lucide:log-out" class="text-lg"></iconify-icon>
+        </button>
+      </div>
+
     </aside>
 
-    <div class="lg:pl-64" data-sd-id="23">
-      <header class="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-white/10 bg-[#0A0A12] px-5 sm:px-8" data-sd-id="24">
-        <div class="flex items-center gap-4" data-sd-id="25"><button id="mobile-menu-btn" class="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white/70 lg:hidden" data-sd-id="26"><iconify-icon icon="lucide:menu" class="text-xl"></iconify-icon></button><div data-sd-id="27"><p class="text-xs text-white/40" data-sd-id="28">Pazartesi, 24 Haziran 2024</p><h1 class="mt-1 text-xl font-bold tracking-tight" data-sd-id="29">Günaydın, Emin 👋</h1></div></div>
-        <div class="flex items-center gap-3" data-sd-id="30"><label class="hidden items-center gap-2 rounded-lg border border-white/10 bg-white/[.04] px-3 py-2 text-white/40 md:flex" data-sd-id="31"><iconify-icon icon="lucide:search"></iconify-icon><input class="w-40 bg-transparent text-sm text-white outline-none placeholder:text-white/30" placeholder="Ara..." aria-label="Ara" data-sd-id="32"></label><button id="notifications-btn" class="relative flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-white/65 hover:border-amber-400 hover:text-amber-400" data-sd-id="33"><iconify-icon icon="lucide:bell" class="text-lg"></iconify-icon><span class="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-amber-500" data-sd-id="34"></span></button><button id="header-profile-btn" class="flex items-center gap-2 rounded-lg border border-white/10 px-2 py-1.5 hover:border-amber-400" data-sd-id="35"><span class="flex h-7 w-7 items-center justify-center rounded-full bg-amber-500 text-[10px] font-bold text-black" data-sd-id="36">EE</span><iconify-icon icon="lucide:chevron-down" class="text-xs text-white/45"></iconify-icon></button></div>
-      </header>
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col min-w-0">
 
-      <main id="dashboard" class="mx-auto max-w-[1440px] px-5 py-8 sm:px-8" data-sd-id="37">
-        <section class="mb-8 flex flex-col justify-between gap-5 xl:flex-row xl:items-end" data-sd-id="38"><div data-sd-id="39"><p class="text-xs font-semibold uppercase tracking-[.25em] text-amber-400" data-sd-id="40">Genel bakış</p><h2 class="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl" data-sd-id="41">İşletmenizin özeti</h2><p class="mt-2 text-sm text-white/45" data-sd-id="42">Bugünkü performansınızı ve son aktiviteleri buradan takip edin.</p></div><div class="flex flex-wrap gap-3" data-sd-id="43"><button id="create-listing-btn" class="inline-flex items-center gap-2 rounded-lg bg-amber-500 px-4 py-3 text-sm font-bold text-black transition hover:bg-amber-400" data-sd-id="44"><iconify-icon icon="lucide:plus"></iconify-icon> İlan Oluştur</button><button id="newsletter-btn" class="inline-flex items-center gap-2 rounded-lg border border-white/15 px-4 py-3 text-sm font-semibold text-white/75 transition hover:border-amber-400 hover:text-amber-400" data-sd-id="45"><iconify-icon icon="lucide:send"></iconify-icon> Bülten Gönder</button><button id="report-btn" class="inline-flex items-center gap-2 rounded-lg border border-white/15 px-4 py-3 text-sm font-semibold text-white/75 transition hover:border-amber-400 hover:text-amber-400" data-sd-id="46"><iconify-icon icon="lucide:file-bar-chart"></iconify-icon> Rapor Oluştur</button></div></section>
-
-        <section class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4" data-sd-id="47">
-          <article class="metric-card glass rounded-2xl p-5" data-sd-id="48"><div class="flex items-start justify-between" data-sd-id="49"><span class="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-500/15 text-amber-400" data-sd-id="50"><iconify-icon icon="lucide:building-2" class="text-xl"></iconify-icon></span><span class="flex items-center gap-1 text-xs font-semibold text-emerald-400" data-sd-id="51"><iconify-icon icon="lucide:trending-up"></iconify-icon> 12.5%</span></div><p class="mt-6 text-sm text-white/45" data-sd-id="52">Toplam ilan</p><strong class="mt-1 block text-3xl font-extrabold" id="dash-total-listings">0</strong><p class="mt-2 text-xs text-white/35" data-sd-id="53">Geçen aya göre +14 ilan</p></article>
-          <article class="metric-card glass rounded-2xl p-5" data-sd-id="54"><div class="flex items-start justify-between" data-sd-id="55"><span class="flex h-11 w-11 items-center justify-center rounded-xl bg-cyan-400/10 text-cyan-300" data-sd-id="56"><iconify-icon icon="lucide:message-square-text" class="text-xl"></iconify-icon></span><span class="flex items-center gap-1 text-xs font-semibold text-emerald-400" data-sd-id="57"><iconify-icon icon="lucide:trending-up"></iconify-icon> 8.2%</span></div><p class="mt-6 text-sm text-white/45" data-sd-id="58">Yeni mesajlar</p><strong class="mt-1 block text-3xl font-extrabold" id="dash-new-messages">0</strong><p class="mt-2 text-xs text-white/35" data-sd-id="59">8 tanesi okunmayı bekliyor</p></article>
-          <article class="metric-card glass rounded-2xl p-5" data-sd-id="60"><div class="flex items-start justify-between" data-sd-id="61"><span class="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-400/10 text-orange-300" data-sd-id="62"><iconify-icon icon="lucide:clipboard-clock" class="text-xl"></iconify-icon></span><span class="rounded-full bg-orange-400/10 px-2 py-1 text-[10px] font-semibold text-orange-300" data-sd-id="63">Bekliyor</span></div><p class="mt-6 text-sm text-white/45" data-sd-id="64">Bekleyen değerleme</p><strong class="mt-1 block text-3xl font-extrabold">12</strong><p class="mt-2 text-xs text-white/35" data-sd-id="65">Son talep 18 dk önce</p></article>
-          <article class="metric-card glass rounded-2xl p-5" data-sd-id="66"><div class="flex items-start justify-between" data-sd-id="67"><span class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-400/10 text-emerald-300" data-sd-id="68"><iconify-icon icon="lucide:wallet-cards" class="text-xl"></iconify-icon></span><span class="flex items-center gap-1 text-xs font-semibold text-emerald-400" data-sd-id="69"><iconify-icon icon="lucide:trending-up"></iconify-icon> 18.7%</span></div><p class="mt-6 text-sm text-white/45" data-sd-id="70">Aylık gelir</p><strong class="mt-1 block text-3xl font-extrabold">₺184.500</strong><p class="mt-2 text-xs text-white/35" data-sd-id="71">Geçen aya göre +₺29.100</p></article>
-        </section>
-
-        <div class="mt-8 grid gap-6 xl:grid-cols-[1.6fr_1fr]" data-sd-id="72">
-          <section id="listings" class="glass overflow-hidden rounded-2xl" data-sd-id="73"><div class="flex flex-col justify-between gap-4 border-b border-white/10 p-5 sm:flex-row sm:items-center" data-sd-id="74"><div data-sd-id="75"><p class="text-xs uppercase tracking-[.2em] text-amber-400" data-sd-id="76">Portföy yönetimi</p><h2 class="mt-2 text-xl font-bold" data-sd-id="77">Son ilanlar</h2></div><div class="flex items-center gap-2" data-sd-id="78"><select class="rounded-lg border border-white/10 bg-white/[.05] px-3 py-2 text-xs text-white outline-none" data-sd-id="79"><option class="bg-[#191927]" data-sd-id="80">Tüm durumlar</option><option class="bg-[#191927]" data-sd-id="81">Aktif</option><option class="bg-[#191927]" data-sd-id="82">Taslak</option></select><a id="view-all-listings-link" href="#listings" class="rounded-lg border border-white/10 px-3 py-2 text-xs text-white/60 hover:border-amber-400 hover:text-amber-400" data-sd-id="83">Tümünü gör</a></div></div><div class="overflow-x-auto" data-sd-id="84"><table class="w-full min-w-[720px] text-left" data-sd-id="85"><thead class="bg-white/[.025] text-[10px] uppercase tracking-wider text-white/35" data-sd-id="86"><tr data-sd-id="87"><th class="px-5 py-4 font-semibold" data-sd-id="88">İlan</th><th class="px-4 py-4 font-semibold" data-sd-id="89">Durum</th><th class="px-4 py-4 font-semibold" data-sd-id="90">Fiyat</th><th class="px-4 py-4 font-semibold" data-sd-id="91">Tarih</th><th class="px-5 py-4 text-right font-semibold" data-sd-id="92">İşlem</th></tr></thead><tbody class="divide-y divide-white/5" id="dash-recent-listings"></tbody></table></div></section>
-
-          <section id="messages" class="glass rounded-2xl" data-sd-id="154"><div class="flex items-center justify-between border-b border-white/10 p-5" data-sd-id="155"><div data-sd-id="156"><p class="text-xs uppercase tracking-[.2em] text-amber-400" data-sd-id="157">Gelen kutusu</p><h2 class="mt-2 text-xl font-bold" data-sd-id="158">Son mesajlar</h2></div><a id="view-all-messages-link" href="#messages" class="text-xs text-amber-400 hover:text-amber-300" data-sd-id="159">Tümünü gör <iconify-icon icon="lucide:arrow-up-right" class="ml-1 align-middle"></iconify-icon></a></div><div class="divide-y divide-white/5" data-sd-id="160"><button class="flex w-full gap-3 p-5 text-left transition hover:bg-white/[.035]" data-sd-id="161"><span class="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-cyan-500/20 font-bold text-cyan-300" data-sd-id="162">AY<span class="absolute right-0 top-0 h-2.5 w-2.5 rounded-full border-2 border-[#191927] bg-amber-500" data-sd-id="163"></span></span><span class="min-w-0 flex-1" data-sd-id="164"><span class="flex items-center justify-between gap-3" data-sd-id="165"><strong class="truncate text-sm">Ahmet Yılmaz</strong><time class="shrink-0 text-[10px] text-white/35">10 dk önce</time></span><span class="mt-1 block truncate text-xs text-white/45" data-sd-id="166">Merkez'deki villa ilanınız hakkında...</span><span class="mt-2 block text-xs text-white/65" data-sd-id="167">Merhaba, ilanı ne zaman görebilirim?</span></span></button><button class="flex w-full gap-3 p-5 text-left transition hover:bg-white/[.035]" data-sd-id="168"><span class="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-500/20 font-bold text-amber-300" data-sd-id="169">SK<span class="absolute right-0 top-0 h-2.5 w-2.5 rounded-full border-2 border-[#191927] bg-amber-500" data-sd-id="170"></span></span><span class="min-w-0 flex-1" data-sd-id="171"><span class="flex items-center justify-between gap-3" data-sd-id="172"><strong class="truncate text-sm">Sibel Kaya</strong><time class="shrink-0 text-[10px] text-white/35">42 dk önce</time></span><span class="mt-1 block truncate text-xs text-white/45" data-sd-id="173">Arsa değerleme talebi</span><span class="mt-2 block text-xs text-white/65" data-sd-id="174">Yenişehir'deki arsam için bilgi almak...</span></span></button><button class="flex w-full gap-3 p-5 text-left transition hover:bg-white/[.035]" data-sd-id="175"><span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-500/20 font-bold text-emerald-300" data-sd-id="176">ED</span><span class="min-w-0 flex-1" data-sd-id="177"><span class="flex items-center justify-between gap-3" data-sd-id="178"><strong class="truncate text-sm text-white/75">Elif Demir</strong><time class="shrink-0 text-[10px] text-white/35">Dün</time></span><span class="mt-1 block truncate text-xs text-white/45" data-sd-id="179">Kiralık daire randevusu</span><span class="mt-2 block truncate text-xs text-white/45" data-sd-id="180">Fırat Mahallesi'ndeki daireyi...</span></span></button><button class="flex w-full gap-3 p-5 text-left transition hover:bg-white/[.035]" data-sd-id="181"><span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-orange-500/20 font-bold text-orange-300" data-sd-id="182">MK</span><span class="min-w-0 flex-1" data-sd-id="183"><span class="flex items-center justify-between gap-3" data-sd-id="184"><strong class="truncate text-sm text-white/75">Mehmet Kaya</strong><time class="shrink-0 text-[10px] text-white/35">Dün</time></span><span class="mt-1 block truncate text-xs text-white/45" data-sd-id="185">Genel bilgi talebi</span><span class="mt-2 block truncate text-xs text-white/45" data-sd-id="186">Ofisiniz hangi saatlerde açık?</span></span></button></div><div class="border-t border-white/10 p-4" data-sd-id="187"><button id="mark-all-read-btn" class="w-full rounded-lg border border-white/10 py-2.5 text-xs font-semibold text-white/55 hover:border-amber-400 hover:text-amber-400" data-sd-id="188">Tümünü okundu işaretle</button></div></section>
+      <!-- Header -->
+      <header class="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-white/10 bg-[#080B11]/90 px-6 backdrop-blur-md">
+        <div class="flex items-center gap-4">
+          <button id="mobile-menu-btn" class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-white/70 lg:hidden">
+            <iconify-icon icon="lucide:menu" class="text-xl"></iconify-icon>
+          </button>
+          <div>
+            <h1 class="text-xl font-display font-extrabold tracking-tight text-white">
+              Satılık & Kiralık İlan Yönetim Paneli
+            </h1>
+            <p class="text-xs text-white/40">Emin Emlak Gayrimenkul Portföy Kontrolü ve Yayın Onayı</p>
+          </div>
         </div>
 
-        <section id="reports" class="mt-6 grid gap-6 xl:grid-cols-[1.4fr_1fr]" data-sd-id="189"><div class="glass rounded-2xl p-5" data-sd-id="190"><div class="flex items-center justify-between" data-sd-id="191"><div data-sd-id="192"><p class="text-xs uppercase tracking-[.2em] text-amber-400" data-sd-id="193">Performans</p><h2 class="mt-2 text-xl font-bold" data-sd-id="194">Gelir özeti</h2></div><select class="rounded-lg border border-white/10 bg-white/[.05] px-3 py-2 text-xs text-white outline-none" data-sd-id="195"><option class="bg-[#191927]" data-sd-id="196">Son 6 ay</option><option class="bg-[#191927]" data-sd-id="197">Son 12 ay</option></select></div><div class="mt-8 flex h-40 items-end gap-3 px-2" data-sd-id="198"><div class="group flex flex-1 flex-col items-center gap-2" data-sd-id="199"><div class="h-20 w-full rounded-t-md bg-amber-500/30 group-hover:bg-amber-500/55" data-sd-id="200"></div><span class="text-[10px] text-white/35" data-sd-id="201">Oca</span></div><div class="group flex flex-1 flex-col items-center gap-2" data-sd-id="202"><div class="h-28 w-full rounded-t-md bg-amber-500/40 group-hover:bg-amber-500/60" data-sd-id="203"></div><span class="text-[10px] text-white/35" data-sd-id="204">Şub</span></div><div class="group flex flex-1 flex-col items-center gap-2" data-sd-id="205"><div class="h-24 w-full rounded-t-md bg-amber-500/35 group-hover:bg-amber-500/60" data-sd-id="206"></div><span class="text-[10px] text-white/35" data-sd-id="207">Mar</span></div><div class="group flex flex-1 flex-col items-center gap-2" data-sd-id="208"><div class="h-32 w-full rounded-t-md bg-amber-500/55 group-hover:bg-amber-500/75" data-sd-id="209"></div><span class="text-[10px] text-white/35" data-sd-id="210">Nis</span></div><div class="group flex flex-1 flex-col items-center gap-2" data-sd-id="211"><div class="h-36 w-full rounded-t-md bg-amber-500/65 group-hover:bg-amber-500/85" data-sd-id="212"></div><span class="text-[10px] text-white/35" data-sd-id="213">May</span></div><div class="group flex flex-1 flex-col items-center gap-2" data-sd-id="214"><div class="h-32 w-full rounded-t-md bg-amber-500 group-hover:bg-amber-400" data-sd-id="215"></div><span class="text-[10px] text-white/35" data-sd-id="216">Haz</span></div></div></div><div id="settings" class="glass rounded-2xl p-5" data-sd-id="217"><p class="text-xs uppercase tracking-[.2em] text-amber-400" data-sd-id="218">Hızlı ayarlar</p><h2 class="mt-2 text-xl font-bold" data-sd-id="219">Panel tercihleri</h2><div class="mt-6 space-y-4" data-sd-id="220"><label class="flex items-center justify-between gap-4 text-sm text-white/65" data-sd-id="221"><span data-sd-id="222"><strong class="block text-white/85">E-posta bildirimleri</strong><small class="text-xs text-white/35">Yeni mesajlardan haberdar ol</small></span><input type="checkbox" checked="" class="h-5 w-5 accent-amber-500" data-sd-id="223"></label><label class="flex items-center justify-between gap-4 text-sm text-white/65" data-sd-id="224"><span data-sd-id="225"><strong class="block text-white/85">Haftalık rapor</strong><small class="text-xs text-white/35">Her pazartesi gönderilsin</small></span><input type="checkbox" checked="" class="h-5 w-5 accent-amber-500" data-sd-id="226"></label><label class="flex items-center justify-between gap-4 text-sm text-white/65" data-sd-id="227"><span data-sd-id="228"><strong class="block text-white/85">Otomatik taslak</strong><small class="text-xs text-white/35">Çalışmanızı otomatik kaydet</small></span><input type="checkbox" class="h-5 w-5 accent-amber-500" data-sd-id="229"></label></div></div></section>
+        <div class="flex items-center gap-3">
+          <a href="ilan-ekle.html" class="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-4 py-2.5 text-xs font-bold text-black transition hover:from-amber-400 hover:to-amber-500 shadow-lg shadow-amber-500/20">
+            <iconify-icon icon="lucide:plus" class="text-base"></iconify-icon>
+            Yeni İlan Ekle
+          </a>
+        </div>
+      </header>
+
+      <main class="flex-1 p-6 max-w-[1600px] w-full mx-auto space-y-6">
+
+        <!-- Top Statistics Cards -->
+        <section class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          
+          <!-- Satılık Card -->
+          <button onclick="filterByTab('satilik')" class="glass-panel rounded-2xl p-5 text-left transition hover:border-amber-500/40 group">
+            <div class="flex items-center justify-between">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">
+                <iconify-icon icon="lucide:tag" class="text-xl"></iconify-icon>
+              </span>
+              <span class="text-[10px] uppercase font-bold tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-md">SATILIK</span>
+            </div>
+            <p class="mt-4 text-xs font-semibold uppercase tracking-wider text-white/40">Satılık İlanlar</p>
+            <strong class="mt-1 block text-3xl font-display font-extrabold text-white" id="stat-satilik-count">0</strong>
+            <p class="mt-2 text-xs text-white/40 flex items-center gap-1 group-hover:text-amber-400">
+              Filtrele <iconify-icon icon="lucide:arrow-right" class="text-xs"></iconify-icon>
+            </p>
+          </button>
+
+          <!-- Kiralık Card -->
+          <button onclick="filterByTab('kiralik')" class="glass-panel rounded-2xl p-5 text-left transition hover:border-amber-500/40 group">
+            <div class="flex items-center justify-between">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-sky-500/15 text-sky-400 border border-sky-500/20">
+                <iconify-icon icon="lucide:key-round" class="text-xl"></iconify-icon>
+              </span>
+              <span class="text-[10px] uppercase font-bold tracking-wider text-sky-400 bg-sky-500/10 px-2 py-1 rounded-md">KİRALIK</span>
+            </div>
+            <p class="mt-4 text-xs font-semibold uppercase tracking-wider text-white/40">Kiralık İlanlar</p>
+            <strong class="mt-1 block text-3xl font-display font-extrabold text-white" id="stat-kiralik-count">0</strong>
+            <p class="mt-2 text-xs text-white/40 flex items-center gap-1 group-hover:text-amber-400">
+              Filtrele <iconify-icon icon="lucide:arrow-right" class="text-xs"></iconify-icon>
+            </p>
+          </button>
+
+          <!-- Total Active Card -->
+          <button onclick="filterByTab('all')" class="glass-panel rounded-2xl p-5 text-left transition hover:border-amber-500/40 group">
+            <div class="flex items-center justify-between">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/20">
+                <iconify-icon icon="lucide:building-2" class="text-xl"></iconify-icon>
+              </span>
+              <span class="text-[10px] uppercase font-bold tracking-wider text-amber-400 bg-amber-500/10 px-2 py-1 rounded-md">TOPLAM</span>
+            </div>
+            <p class="mt-4 text-xs font-semibold uppercase tracking-wider text-white/40">Yayındaki Portföy</p>
+            <strong class="mt-1 block text-3xl font-display font-extrabold text-white" id="stat-active-count">0</strong>
+            <p class="mt-2 text-xs text-white/40 flex items-center gap-1 group-hover:text-amber-400">
+              Tümünü Gör <iconify-icon icon="lucide:arrow-right" class="text-xs"></iconify-icon>
+            </p>
+          </button>
+
+          <!-- Pending / Featured Card -->
+          <button onclick="filterByTab('pending')" class="glass-panel rounded-2xl p-5 text-left transition hover:border-amber-500/40 group">
+            <div class="flex items-center justify-between">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-purple-500/15 text-purple-400 border border-purple-500/20">
+                <iconify-icon icon="lucide:clock" class="text-xl"></iconify-icon>
+              </span>
+              <span class="text-[10px] uppercase font-bold tracking-wider text-purple-300 bg-purple-500/10 px-2 py-1 rounded-md">DURUM</span>
+            </div>
+            <p class="mt-4 text-xs font-semibold uppercase tracking-wider text-white/40">Onay / Taslak Bekleyenler</p>
+            <strong class="mt-1 block text-3xl font-display font-extrabold text-purple-300" id="stat-pending-count">0</strong>
+            <p class="mt-2 text-xs text-purple-400/80 font-medium">Kontrol Edip Onayla</p>
+          </button>
+
+        </section>
+
+        <!-- Listing Management Main Panel -->
+        <section class="glass-panel rounded-2xl overflow-hidden border border-white/10">
+          
+          <!-- Panel Header & Filter Tabs -->
+          <div class="p-6 border-b border-white/10 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            
+            <!-- Tabs -->
+            <div class="flex flex-wrap items-center gap-2" id="filter-tabs">
+              <button onclick="filterByTab('all')" id="tab-all" class="px-4 py-2.5 rounded-xl text-xs font-bold transition border border-white/10 bg-white/5 text-white active-tab">
+                Tüm İlanlar (<span id="count-tab-all">0</span>)
+              </button>
+              <button onclick="filterByTab('satilik')" id="tab-satilik" class="px-4 py-2.5 rounded-xl text-xs font-bold transition border border-white/10 bg-white/5 text-white/70 hover:text-white">
+                🏷️ Satılık (<span id="count-tab-satilik">0</span>)
+              </button>
+              <button onclick="filterByTab('kiralik')" id="tab-kiralik" class="px-4 py-2.5 rounded-xl text-xs font-bold transition border border-white/10 bg-white/5 text-white/70 hover:text-white">
+                🔑 Kiralık (<span id="count-tab-kiralik">0</span>)
+              </button>
+              <button onclick="filterByTab('featured')" id="tab-featured" class="px-4 py-2.5 rounded-xl text-xs font-bold transition border border-white/10 bg-white/5 text-white/70 hover:text-white">
+                ⭐ Öne Çıkanlar (<span id="count-tab-featured">0</span>)
+              </button>
+              <button onclick="filterByTab('pending')" id="tab-pending" class="px-4 py-2.5 rounded-xl text-xs font-bold transition border border-white/10 bg-white/5 text-white/70 hover:text-white">
+                ⏳ Onay Bekleyenler / Taslak (<span id="count-tab-pending">0</span>)
+              </button>
+            </div>
+
+            <!-- Search Box -->
+            <div class="relative min-w-[260px]">
+              <iconify-icon icon="lucide:search" class="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/40 text-base"></iconify-icon>
+              <input 
+                type="text" 
+                id="search-input" 
+                placeholder="İlan başlığı, mahalle veya id ara..." 
+                class="w-full rounded-xl border border-white/10 bg-black/40 pl-10 pr-4 py-2.5 text-xs text-white outline-none focus:border-amber-400 placeholder:text-white/30"
+              >
+            </div>
+
+          </div>
+
+          <!-- Listings Table -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="border-b border-white/10 bg-white/[0.02] text-[10px] uppercase font-bold tracking-wider text-white/40">
+                  <th class="px-6 py-4">İlan Görseli & Detayları</th>
+                  <th class="px-4 py-4">Tipi</th>
+                  <th class="px-4 py-4">Kategori</th>
+                  <th class="px-4 py-4">Fiyat</th>
+                  <th class="px-4 py-4">Yayın Durumu</th>
+                  <th class="px-4 py-4 text-center">Tarih</th>
+                  <th class="px-6 py-4 text-right">Yönetim / Onay</th>
+                </tr>
+              </thead>
+              <tbody id="listings-tbody" class="divide-y divide-white/5 text-xs">
+                <!-- Dynamic Content -->
+              </tbody>
+            </table>
+          </div>
+
+        </section>
+
       </main>
+
+    </div>
+
+  </div>
+
+  <!-- Instant Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden max-w-md rounded-xl border border-emerald-500/30 bg-emerald-950/90 p-4 text-white shadow-2xl backdrop-blur-md">
+    <div class="flex items-center gap-3">
+      <iconify-icon icon="lucide:check-circle-2" class="text-2xl text-emerald-400"></iconify-icon>
+      <div>
+        <h4 id="toast-title" class="font-bold text-sm">Başarılı!</h4>
+        <p id="toast-message" class="text-xs text-white/80">İlan durumu güncellendi.</p>
+      </div>
     </div>
   </div>
+
+  <!-- WhatsApp Floating Button -->
+  <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);" aria-label="WhatsApp">
+    <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
+  </a>
+
+  <script src="../js/utils.js"></script>
+  <script src="../js/data.js"></script>
   <script>
-    const sidebar=document.getElementById('admin-sidebar');
-    document.getElementById('mobile-menu-btn')?.addEventListener('click',()=>sidebar.classList.toggle('-translate-x-full'));
-    document.getElementById('mark-all-read-btn')?.addEventListener('click',e=>{e.currentTarget.textContent='Tüm mesajlar okundu';e.currentTarget.classList.add('text-emerald-300','border-emerald-400/30')});
-    document.querySelectorAll('button[aria-label="İlanı sil"]').forEach(button=>button.addEventListener('click',()=>{const row=button.closest('tr');row.classList.add('opacity-40');setTimeout(()=>row.remove(),250)}));
+    let currentFilterTab = 'all';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await DataManager.init();
+      if (!DataManager.isLoggedIn()) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      renderDashboard();
+
+      // Search input listener
+      document.getElementById('search-input')?.addEventListener('input', () => {
+        renderListingsTable();
+      });
+
+      // Mobile sidebar toggle
+      const sidebar = document.getElementById('admin-sidebar');
+      document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+      });
+    });
+
+    function handleLogout() {
+      if (confirm('Yönetici panelinden çıkış yapmak istediğinize emin misiniz?')) {
+        DataManager.logout();
+        window.location.href = 'index.html';
+      }
+    }
+
+    function showToast(title, message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-title').textContent = title;
+      document.getElementById('toast-message').textContent = message;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3500);
+    }
+
+    function renderDashboard() {
+      const listings = DataManager.getAllListings();
+
+      const satilikList = listings.filter(l => l.type === 'satilik');
+      const kiralikList = listings.filter(l => l.type === 'kiralik');
+      const activeList = listings.filter(l => l.status === 'active');
+      const pendingList = listings.filter(l => l.status !== 'active');
+      const featuredList = listings.filter(l => l.featured);
+
+      // Stats
+      document.getElementById('stat-satilik-count').textContent = satilikList.length;
+      document.getElementById('stat-kiralik-count').textContent = kiralikList.length;
+      document.getElementById('stat-active-count').textContent = activeList.length;
+      document.getElementById('stat-pending-count').textContent = pendingList.length;
+
+      // Sidebar
+      const listingCountEl = document.getElementById('sidebar-listing-count');
+      if (listingCountEl) listingCountEl.textContent = listings.length;
+
+      // Tabs counts
+      document.getElementById('count-tab-all').textContent = listings.length;
+      document.getElementById('count-tab-satilik').textContent = satilikList.length;
+      document.getElementById('count-tab-kiralik').textContent = kiralikList.length;
+      document.getElementById('count-tab-featured').textContent = featuredList.length;
+      document.getElementById('count-tab-pending').textContent = pendingList.length;
+
+      renderListingsTable();
+    }
+
+    function filterByTab(tab) {
+      currentFilterTab = tab;
+
+      // Update tab active UI
+      document.querySelectorAll('#filter-tabs button').forEach(btn => {
+        btn.classList.remove('active-tab', 'border-amber-500/50', 'text-amber-400');
+        btn.classList.add('text-white/70');
+      });
+
+      const activeBtn = document.getElementById(`tab-${tab}`);
+      if (activeBtn) {
+        activeBtn.classList.add('active-tab', 'border-amber-500/50', 'text-amber-400');
+        activeBtn.classList.remove('text-white/70');
+      }
+
+      renderListingsTable();
+    }
+
+    function renderListingsTable() {
+      const tbody = document.getElementById('listings-tbody');
+      if (!tbody) return;
+
+      let listings = DataManager.getAllListings();
+      const searchQuery = document.getElementById('search-input')?.value.toLowerCase().trim() || '';
+
+      // Apply tab filter
+      if (currentFilterTab === 'satilik') {
+        listings = listings.filter(l => l.type === 'satilik');
+      } else if (currentFilterTab === 'kiralik') {
+        listings = listings.filter(l => l.type === 'kiralik');
+      } else if (currentFilterTab === 'featured') {
+        listings = listings.filter(l => l.featured);
+      } else if (currentFilterTab === 'pending') {
+        listings = listings.filter(l => l.status !== 'active');
+      }
+
+      // Apply search
+      if (searchQuery) {
+        listings = listings.filter(l => 
+          (l.title && l.title.toLowerCase().includes(searchQuery)) ||
+          (l.neighborhood && l.neighborhood.toLowerCase().includes(searchQuery)) ||
+          (l.city && l.city.toLowerCase().includes(searchQuery)) ||
+          (l.id && String(l.id).includes(searchQuery))
+        );
+      }
+
+      if (listings.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="p-12 text-center text-white/40">
+              <iconify-icon icon="lucide:building-2" class="text-4xl text-white/20 mb-2 block mx-auto"></iconify-icon>
+              Bu kriterlere uygun ilan bulunamadı.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = listings.map(l => {
+        const imgUrl = (l.images && l.images.length ? l.images[0] : (l.image || '../assets/images/placeholder.jpg'));
+        
+        // Badges
+        const typeBadge = l.type === 'satilik'
+          ? '<span class="px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase bg-emerald-500/15 text-emerald-400 border border-emerald-500/30">SATILIK</span>'
+          : '<span class="px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase bg-sky-500/15 text-sky-400 border border-sky-500/30">KİRALIK</span>';
+
+        const statusBadge = l.status === 'active'
+          ? '<span class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase bg-emerald-500/10 text-emerald-300 border border-emerald-500/20 flex items-center gap-1.5 w-fit"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Yayında (Aktif)</span>'
+          : '<span class="px-2.5 py-1 rounded-md text-[10px] font-bold uppercase bg-amber-500/10 text-amber-300 border border-amber-500/20 flex items-center gap-1.5 w-fit"><span class="h-1.5 w-1.5 rounded-full bg-amber-400"></span> Onay Bekliyor</span>';
+
+        const categoryText = {
+          'daire': 'Daire',
+          'mustakil': 'Müstakil Ev',
+          'arsa': 'Arsa / Tarla',
+          'isyeri': 'İş Yeri'
+        }[l.category] || (l.category || 'Gayrimenkul');
+
+        const dateStr = l.createdAt ? new Date(l.createdAt).toLocaleDateString('tr-TR') : '-';
+
+        return `
+          <tr class="hover:bg-white/[0.02] transition">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3.5">
+                <img src="${imgUrl}" alt="${Utils.sanitize(l.title)}" class="h-14 w-20 rounded-xl object-cover border border-white/10 shrink-0" onerror="this.onerror=null; this.src='../assets/images/placeholder.jpg';">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <strong class="text-sm font-bold text-white truncate max-w-[280px]" title="${Utils.sanitize(l.title)}">${Utils.sanitize(l.title)}</strong>
+                    ${l.featured ? '<span class="text-amber-400 text-xs" title="Öne Çıkan İlan"><iconify-icon icon="lucide:star"></iconify-icon></span>' : ''}
+                  </div>
+                  <p class="text-xs text-white/40 mt-1">
+                    ${l.rooms && l.rooms !== '-' ? `${l.rooms} · ` : ''}${l.area || l.squareMeters || '-'} m² · ${l.city || 'Mardin, Nusaybin'} ${l.neighborhood ? `(${l.neighborhood})` : ''}
+                  </p>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-4 align-middle">${typeBadge}</td>
+            <td class="px-4 py-4 align-middle text-white/70 font-medium">${categoryText}</td>
+            <td class="px-4 py-4 align-middle font-display font-extrabold text-amber-400 text-sm">
+              ₺ ${Number(l.price).toLocaleString('tr-TR')}
+            </td>
+            <td class="px-4 py-4 align-middle">${statusBadge}</td>
+            <td class="px-4 py-4 align-middle text-center text-white/40 text-xs">${dateStr}</td>
+            <td class="px-6 py-4 align-middle text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                
+                <!-- View Live -->
+                <a href="../ilan-detay.html?id=${l.id}" target="_blank" class="p-2 rounded-lg text-white/50 hover:bg-white/10 hover:text-white transition" title="Sitede Canlı Gör">
+                  <iconify-icon icon="lucide:eye" class="text-base"></iconify-icon>
+                </a>
+
+                <!-- Toggle Status / Approve -->
+                <button onclick="toggleApproval('${l.id}')" class="p-2 rounded-lg ${l.status === 'active' ? 'text-amber-400 hover:bg-amber-500/15' : 'text-emerald-400 hover:bg-emerald-500/15'} transition" title="${l.status === 'active' ? 'Yayından Kaldır (Taslağa Al)' : 'İlanı Onayla & Yayınla'}">
+                  <iconify-icon icon="${l.status === 'active' ? 'lucide:pause-circle' : 'lucide:check-circle-2'}" class="text-base"></iconify-icon>
+                </button>
+
+                <!-- Edit -->
+                <a href="ilan-ekle.html?edit=${l.id}" class="p-2 rounded-lg text-amber-400 hover:bg-amber-500/15 transition" title="İlanı Düzenle">
+                  <iconify-icon icon="lucide:pencil" class="text-base"></iconify-icon>
+                </a>
+
+                <!-- Delete -->
+                <button onclick="confirmDelete('${l.id}')" class="p-2 rounded-lg text-white/40 hover:bg-red-500/15 hover:text-red-400 transition" title="Sil">
+                  <iconify-icon icon="lucide:trash-2" class="text-base"></iconify-icon>
+                </button>
+
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function toggleApproval(id) {
+      const listing = DataManager.getListing(id);
+      if (!listing) return;
+
+      const newStatus = listing.status === 'active' ? 'draft' : 'active';
+      listing.status = newStatus;
+
+      await DataManager.updateListing(listing);
+      renderDashboard();
+
+      if (newStatus === 'active') {
+        showToast('🎉 İlan Onaylandı & Yayında!', 'İlan web sitesinde canlı olarak yayınlanıyor.');
+      } else {
+        showToast('⏸️ İlan Yayından Kaldırıldı', 'İlan pasife/taslağa alındı.');
+      }
+    }
+
+    async function confirmDelete(id) {
+      if (confirm('Bu ilanı silmek istediğinize emin misiniz? Bu işlem geri alınamaz.')) {
+        await DataManager.deleteListing(id);
+        renderDashboard();
+        showToast('🗑️ İlan Silindi', 'İlan başarıyla kaldırıldı.');
+      }
+    }
   </script>
-
-    <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);">
-      <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
-    </a>
-
 </body>
 </html>
-
-
-
-
-

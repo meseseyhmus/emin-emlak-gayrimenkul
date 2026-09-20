@@ -162,89 +162,123 @@ const AdminApp = {
         const reader = new FileReader();
         reader.onload = (ev) => {
           results[index] = ev.target.result;
-          extraPreview.innerHTML += \<img src="\" class="h-16 w-16 object-cover rounded-lg border border-white/20">\;
-            loaded++;
-            if(loaded === files.length) {
-              extraBase64.value = JSON.stringify(results);
+          extraPreview.innerHTML += `<img src="${ev.target.result}" class="h-16 w-16 object-cover rounded-lg border border-white/20">`;
+          loaded++;
+          if (loaded === files.length) {
+            extraBase64.value = JSON.stringify(results);
           }
         };
-            reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
       });
     });
 
-            if (editId) {
-              document.getElementById('page-title').textContent = 'İlanı Düzenle';
-            const listing = DataManager.getListing(editId);
-            if (listing) {
-              document.getElementById('title').value = listing.title;
-            document.getElementById('type').value = listing.type;
-            document.getElementById('category').value = listing.category || 'daire';
-            document.getElementById('price').value = listing.price;
-            document.getElementById('status').value = listing.status || 'active';
-            document.getElementById('featured').checked = listing.featured || false;
+    if (editId) {
+      document.getElementById('page-title').textContent = 'İlanı Düzenle';
+      const listing = DataManager.getListing(editId);
+      if (listing) {
+        document.getElementById('title').value = listing.title;
+        document.getElementById('type').value = listing.type;
+        document.getElementById('category').value = listing.category || 'daire';
+        document.getElementById('price').value = listing.price;
+        document.getElementById('status').value = listing.status || 'active';
+        document.getElementById('featured').checked = listing.featured || false;
 
-            document.getElementById('city').value = listing.city || '';
-            document.getElementById('neighborhood').value = listing.neighborhood || '';
-            document.getElementById('rooms').value = listing.rooms || '-';
-            document.getElementById('area').value = listing.area || '';
-            document.getElementById('floor').value = listing.floor || '';
-            document.getElementById('description').value = listing.description || '';
-            document.getElementById('features').value = (listing.features || []).join(', ');
+        document.getElementById('city').value = listing.city || '';
+        document.getElementById('neighborhood').value = listing.neighborhood || '';
+        document.getElementById('rooms').value = listing.rooms || '-';
+        document.getElementById('area').value = listing.area || '';
+        document.getElementById('floor').value = listing.floor || '';
+        document.getElementById('description').value = listing.description || '';
+        document.getElementById('features').value = (listing.features || []).join(', ');
 
-            if(listing.image) {
-              imageBase64.value = listing.image;
-            imagePreview.src = listing.image;
-            imagePreview.classList.remove('hidden');
-            imageInput.removeAttribute('required');
+        if (listing.image) {
+          imageBase64.value = listing.image;
+          imagePreview.src = listing.image;
+          imagePreview.classList.remove('hidden');
+          if (imageInput) imageInput.removeAttribute('required');
         }
-        
-        if(listing.imageUrls && listing.imageUrls.length > 0) {
-              extraBase64.value = JSON.stringify(listing.imageUrls);
+
+        if (listing.imageUrls && listing.imageUrls.length > 0) {
+          extraBase64.value = JSON.stringify(listing.imageUrls);
           listing.imageUrls.forEach(url => {
-              extraPreview.innerHTML += \<img src="\" class="h-16 w-16 object-cover rounded-lg border border-white/20">\;
+            extraPreview.innerHTML += `<img src="${url}" class="h-16 w-16 object-cover rounded-lg border border-white/20">`;
           });
         }
 
-                document.getElementById('videoUrl').value = listing.videoUrl || '';
+        document.getElementById('videoUrl').value = listing.videoUrl || '';
       }
     }
     
     form?.addEventListener('submit', async (e) => {
-                e.preventDefault();
+      e.preventDefault();
 
-              const parsedExtra = extraBase64.value ? JSON.parse(extraBase64.value) : [];
-
-              const newListing = {
-                title: document.getElementById('title').value,
-              type: document.getElementById('type').value,
-              category: document.getElementById('category').value,
-              price: Number(document.getElementById('price').value),
-              status: document.getElementById('status').value,
-              featured: document.getElementById('featured').checked,
-
-              city: document.getElementById('city').value,
-              neighborhood: document.getElementById('neighborhood').value,
-              rooms: document.getElementById('rooms').value,
-              area: Number(document.getElementById('area').value),
-              floor: document.getElementById('floor').value,
-              description: document.getElementById('description').value,
-        
-        features: document.getElementById('features').value.split(',').map(f => f.trim()).filter(f => f),
-
-              image: imageBase64.value || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-              imageUrls: parsedExtra,
-              videoUrl: document.getElementById('videoUrl').value.trim()
-      };
-
-              if (editId) {
-        const existing = DataManager.getListing(editId);
-              Object.assign(existing, newListing);
-              await DataManager.updateListing(existing);
-      } else {
-                await DataManager.addListing(newListing);
+      const submitBtn = document.getElementById('submit-btn');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<div class="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent"></div> Kaydediliyor & Onaylanıyor...`;
       }
 
-              window.location.href = 'ilanlar.html';
+      const directUrl = document.getElementById('imageUrlDirect')?.value?.trim();
+      const mainImg = directUrl || imageBase64.value || 'assets/images/placeholder.jpg';
+
+      let parsedExtra = [];
+      try {
+        parsedExtra = extraBase64.value ? JSON.parse(extraBase64.value) : [];
+      } catch (err) {}
+
+      const typeVal = document.getElementById('type').value;
+      const listingId = editId || Date.now().toString();
+
+      const newListing = {
+        id: listingId,
+        title: document.getElementById('title').value.trim(),
+        type: typeVal,
+        category: document.getElementById('category').value,
+        price: Number(document.getElementById('price').value) || 0,
+        status: document.getElementById('status').value || 'active',
+        featured: document.getElementById('featured').checked,
+        city: document.getElementById('city').value.trim() || 'Mardin, Nusaybin',
+        neighborhood: document.getElementById('neighborhood').value.trim() || '',
+        location: `${document.getElementById('city').value.trim()}${document.getElementById('neighborhood').value.trim() ? `, ${document.getElementById('neighborhood').value.trim()}` : ''}`,
+        rooms: document.getElementById('rooms').value,
+        area: Number(document.getElementById('area').value) || 0,
+        squareMeters: Number(document.getElementById('area').value) || 0,
+        floor: document.getElementById('floor').value.trim(),
+        description: document.getElementById('description').value.trim(),
+        features: document.getElementById('features').value.split(',').map(f => f.trim()).filter(f => f),
+        agentName: 'Emin Emlak Gayrimenkul',
+        agentPhone: '0555 013 7647',
+        image: mainImg,
+        images: [mainImg, ...parsedExtra],
+        imageUrls: parsedExtra,
+        videoUrl: document.getElementById('videoUrl').value.trim(),
+        createdAt: new Date().toISOString()
+      };
+
+      if (editId) {
+        const existing = DataManager.getListing(editId);
+        if (existing) Object.assign(existing, newListing);
+        await DataManager.updateListing(existing || newListing);
+      } else {
+        await DataManager.addListing(newListing);
+      }
+
+      // Re-init data
+      await DataManager.init();
+
+      // Show Approval Success Modal
+      const modal = document.getElementById('approval-modal');
+      if (modal) {
+        const liveLink = document.getElementById('modal-view-live');
+        const catLink = document.getElementById('modal-view-category');
+
+        if (liveLink) liveLink.href = `../ilan-detay.html?id=${listingId}`;
+        if (catLink) catLink.href = typeVal === 'satilik' ? '../satilik.html' : '../kiralik.html';
+
+        modal.classList.remove('hidden');
+      } else {
+        window.location.href = 'dashboard.html';
+      }
     });
   },
 
