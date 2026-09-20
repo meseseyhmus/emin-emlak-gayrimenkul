@@ -262,17 +262,21 @@ const App = {
         const container = document.getElementById('detail-video-container');
         if (embedUrl.startsWith('data:video/') || embedUrl.endsWith('.mp4')) {
           container.innerHTML = `
-            <video class="w-full aspect-video rounded-xl bg-black" controls playsinline controlsList="nodownload">
-              <source src="${embedUrl}">
-              Tarayıcınız video etiketini desteklemiyor.
-            </video>
+            <div class="mx-auto max-w-sm sm:max-w-md overflow-hidden rounded-3xl shadow-2xl border-2 border-graphite/40 bg-black p-2">
+              <video class="w-full aspect-[9/16] max-h-[640px] object-cover rounded-2xl" controls playsinline controlsList="nodownload">
+                <source src="${embedUrl}">
+                Tarayıcınız video etiketini desteklemiyor.
+              </video>
+            </div>
           `;
         } else if (embedUrl.includes('drive.google.com')) {
           container.innerHTML = `
-            <div class="space-y-3">
-              <iframe class="w-full aspect-video rounded-xl bg-black border border-graphite/40" src="${embedUrl}" allow="autoplay" allowfullscreen></iframe>
-              <div class="flex justify-end">
-                <a href="${listing.videoUrl}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl bg-mint/20 text-mint border border-mint/40 px-4 py-2 text-xs font-bold hover:bg-mint hover:text-navy transition">
+            <div class="space-y-4 mx-auto max-w-sm sm:max-w-md">
+              <div class="relative overflow-hidden rounded-3xl aspect-[9/16] max-h-[640px] bg-black border-2 border-graphite/40 shadow-2xl p-2">
+                <iframe class="w-full h-full rounded-2xl" src="${embedUrl}" allow="autoplay" allowfullscreen></iframe>
+              </div>
+              <div class="flex justify-center">
+                <a href="${listing.videoUrl}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl bg-mint/20 text-mint border border-mint/40 px-5 py-2.5 text-xs font-bold hover:bg-mint hover:text-navy transition shadow-md">
                   <iconify-icon icon="lucide:external-link" class="text-sm"></iconify-icon>
                   Videoyu Harici Pencerede / Google Drive'da Aç
                 </a>
@@ -281,7 +285,9 @@ const App = {
           `;
         } else {
           container.innerHTML = `
-            <iframe class="w-full aspect-video rounded-xl bg-black border border-graphite/40" src="${embedUrl}" title="Video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <div class="mx-auto max-w-sm sm:max-w-md overflow-hidden rounded-3xl shadow-2xl border-2 border-graphite/40 bg-black p-2">
+              <iframe class="w-full aspect-[9/16] max-h-[640px] rounded-2xl" src="${embedUrl}" title="Video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
           `;
         }
       } else {
