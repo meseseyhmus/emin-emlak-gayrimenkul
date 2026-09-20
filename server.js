@@ -7,14 +7,14 @@ const cheerio = require('cheerio');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Use __dirname to reliably locate static files regardless of where the node process was started from
-const rootDir = __dirname;
+const rootDir = process.cwd();
 
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
 // Serve static frontend files from project root
-app.use(express.static(path.join(rootDir, 'public')));
+app.use(express.static(rootDir));
+app.use(express.static(__dirname));
 
 // =======================
 // API ENDPOINTS
@@ -51,20 +51,40 @@ app.post('/api/settings', async (req, res) => {
 // --- Listings ---
 app.get('/api/listings', async (req, res) => {
   try {
-    let dbListings = [];
-    try {
-      const rows = await db.query('SELECT * FROM listings');
-      dbListings = rows.map(r => ({
-        ...r,
-        features: typeof r.features === 'string' ? JSON.parse(r.features || '[]') : (r.features || []),
-        imageUrls: typeof r.imageUrls === 'string' ? JSON.parse(r.imageUrls || '[]') : (r.imageUrls || []),
-        featured: r.featured === 1
-      }));
-    } catch (dbErr) {
-      console.warn('DB fetch warning:', dbErr.message);
+    const rows = await db.query('SELECT * FROM listings');
+    let listings = rows.map(r => ({
+      ...r,
+      features: typeof r.features === 'string' ? JSON.parse(r.features || '[]') : (r.features || []),
+      imageUrls: typeof r.imageUrls === 'string' ? JSON.parse(r.imageUrls || '[]') : (r.imageUrls || []),
+      featured: r.featured === 1
+    }));
+
+    // Fallback to static JSON if database is empty on serverless environment (e.g. Vercel)
+    if (!listings || listings.length === 0) {
+      try {
+        const fs = require('fs');
+        const possiblePaths = [
+          path.join(process.cwd(), 'data', 'listings.json'),
+          path.join(__dirname, 'data', 'listings.json'),
+          path.join(__dirname, '..', 'data', 'listings.json')
+        ];
+        for (const jsonPath of possiblePaths) {
+          if (fs.existsSync(jsonPath)) {
+            const raw = fs.readFileSync(jsonPath, 'utf8');
+            const parsed = JSON.parse(raw);
+            if (parsed.listings && parsed.listings.length > 0) {
+              listings = parsed.listings;
+              break;
+            }
+          }
+        }
+      } catch (e) {
+        console.error('Fallback read error:', e);
+      }
     }
 
-    let jsonListings = [];
+    res.json(listings || []);
+  } catch (err) {
     try {
       const fs = require('fs');
       const possiblePaths = [
@@ -76,25 +96,10 @@ app.get('/api/listings', async (req, res) => {
         if (fs.existsSync(jsonPath)) {
           const raw = fs.readFileSync(jsonPath, 'utf8');
           const parsed = JSON.parse(raw);
-          if (parsed.listings && parsed.listings.length > 0) {
-            jsonListings = parsed.listings;
-            break;
-          }
+          return res.json(parsed.listings || []);
         }
       }
-    } catch (e) {
-      console.error('Fallback read error:', e);
-    }
-
-    // Merge DB listings with JSON listings (DB takes precedence if same ID)
-    const mergedMap = new Map();
-    jsonListings.forEach(l => mergedMap.set(String(l.id), l));
-    dbListings.forEach(l => mergedMap.set(String(l.id), l));
-
-    const finalListings = Array.from(mergedMap.values()).sort((a, b) => b.id - a.id);
-    res.json(finalListings);
-
-  } catch (err) {
+    } catch (e) { }
     res.status(500).json({ error: err.message });
   }
 });
@@ -280,7 +285,7 @@ function parseSahibindenHTML(html) {
 
   if (!priceText || (!priceText.includes('TL') && !priceText.includes('₺'))) {
     const match = html.match(/class=["'][^"']*price[^"']*["'][^>]*>\s*([\d\.\,]+)\s*(?:TL|₺)/i)
-               || html.match(/([\d\.\,]{4,})\s*(?:TL|₺)/i);
+      || html.match(/([\d\.\,]{4,})\s*(?:TL|₺)/i);
     if (match) priceText = match[1];
   }
 
@@ -488,20 +493,20 @@ app.post('/api/scrape-sahibinden', async (req, res) => {
 });
 
 // Fallback route handlers for all pages (Public + Admin)
-app.get(['/', '/index', '/index.html'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'index.html')));
-app.get(['/satilik', '/satilik.html'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'satilik.html')));
-app.get(['/kiralik', '/kiralik.html'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'kiralik.html')));
-app.get(['/ilanlar', '/ilanlar.html'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'ilanlar.html')));
-app.get(['/hakkimizda', '/hakkimizda.html'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'hakkimizda.html')));
-app.get(['/iletisim', '/iletisim.html'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'iletisim.html')));
-app.get(['/ilan-detay', '/ilan-detay.html'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'ilan-detay.html')));
+app.get(['/', '/index', '/index.html'], (req, res) => res.sendFile(path.join(rootDir, 'index.html')));
+app.get(['/satilik', '/satilik.html'], (req, res) => res.sendFile(path.join(rootDir, 'satilik.html')));
+app.get(['/kiralik', '/kiralik.html'], (req, res) => res.sendFile(path.join(rootDir, 'kiralik.html')));
+app.get(['/ilanlar', '/ilanlar.html'], (req, res) => res.sendFile(path.join(rootDir, 'ilanlar.html')));
+app.get(['/hakkimizda', '/hakkimizda.html'], (req, res) => res.sendFile(path.join(rootDir, 'hakkimizda.html')));
+app.get(['/iletisim', '/iletisim.html'], (req, res) => res.sendFile(path.join(rootDir, 'iletisim.html')));
+app.get(['/ilan-detay', '/ilan-detay.html'], (req, res) => res.sendFile(path.join(rootDir, 'ilan-detay.html')));
 
-app.get(['/admin', '/admin/'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'admin', 'index.html')));
-app.get(['/admin/dashboard', '/admin/dashboard.html'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'admin', 'dashboard.html')));
-app.get(['/admin/ilanlar', '/admin/ilanlar.html'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'admin', 'ilanlar.html')));
-app.get(['/admin/ilan-ekle', '/admin/ilan-ekle.html'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'admin', 'ilan-ekle.html')));
-app.get(['/admin/mesajlar', '/admin/mesajlar.html'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'admin', 'mesajlar.html')));
-app.get(['/admin/ayarlar', '/admin/ayarlar.html'], (req, res) => res.sendFile(path.join(rootDir, 'public', 'admin', 'ayarlar.html')));
+app.get(['/admin', '/admin/'], (req, res) => res.sendFile(path.join(rootDir, 'admin', 'index.html')));
+app.get(['/admin/dashboard', '/admin/dashboard.html'], (req, res) => res.sendFile(path.join(rootDir, 'admin', 'dashboard.html')));
+app.get(['/admin/ilanlar', '/admin/ilanlar.html'], (req, res) => res.sendFile(path.join(rootDir, 'admin', 'ilanlar.html')));
+app.get(['/admin/ilan-ekle', '/admin/ilan-ekle.html'], (req, res) => res.sendFile(path.join(rootDir, 'admin', 'ilan-ekle.html')));
+app.get(['/admin/mesajlar', '/admin/mesajlar.html'], (req, res) => res.sendFile(path.join(rootDir, 'admin', 'mesajlar.html')));
+app.get(['/admin/ayarlar', '/admin/ayarlar.html'], (req, res) => res.sendFile(path.join(rootDir, 'admin', 'ayarlar.html')));
 
 // Start server if not running in a serverless environment like Vercel
 if (process.env.NODE_ENV !== 'production') {

@@ -151,7 +151,7 @@ const AdminApp = {
 
     extraInput?.addEventListener('change', (e) => {
       extraPreview.innerHTML = '';
-      const files = Array.from(e.target.files).slice(0, 4);
+      const files = Array.from(e.target.files).slice(0, 14);
       const results = [];
       let loaded = 0;
       if (files.length === 0) {
@@ -170,6 +170,32 @@ const AdminApp = {
         };
         reader.readAsDataURL(file);
       });
+    });
+
+    const videoInput = document.getElementById('videoFile');
+    const videoBase64 = document.getElementById('videoBase64');
+    const videoPreviewContainer = document.getElementById('videoPreviewContainer');
+    const videoPreview = document.getElementById('videoPreview');
+
+    videoInput?.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        if (file.size > 5 * 1024 * 1024) {
+          alert('Video boyutu çok büyük. Lütfen 5MB altı bir video seçin (Sunucu sınırları).');
+          e.target.value = '';
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+          if (videoBase64) videoBase64.value = ev.target.result;
+          if (videoPreview) videoPreview.src = ev.target.result;
+          if (videoPreviewContainer) videoPreviewContainer.classList.remove('hidden');
+        };
+        reader.readAsDataURL(file);
+      } else {
+        if (videoBase64) videoBase64.value = '';
+        if (videoPreviewContainer) videoPreviewContainer.classList.add('hidden');
+      }
     });
 
     if (editId) {
@@ -251,7 +277,7 @@ const AdminApp = {
         image: mainImg,
         images: [mainImg, ...parsedExtra],
         imageUrls: parsedExtra,
-        videoUrl: document.getElementById('videoUrl').value.trim(),
+        videoUrl: document.getElementById('videoBase64')?.value || document.getElementById('videoUrl')?.value.trim() || '',
         createdAt: new Date().toISOString()
       };
 
@@ -439,7 +465,7 @@ const AdminApp = {
         }
 
         if (data.images.length > 1) {
-          const extraImages = data.images.slice(1);
+          const extraImages = data.images.slice(1, 15);
               const extraBase64 = document.getElementById('extraImagesBase64');
               const extraPreview = document.getElementById('extraImagesPreview');
               if (extraBase64) {
