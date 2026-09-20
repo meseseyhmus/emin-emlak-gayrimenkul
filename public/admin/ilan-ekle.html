@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,9 @@
   <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap"
+    rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
@@ -24,7 +27,11 @@
   </script>
   <link rel="stylesheet" href="../css/index.css">
   <style>
-    body { background-color: #080B11; color: #F3F4F6; }
+    body {
+      background-color: #080B11;
+      color: #F3F4F6;
+    }
+
     .glass-panel {
       background: rgba(15, 22, 35, 0.7);
       backdrop-filter: blur(16px);
@@ -32,15 +39,18 @@
     }
   </style>
 </head>
+
 <body class="font-sans antialiased selection:bg-amber-500 selection:text-black">
 
   <div class="min-h-screen flex flex-col lg:flex-row">
-    
+
     <!-- Sidebar -->
-    <aside id="admin-sidebar" class="fixed inset-y-0 left-0 z-40 flex w-64 -translate-x-full flex-col border-r border-white/10 bg-[#0A0E17] px-4 py-6 transition-transform lg:static lg:translate-x-0">
-      
+    <aside id="admin-sidebar"
+      class="fixed inset-y-0 left-0 z-40 flex w-64 -translate-x-full flex-col border-r border-white/10 bg-[#0A0E17] px-4 py-6 transition-transform lg:static lg:translate-x-0">
+
       <div class="flex items-center gap-3 px-3 mb-8">
-        <span class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-xl font-black text-black shadow-lg shadow-amber-500/20">E</span>
+        <span
+          class="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-amber-400 to-amber-600 text-xl font-black text-black shadow-lg shadow-amber-500/20">E</span>
         <div>
           <strong class="block text-sm font-bold tracking-tight text-white font-display">EMİN EMLAK</strong>
           <small class="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-400">GAYRİMENKUL PANELİ</small>
@@ -49,32 +59,40 @@
 
       <div class="px-3 text-[10px] font-bold uppercase tracking-[0.22em] text-white/30 mb-2">Yönetim Menüsü</div>
       <nav class="space-y-1.5 flex-1">
-        <a href="dashboard.html" class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition">
+        <a href="dashboard.html"
+          class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition">
           <iconify-icon icon="lucide:layout-dashboard" class="text-lg"></iconify-icon>
           İlan Yönetimi
         </a>
-        <a href="ilan-ekle.html" class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30">
+        <a href="ilan-ekle.html"
+          class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold bg-amber-500/15 text-amber-400 border border-amber-500/30">
           <iconify-icon icon="lucide:plus-circle" class="text-lg text-amber-400"></iconify-icon>
           Yeni İlan Ekle
         </a>
-        <a href="ilanlar.html" class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition">
+        <a href="ilanlar.html"
+          class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition">
           <iconify-icon icon="lucide:building-2" class="text-lg"></iconify-icon>
           Tüm Portföy
-          <span id="sidebar-listing-count" class="ml-auto rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] text-amber-400 font-bold">0</span>
+          <span id="sidebar-listing-count"
+            class="ml-auto rounded-full bg-amber-500/15 px-2 py-0.5 text-[10px] text-amber-400 font-bold">0</span>
         </a>
-        <a href="mesajlar.html" class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition">
+        <a href="mesajlar.html"
+          class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition">
           <iconify-icon icon="lucide:inbox" class="text-lg"></iconify-icon>
           Gelen Mesajlar
-          <span id="sidebar-message-count" class="ml-auto rounded-full bg-blue-500/20 px-2 py-0.5 text-[10px] text-blue-300 font-bold">0</span>
+          <span id="sidebar-message-count"
+            class="ml-auto rounded-full bg-blue-500/20 px-2 py-0.5 text-[10px] text-blue-300 font-bold">0</span>
         </a>
-        <a href="ayarlar.html" class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition">
+        <a href="ayarlar.html"
+          class="flex items-center gap-3 rounded-xl px-3.5 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition">
           <iconify-icon icon="lucide:settings" class="text-lg"></iconify-icon>
           Firma Ayarları
         </a>
       </nav>
 
       <div class="mt-6 pt-4 border-t border-white/10">
-        <a href="../index.html" target="_blank" class="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-3 text-xs font-semibold text-white/70 hover:border-amber-400 hover:text-amber-400 transition">
+        <a href="../index.html" target="_blank"
+          class="flex items-center justify-between rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-3 text-xs font-semibold text-white/70 hover:border-amber-400 hover:text-amber-400 transition">
           <span class="flex items-center gap-2">
             <iconify-icon icon="lucide:globe" class="text-base text-amber-400"></iconify-icon>
             Siteyi Canlı Gör
@@ -85,7 +103,8 @@
 
       <div class="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
         <div class="flex items-center gap-3">
-          <span class="flex h-9 w-9 items-center justify-center rounded-full bg-amber-500 font-bold text-black text-xs">EE</span>
+          <span
+            class="flex h-9 w-9 items-center justify-center rounded-full bg-amber-500 font-bold text-black text-xs">EE</span>
           <div>
             <strong class="block text-xs font-bold text-white">Emin Meşe</strong>
             <small class="text-[10px] text-white/40">Yönetici</small>
@@ -101,9 +120,11 @@
     <!-- Main Content -->
     <div class="flex-1 flex flex-col min-w-0">
 
-      <header class="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-white/10 bg-[#080B11]/90 px-6 backdrop-blur-md">
+      <header
+        class="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-white/10 bg-[#080B11]/90 px-6 backdrop-blur-md">
         <div class="flex items-center gap-4">
-          <button id="mobile-menu-btn" class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-white/70 lg:hidden">
+          <button id="mobile-menu-btn"
+            class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 text-white/70 lg:hidden">
             <iconify-icon icon="lucide:menu" class="text-xl"></iconify-icon>
           </button>
           <h1 id="page-title" class="text-xl font-display font-extrabold tracking-tight text-white">
@@ -115,9 +136,11 @@
       <main class="flex-1 p-6 max-w-[1000px] w-full mx-auto space-y-8">
 
         <!-- ======= Sahibinden Import Box ======= -->
-        <section id="sahibinden-import" class="rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/[0.08] to-orange-500/[0.04] p-6">
+        <section id="sahibinden-import"
+          class="rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/[0.08] to-orange-500/[0.04] p-6">
           <div class="flex items-center gap-3 mb-4">
-            <span class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-lg font-bold text-black shadow-lg shadow-amber-500/20">
+            <span
+              class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-lg font-bold text-black shadow-lg shadow-amber-500/20">
               <iconify-icon icon="lucide:download"></iconify-icon>
             </span>
             <div>
@@ -127,23 +150,28 @@
           </div>
 
           <div class="flex flex-col sm:flex-row gap-3 mb-3">
-            <input type="url" id="sahibinden-url" placeholder="https://www.sahibinden.com/ilan/..." class="flex-1 rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none focus:border-amber-400 placeholder:text-white/30">
-            <button type="button" id="sahibinden-fetch-btn" class="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-5 py-3 text-xs font-bold text-black hover:from-amber-400 hover:to-amber-500 transition whitespace-nowrap">
+            <input type="url" id="sahibinden-url" placeholder="https://www.sahibinden.com/ilan/..."
+              class="flex-1 rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none focus:border-amber-400 placeholder:text-white/30">
+            <button type="button" id="sahibinden-fetch-btn"
+              class="flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-5 py-3 text-xs font-bold text-black hover:from-amber-400 hover:to-amber-500 transition whitespace-nowrap">
               <iconify-icon icon="lucide:zap" class="text-base"></iconify-icon>
               Verileri Çek
             </button>
           </div>
 
           <!-- Loading -->
-          <div id="sahibinden-loading" class="hidden flex items-center gap-3 rounded-xl bg-amber-500/10 border border-amber-500/20 p-4 mb-3">
+          <div id="sahibinden-loading"
+            class="hidden flex items-center gap-3 rounded-xl bg-amber-500/10 border border-amber-500/20 p-4 mb-3">
             <div class="h-4 w-4 animate-spin rounded-full border-2 border-amber-400 border-t-transparent"></div>
             <span class="text-xs text-amber-200">Sahibinden'den ilan verileri çekiliyor...</span>
           </div>
 
           <!-- Success -->
-          <div id="sahibinden-success" class="hidden flex items-center gap-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-4 mb-3">
+          <div id="sahibinden-success"
+            class="hidden flex items-center gap-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-4 mb-3">
             <iconify-icon icon="lucide:check-circle" class="text-lg text-emerald-400"></iconify-icon>
-            <span class="text-xs text-emerald-200 font-medium">Veriler başarıyla çekildi! Aşağıdaki form alanlarını kontrol edip kaydedin.</span>
+            <span class="text-xs text-emerald-200 font-medium">Veriler başarıyla çekildi! Aşağıdaki form alanlarını
+              kontrol edip kaydedin.</span>
           </div>
 
           <!-- Error -->
@@ -156,16 +184,22 @@
           </div>
 
           <details id="sahibinden-paste-section" class="group">
-            <summary class="cursor-pointer text-xs font-bold text-amber-400 hover:text-amber-300 transition flex items-center gap-1.5 py-1">
+            <summary
+              class="cursor-pointer text-xs font-bold text-amber-400 hover:text-amber-300 transition flex items-center gap-1.5 py-1">
               <iconify-icon icon="lucide:chevron-right" class="text-sm transition group-open:rotate-90"></iconify-icon>
               Güvenlik engeli mi var? Sayfa kaynağını (HTML) kopyalayıp yapıştırın
             </summary>
             <div class="mt-3 space-y-3 rounded-xl border border-white/10 bg-black/50 p-4">
               <p class="text-xs text-white/60 leading-relaxed">
-                <strong class="text-amber-400">💡 Kolay Yöntem:</strong> İlan sayfasında <kbd class="px-1.5 py-0.5 rounded bg-white/10 text-amber-300">Ctrl+U</kbd> ile sayfa kaynağını kopyalayıp yapıştırın.
+                <strong class="text-amber-400">💡 Kolay Yöntem:</strong> İlan sayfasında <kbd
+                  class="px-1.5 py-0.5 rounded bg-white/10 text-amber-300">Ctrl+U</kbd> ile sayfa kaynağını kopyalayıp
+                yapıştırın.
               </p>
-              <textarea id="sahibinden-html" rows="4" placeholder="Sahibinden ilanının kaynak kodunu (HTML) buraya yapıştırın..." class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none focus:border-amber-400 font-mono"></textarea>
-              <button type="button" id="sahibinden-parse-btn" class="flex items-center gap-2 rounded-xl border border-amber-500/40 bg-amber-500/20 px-5 py-2.5 text-xs font-bold text-amber-300 hover:bg-amber-500/30 transition">
+              <textarea id="sahibinden-html" rows="4"
+                placeholder="Sahibinden ilanının kaynak kodunu (HTML) buraya yapıştırın..."
+                class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none focus:border-amber-400 font-mono"></textarea>
+              <button type="button" id="sahibinden-parse-btn"
+                class="flex items-center gap-2 rounded-xl border border-amber-500/40 bg-amber-500/20 px-5 py-2.5 text-xs font-bold text-amber-300 hover:bg-amber-500/30 transition">
                 <iconify-icon icon="lucide:scan-text" class="text-base"></iconify-icon>
                 HTML'den Otomatik Çıkar
               </button>
@@ -175,7 +209,7 @@
 
         <!-- ======= Main Listing Form (Matches Images 2 & 3) ======= -->
         <form id="listing-form" class="space-y-8">
-          
+
           <!-- Section 1: Temel Bilgiler (Image 2) -->
           <section class="glass-panel rounded-2xl p-6 sm:p-8 space-y-6">
             <h2 class="text-lg font-display font-bold text-white flex items-center gap-2 border-b border-white/10 pb-4">
@@ -185,13 +219,16 @@
 
             <div class="grid gap-5 sm:grid-cols-2">
               <label class="block sm:col-span-2">
-                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">İLAN BAŞLIĞI</span>
-                <input required type="text" id="title" placeholder="Örn: Mardin Yolu Cad. Satılık 3+1 Lüks Daire" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">İLAN
+                  BAŞLIĞI</span>
+                <input required type="text" id="title" placeholder="Örn: Mardin Yolu Cad. Satılık 3+1 Lüks Daire"
+                  class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
               </label>
 
               <label class="block">
                 <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">İLAN TİPİ</span>
-                <select required id="type" class="w-full rounded-xl border border-white/10 bg-[#0D131F] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+                <select required id="type"
+                  class="w-full rounded-xl border border-white/10 bg-[#0D131F] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
                   <option value="satilik">Satılık</option>
                   <option value="kiralik">Kiralık</option>
                 </select>
@@ -199,7 +236,8 @@
 
               <label class="block">
                 <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">KATEGORİ</span>
-                <select required id="category" class="w-full rounded-xl border border-white/10 bg-[#0D131F] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+                <select required id="category"
+                  class="w-full rounded-xl border border-white/10 bg-[#0D131F] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
                   <option value="daire">Daire</option>
                   <option value="mustakil">Müstakil Ev</option>
                   <option value="arsa">Arsa / Tarla</option>
@@ -209,21 +247,25 @@
 
               <label class="block">
                 <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">FİYAT (₺)</span>
-                <input required type="number" id="price" min="0" placeholder="5999000" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400 font-display font-bold text-amber-400">
+                <input required type="number" id="price" min="0" placeholder="5999000"
+                  class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400 font-display font-bold text-amber-400">
               </label>
 
               <label class="block">
                 <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">İLAN DURUMU</span>
-                <select id="status" class="w-full rounded-xl border border-white/10 bg-[#0D131F] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+                <select id="status"
+                  class="w-full rounded-xl border border-white/10 bg-[#0D131F] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
                   <option value="active">Aktif (Yayında)</option>
                   <option value="pending">Onay Bekliyor</option>
                   <option value="draft">Taslak</option>
                 </select>
               </label>
 
-              <label class="block sm:col-span-2 flex items-center gap-3 rounded-xl border border-amber-500/20 bg-amber-500/10 p-4 cursor-pointer">
+              <label
+                class="block sm:col-span-2 flex items-center gap-3 rounded-xl border border-amber-500/20 bg-amber-500/10 p-4 cursor-pointer">
                 <input type="checkbox" id="featured" checked class="h-5 w-5 accent-amber-500 rounded">
-                <span class="text-sm font-semibold text-white">Öne Çıkan İlan Olarak İşaretle (Anasayfada Gösterilir)</span>
+                <span class="text-sm font-semibold text-white">Öne Çıkan İlan Olarak İşaretle (Anasayfada
+                  Gösterilir)</span>
               </label>
             </div>
           </section>
@@ -238,17 +280,20 @@
             <div class="grid gap-5 sm:grid-cols-2">
               <label class="block">
                 <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">ŞEHİR/İLÇE</span>
-                <input required type="text" id="city" value="Mardin, Nusaybin" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+                <input required type="text" id="city" value="Mardin, Nusaybin"
+                  class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
               </label>
 
               <label class="block">
                 <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">MAHALLE</span>
-                <input required type="text" id="neighborhood" placeholder="Örn: 8 Mart Mah." class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+                <input required type="text" id="neighborhood" placeholder="Örn: 8 Mart Mah."
+                  class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
               </label>
 
               <label class="block">
                 <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">ODA SAYISI</span>
-                <select id="rooms" class="w-full rounded-xl border border-white/10 bg-[#0D131F] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+                <select id="rooms"
+                  class="w-full rounded-xl border border-white/10 bg-[#0D131F] px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
                   <option value="-">-</option>
                   <option value="1+0">1+0</option>
                   <option value="1+1">1+1</option>
@@ -260,23 +305,31 @@
               </label>
 
               <label class="block">
-                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">BRÜT ALAN (M²)</span>
-                <input required type="number" id="area" min="0" placeholder="180" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">BRÜT ALAN
+                  (M²)</span>
+                <input required type="number" id="area" min="0" placeholder="180"
+                  class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
               </label>
 
               <label class="block sm:col-span-2">
-                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">BULUNDUĞU KAT</span>
-                <input type="text" id="floor" placeholder="Örn: 2. Kat" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">BULUNDUĞU
+                  KAT</span>
+                <input type="text" id="floor" placeholder="Örn: 2. Kat"
+                  class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
               </label>
 
               <label class="block sm:col-span-2">
                 <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">AÇIKLAMA</span>
-                <textarea required id="description" rows="5" placeholder="İlan detaylı açıklamasını giriniz..." class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400 resize-y"></textarea>
+                <textarea required id="description" rows="5" placeholder="İlan detaylı açıklamasını giriniz..."
+                  class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400 resize-y"></textarea>
               </label>
 
               <label class="block sm:col-span-2">
-                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">ÖZELLİKLER (VİRGÜLLE AYIRIN, ÖRN: ASANSÖR, OTOPARK, BALKON)</span>
-                <input type="text" id="features" placeholder="Asansör, Açık Otopark, Doğalgaz Kombi, Balkon, Ebeveyn Banyosu" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">ÖZELLİKLER
+                  (VİRGÜLLE AYIRIN, ÖRN: ASANSÖR, OTOPARK, BALKON)</span>
+                <input type="text" id="features"
+                  placeholder="Asansör, Açık Otopark, Doğalgaz Kombi, Balkon, Ebeveyn Banyosu"
+                  class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-sm text-white outline-none focus:border-amber-400">
               </label>
             </div>
           </section>
@@ -285,7 +338,8 @@
           <section class="glass-panel rounded-2xl p-6 sm:p-8 space-y-6">
             <div class="rounded-xl bg-blue-500/10 p-4 border border-blue-500/20 text-xs text-blue-200">
               <strong class="text-blue-400 block mb-1">Vercel (Canlı Yayın) Notu:</strong>
-              Sunucuya doğrudan dosya yüklemek yerine medya dosyalarınızın linklerini (URL) ekleyin. Resimlerinizi HızlıResim vb. servislere, videolarınızı YouTube'a yükleyip linklerini yapıştırabilirsiniz.
+              Sunucuya doğrudan dosya yüklemek yerine medya dosyalarınızın linklerini (URL) ekleyin. Resimlerinizi
+              HızlıResim vb. servislere, videolarınızı YouTube'a yükleyip linklerini yapıştırabilirsiniz.
             </div>
 
             <h2 class="text-lg font-display font-bold text-white flex items-center gap-2 border-b border-white/10 pb-4">
@@ -294,13 +348,17 @@
             </h2>
 
             <div class="space-y-6">
-              
+
               <!-- Main Image -->
               <div>
-                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">ANA RESİM (ZORUNLU)</span>
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">ANA RESİM
+                  (ZORUNLU)</span>
                 <div class="space-y-3">
-                  <input type="file" id="image" accept="image/*" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-amber-500 file:text-black hover:file:bg-amber-400">
-                  <input type="url" id="imageUrlDirect" placeholder="Veya doğrudan Resim URL'si girin (örn: https://...)" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none focus:border-amber-400">
+                  <input type="file" id="image" accept="image/*"
+                    class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-amber-500 file:text-black hover:file:bg-amber-400">
+                  <input type="url" id="imageUrlDirect"
+                    placeholder="Veya doğrudan Resim URL'si girin (örn: https://...)"
+                    class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none focus:border-amber-400">
                 </div>
                 <div class="mt-3">
                   <img id="imagePreview" src="" class="hidden h-24 w-32 object-cover rounded-xl border border-white/20">
@@ -310,22 +368,27 @@
 
               <!-- Additional Images -->
               <div>
-                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">EK RESİMLER (İSTEĞE BAĞLI - MAKSİMUM 14 ADET)</span>
-                <input type="file" id="imageUrls" accept="image/*" multiple class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-white/10 file:text-white hover:file:bg-white/20">
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">EK RESİMLER
+                  (İSTEĞE BAĞLI - MAKSİMUM 4 ADET)</span>
+                <input type="file" id="imageUrls" accept="image/*" multiple
+                  class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-white/10 file:text-white hover:file:bg-white/20">
                 <div id="extraImagesPreview" class="mt-4 flex gap-3 flex-wrap"></div>
                 <input type="hidden" id="extraImagesBase64" value="">
               </div>
 
-              <!-- Video Upload -->
+              <!-- Video URL / Upload -->
               <div>
-                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">VİDEO YÜKLE (İSTEĞE BAĞLI - MAKS. 5MB VEYA LİNK)</span>
-                <input type="file" id="videoFile" accept="video/mp4,video/webm" class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-white/10 file:text-white hover:file:bg-white/20">
-                <input type="hidden" id="videoBase64" value="">
-                <div id="videoPreviewContainer" class="mt-3 hidden">
-                  <video id="videoPreview" src="" class="h-32 rounded-xl border border-white/20" controls></video>
+                <span class="mb-2 block text-xs font-semibold uppercase tracking-wider text-white/50">VİDEO EKLE
+                  (DOĞRUDAN YÜKLE YADA YOUTUBE LİNKİ YAPIŞTIR)</span>
+                
+                <div class="space-y-3">
+                  <input type="file" id="videoFile" accept="video/mp4,video/*"
+                    class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-xs text-white outline-none file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-amber-500 file:text-black hover:file:bg-amber-400">
+                  
+                  <input type="url" id="videoUrl" placeholder="Veya YouTube linki girin: https://www.youtube.com/watch?v=..."
+                    class="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-xs text-white outline-none focus:border-amber-400">
                 </div>
-                <div class="mt-2 text-xs text-white/40">Veya video linki ekleyin (Youtube / URL):</div>
-                <input type="url" id="videoUrl" placeholder="Örn: https://www.youtube.com/watch?v=..." class="w-full mt-1 rounded-xl border border-white/10 bg-black/40 px-4 py-3.5 text-xs text-white outline-none focus:border-amber-400">
+                <p class="mt-2 text-[10px] text-white/40">Not: Doğrudan video yüklerseniz boyut sınırı maks 3MB olmalıdır. Büyük videoları YouTube'a yükleyip linkini buraya yapıştırın.</p>
               </div>
 
             </div>
@@ -333,11 +396,13 @@
 
           <!-- Form Submit Buttons -->
           <div class="flex items-center gap-4 pt-4 pb-12">
-            <button type="submit" id="submit-btn" class="flex-1 sm:flex-none rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-8 py-4 font-display font-bold text-black text-sm uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+            <button type="submit" id="submit-btn"
+              class="flex-1 sm:flex-none rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 px-8 py-4 font-display font-bold text-black text-sm uppercase tracking-wider hover:from-amber-400 hover:to-amber-500 transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
               <iconify-icon icon="lucide:check-circle" class="text-lg"></iconify-icon>
               İlanı Kaydet & Yayınla
             </button>
-            <a href="dashboard.html" class="rounded-xl border border-white/15 px-6 py-4 font-semibold text-white/70 hover:border-white/40 hover:text-white transition">İptal</a>
+            <a href="dashboard.html"
+              class="rounded-xl border border-white/15 px-6 py-4 font-semibold text-white/70 hover:border-white/40 hover:text-white transition">İptal</a>
           </div>
 
         </form>
@@ -349,32 +414,39 @@
   </div>
 
   <!-- ======= PUBLICATION & APPROVAL CONFIRMATION MODAL ======= -->
-  <div id="approval-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
-    <div class="w-full max-w-lg rounded-3xl border border-amber-500/30 bg-[#0C1017] p-8 text-center shadow-2xl space-y-6">
-      
-      <div class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-black text-4xl shadow-xl shadow-emerald-500/30">
+  <div id="approval-modal"
+    class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/80 p-4 backdrop-blur-md">
+    <div
+      class="w-full max-w-lg rounded-3xl border border-amber-500/30 bg-[#0C1017] p-8 text-center shadow-2xl space-y-6">
+
+      <div
+        class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br from-emerald-400 to-emerald-600 text-black text-4xl shadow-xl shadow-emerald-500/30">
         <iconify-icon icon="lucide:check"></iconify-icon>
       </div>
 
       <div>
         <h3 class="font-display text-2xl font-extrabold text-white">İlan Başarıyla İletildi & Onaylandı!</h3>
         <p class="mt-2 text-xs text-white/60 leading-relaxed">
-          İlanınız kontrol edildi, veritabanına ve web sitesine başarıyla aktarıldı. Müşterileriniz artık ilanınızı görüntüleyebilir.
+          İlanınız kontrol edildi, veritabanına ve web sitesine başarıyla aktarıldı. Müşterileriniz artık ilanınızı
+          görüntüleyebilir.
         </p>
       </div>
 
       <div class="space-y-2.5 pt-2">
-        <a id="modal-view-live" href="#" target="_blank" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 font-display font-bold text-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:from-amber-400 hover:to-amber-500 transition">
+        <a id="modal-view-live" href="#" target="_blank"
+          class="w-full py-3.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 font-display font-bold text-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:from-amber-400 hover:to-amber-500 transition">
           <iconify-icon icon="lucide:eye" class="text-base"></iconify-icon>
           İlanı Sitede Canlı Gör
         </a>
 
-        <a id="modal-view-category" href="../satilik.html" class="w-full py-3.5 rounded-xl border border-white/15 bg-white/5 font-display font-semibold text-white text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:border-amber-400 hover:text-amber-400 transition">
+        <a id="modal-view-category" href="../satilik.html"
+          class="w-full py-3.5 rounded-xl border border-white/15 bg-white/5 font-display font-semibold text-white text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:border-amber-400 hover:text-amber-400 transition">
           <iconify-icon icon="lucide:building-2" class="text-base"></iconify-icon>
           Satılık / Kiralık Listesine Git
         </a>
 
-        <a href="dashboard.html" class="w-full py-3.5 rounded-xl border border-white/10 font-semibold text-white/50 text-xs flex items-center justify-center gap-2 hover:text-white transition">
+        <a href="dashboard.html"
+          class="w-full py-3.5 rounded-xl border border-white/10 font-semibold text-white/50 text-xs flex items-center justify-center gap-2 hover:text-white transition">
           İlan Yönetim Paneline Dön
         </a>
       </div>
@@ -383,7 +455,9 @@
   </div>
 
   <!-- WhatsApp Floating Button -->
-  <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);" aria-label="WhatsApp">
+  <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank"
+    class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]"
+    style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);" aria-label="WhatsApp">
     <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
   </a>
 
@@ -429,4 +503,5 @@
     }
   </script>
 </body>
+
 </html>

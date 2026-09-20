@@ -128,6 +128,38 @@ const AdminApp = {
     const editId = urlParams.get('edit');
     const form = document.getElementById('listing-form');
 
+    function compressImage(file, maxWidth = 1200, quality = 0.7) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const img = new Image();
+          img.onload = () => {
+            let width = img.width;
+            let height = img.height;
+            if (width > height) {
+              if (width > maxWidth) {
+                height = Math.round((height * maxWidth) / width);
+                width = maxWidth;
+              }
+            } else {
+              if (height > maxWidth) {
+                width = Math.round((width * maxWidth) / height);
+                height = maxWidth;
+              }
+            }
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            resolve(canvas.toDataURL('image/jpeg', quality));
+          };
+          img.src = event.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
     const imageInput = document.getElementById('image');
     const imageBase64 = document.getElementById('imageBase64');
     const imagePreview = document.getElementById('imagePreview');
@@ -135,13 +167,11 @@ const AdminApp = {
     imageInput?.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file) {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          imageBase64.value = ev.target.result;
-          imagePreview.src = ev.target.result;
+        compressImage(file, 1200, 0.7).then(base64 => {
+          imageBase64.value = base64;
+          imagePreview.src = base64;
           imagePreview.classList.remove('hidden');
-        };
-        reader.readAsDataURL(file);
+        });
       }
     });
 
@@ -151,7 +181,7 @@ const AdminApp = {
 
     extraInput?.addEventListener('change', (e) => {
       extraPreview.innerHTML = '';
-      const files = Array.from(e.target.files).slice(0, 14);
+      const files = Array.from(e.target.files).slice(0, 15);
       const results = [];
       let loaded = 0;
       if (files.length === 0) {
@@ -159,42 +189,32 @@ const AdminApp = {
         return;
       }
       files.forEach((file, index) => {
-        const reader = new FileReader();
-        reader.onload = (ev) => {
-          results[index] = ev.target.result;
-          extraPreview.innerHTML += `<img src="${ev.target.result}" class="h-16 w-16 object-cover rounded-lg border border-white/20">`;
+        compressImage(file, 1200, 0.7).then(base64 => {
+          results[index] = base64;
+          extraPreview.innerHTML += `<img src="${base64}" class="h-16 w-16 object-cover rounded-lg border border-white/20">`;
           loaded++;
           if (loaded === files.length) {
             extraBase64.value = JSON.stringify(results);
           }
-        };
-        reader.readAsDataURL(file);
+        });
       });
     });
 
     const videoInput = document.getElementById('videoFile');
-    const videoBase64 = document.getElementById('videoBase64');
-    const videoPreviewContainer = document.getElementById('videoPreviewContainer');
-    const videoPreview = document.getElementById('videoPreview');
-
+    const videoUrlInput = document.getElementById('videoUrl');
     videoInput?.addEventListener('change', (e) => {
       const file = e.target.files[0];
       if (file) {
-        if (file.size > 5 * 1024 * 1024) {
-          alert('Video boyutu çok büyük. Lütfen 5MB altı bir video seçin (Sunucu sınırları).');
+        if (file.size > 3 * 1024 * 1024) {
+          alert("Video boyutu 3MB'dan büyük olamaz! Lütfen daha küçük bir video seçin veya YouTube'a yükleyip link ekleyin.");
           e.target.value = '';
           return;
         }
         const reader = new FileReader();
         reader.onload = (ev) => {
-          if (videoBase64) videoBase64.value = ev.target.result;
-          if (videoPreview) videoPreview.src = ev.target.result;
-          if (videoPreviewContainer) videoPreviewContainer.classList.remove('hidden');
+          videoUrlInput.value = ev.target.result;
         };
         reader.readAsDataURL(file);
-      } else {
-        if (videoBase64) videoBase64.value = '';
-        if (videoPreviewContainer) videoPreviewContainer.classList.add('hidden');
       }
     });
 
@@ -234,7 +254,7 @@ const AdminApp = {
         document.getElementById('videoUrl').value = listing.videoUrl || '';
       }
     }
-    
+
     form?.addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -250,7 +270,7 @@ const AdminApp = {
       let parsedExtra = [];
       try {
         parsedExtra = extraBase64.value ? JSON.parse(extraBase64.value) : [];
-      } catch (err) {}
+      } catch (err) { }
 
       const typeVal = document.getElementById('type').value;
       const listingId = editId || Date.now().toString();
@@ -277,7 +297,7 @@ const AdminApp = {
         image: mainImg,
         images: [mainImg, ...parsedExtra],
         imageUrls: parsedExtra,
-        videoUrl: document.getElementById('videoBase64')?.value || document.getElementById('videoUrl')?.value.trim() || '',
+        videoUrl: document.getElementById('videoUrl').value.trim(),
         createdAt: new Date().toISOString()
       };
 
@@ -308,16 +328,16 @@ const AdminApp = {
     });
   },
 
-              // 4. Messages Page
-              async initMessagesPage() {
-                this.updateSidebarCounts();
-              const messages = await DataManager.getMessages();
+  // 4. Messages Page
+  async initMessagesPage() {
+    this.updateSidebarCounts();
+    const messages = await DataManager.getMessages();
 
-              const msgList = document.getElementById('messages-list');
-              if (msgList) {
+    const msgList = document.getElementById('messages-list');
+    if (msgList) {
       if (messages.length === 0) {
-                msgList.innerHTML = '<div class="text-center p-8 text-white/50">Henüz mesaj yok.</div>';
-              return;
+        msgList.innerHTML = '<div class="text-center p-8 text-white/50">Henüz mesaj yok.</div>';
+        return;
       }
       msgList.innerHTML = messages.map(m => `
               <div class="message-card ${m.read ? '' : 'unread'}">
@@ -333,148 +353,148 @@ const AdminApp = {
     }
   },
 
-              // 5. Settings Page
-              initSettingsPage() {
-                this.updateSidebarCounts();
+  // 5. Settings Page
+  initSettingsPage() {
+    this.updateSidebarCounts();
 
-              const form = document.getElementById('settings-form');
-              if (form) {
+    const form = document.getElementById('settings-form');
+    if (form) {
       const settings = DataManager.getSettings();
-              document.getElementById('phone').value = settings.phone || '0555 013 7647';
-              document.getElementById('address').value = settings.address || 'Nusaybin, Mardin';
-      
-      form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-              const newSettings = {
-                phone: document.getElementById('phone').value,
-              address: document.getElementById('address').value
-        };
-              await DataManager.updateSettings(newSettings);
+      document.getElementById('phone').value = settings.phone || '0555 013 7647';
+      document.getElementById('address').value = settings.address || 'Nusaybin, Mardin';
 
-              const success = document.getElementById('settings-success');
-              success.classList.remove('hidden');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newSettings = {
+          phone: document.getElementById('phone').value,
+          address: document.getElementById('address').value
+        };
+        await DataManager.updateSettings(newSettings);
+
+        const success = document.getElementById('settings-success');
+        success.classList.remove('hidden');
         setTimeout(() => success.classList.add('hidden'), 3000);
       });
     }
   },
 
-              // 6. Sahibinden İçe Aktarma
-              initSahibindenImporter() {
+  // 6. Sahibinden İçe Aktarma
+  initSahibindenImporter() {
     const urlInput = document.getElementById('sahibinden-url');
-              const fetchBtn = document.getElementById('sahibinden-fetch-btn');
-              const parseBtn = document.getElementById('sahibinden-parse-btn');
-              const htmlInput = document.getElementById('sahibinden-html');
-              const loadingEl = document.getElementById('sahibinden-loading');
-              const successEl = document.getElementById('sahibinden-success');
-              const errorEl = document.getElementById('sahibinden-error');
-              const errorText = document.getElementById('sahibinden-error-text');
-              const errorTip = document.getElementById('sahibinden-error-tip');
-              const pasteSection = document.getElementById('sahibinden-paste-section');
+    const fetchBtn = document.getElementById('sahibinden-fetch-btn');
+    const parseBtn = document.getElementById('sahibinden-parse-btn');
+    const htmlInput = document.getElementById('sahibinden-html');
+    const loadingEl = document.getElementById('sahibinden-loading');
+    const successEl = document.getElementById('sahibinden-success');
+    const errorEl = document.getElementById('sahibinden-error');
+    const errorText = document.getElementById('sahibinden-error-text');
+    const errorTip = document.getElementById('sahibinden-error-tip');
+    const pasteSection = document.getElementById('sahibinden-paste-section');
 
-              if (!fetchBtn) return;
+    if (!fetchBtn) return;
 
     const hideAlerts = () => {
-                loadingEl?.classList.add('hidden');
-              successEl?.classList.add('hidden');
-              errorEl?.classList.add('hidden');
+      loadingEl?.classList.add('hidden');
+      successEl?.classList.add('hidden');
+      errorEl?.classList.add('hidden');
     };
 
     const showLoading = () => {
-                hideAlerts();
-              loadingEl?.classList.remove('hidden');
-              fetchBtn.disabled = true;
+      hideAlerts();
+      loadingEl?.classList.remove('hidden');
+      fetchBtn.disabled = true;
     };
 
     const showSuccess = () => {
-                hideAlerts();
-              successEl?.classList.remove('hidden');
-              fetchBtn.disabled = false;
+      hideAlerts();
+      successEl?.classList.remove('hidden');
+      fetchBtn.disabled = false;
     };
 
     const showError = (msg, tip, openPaste) => {
-                hideAlerts();
-              errorEl?.classList.remove('hidden');
-              if (errorText) errorText.textContent = msg;
-              if (errorTip) errorTip.textContent = tip || '';
-              fetchBtn.disabled = false;
-              if (openPaste && pasteSection) {
-                pasteSection.open = true;
+      hideAlerts();
+      errorEl?.classList.remove('hidden');
+      if (errorText) errorText.textContent = msg;
+      if (errorTip) errorTip.textContent = tip || '';
+      fetchBtn.disabled = false;
+      if (openPaste && pasteSection) {
+        pasteSection.open = true;
       }
     };
 
     const fillFormWithData = (data) => {
       const titleEl = document.getElementById('title');
-              if (titleEl && data.title) titleEl.value = data.title;
+      if (titleEl && data.title) titleEl.value = data.title;
 
-              const priceEl = document.getElementById('price');
-              if (priceEl && data.price) priceEl.value = data.price;
+      const priceEl = document.getElementById('price');
+      if (priceEl && data.price) priceEl.value = data.price;
 
-              const typeEl = document.getElementById('type');
-              if (typeEl && data.type) typeEl.value = data.type;
+      const typeEl = document.getElementById('type');
+      if (typeEl && data.type) typeEl.value = data.type;
 
-              const categoryEl = document.getElementById('category');
-              if (categoryEl && data.category) categoryEl.value = data.category;
+      const categoryEl = document.getElementById('category');
+      if (categoryEl && data.category) categoryEl.value = data.category;
 
-              const cityEl = document.getElementById('city');
-              if (cityEl && data.city) cityEl.value = data.city;
+      const cityEl = document.getElementById('city');
+      if (cityEl && data.city) cityEl.value = data.city;
 
-              const neighborhoodEl = document.getElementById('neighborhood');
-              if (neighborhoodEl && data.neighborhood) neighborhoodEl.value = data.neighborhood;
+      const neighborhoodEl = document.getElementById('neighborhood');
+      if (neighborhoodEl && data.neighborhood) neighborhoodEl.value = data.neighborhood;
 
-              const roomsEl = document.getElementById('rooms');
-              if (roomsEl && data.rooms) {
+      const roomsEl = document.getElementById('rooms');
+      if (roomsEl && data.rooms) {
         const options = Array.from(roomsEl.options).map(o => o.value);
-              if (options.includes(data.rooms)) {
-                roomsEl.value = data.rooms;
+        if (options.includes(data.rooms)) {
+          roomsEl.value = data.rooms;
         } else {
           const roomMap = {
-                '1+0': '1+0', '1+1': '1+1', '2+1': '2+1', '3+1': '3+1', '4+1': '4+1',
-              '2+0': '2+1', '3+0': '3+1', '4+0': '4+1', '5+1': '5+1', '5+2': '5+1',
-              '6+1': '5+1', '6+2': '5+1', '7+1': '5+1'
+            '1+0': '1+0', '1+1': '1+1', '2+1': '2+1', '3+1': '3+1', '4+1': '4+1',
+            '2+0': '2+1', '3+0': '3+1', '4+0': '4+1', '5+1': '5+1', '5+2': '5+1',
+            '6+1': '5+1', '6+2': '5+1', '7+1': '5+1'
           };
-              roomsEl.value = roomMap[data.rooms] || '-';
+          roomsEl.value = roomMap[data.rooms] || '-';
         }
       }
 
-              const areaEl = document.getElementById('area');
-              if (areaEl && data.area) areaEl.value = data.area;
+      const areaEl = document.getElementById('area');
+      if (areaEl && data.area) areaEl.value = data.area;
 
-              const floorEl = document.getElementById('floor');
-              if (floorEl && data.floor) floorEl.value = data.floor;
+      const floorEl = document.getElementById('floor');
+      if (floorEl && data.floor) floorEl.value = data.floor;
 
-              const descEl = document.getElementById('description');
-              if (descEl && data.description) descEl.value = data.description;
+      const descEl = document.getElementById('description');
+      if (descEl && data.description) descEl.value = data.description;
 
-              const featEl = document.getElementById('features');
+      const featEl = document.getElementById('features');
       if (featEl && data.features && data.features.length > 0) {
-                featEl.value = data.features.join(', ');
+        featEl.value = data.features.join(', ');
       }
 
       // Images
       if (data.images && data.images.length > 0) {
         const imageBase64 = document.getElementById('imageBase64');
-              const imagePreview = document.getElementById('imagePreview');
-              const imageInput = document.getElementById('image');
-              if (imageBase64) {
-                imageBase64.value = data.images[0];
-              if (imagePreview) {
-                imagePreview.src = data.images[0];
-              imagePreview.classList.remove('hidden');
+        const imagePreview = document.getElementById('imagePreview');
+        const imageInput = document.getElementById('image');
+        if (imageBase64) {
+          imageBase64.value = data.images[0];
+          if (imagePreview) {
+            imagePreview.src = data.images[0];
+            imagePreview.classList.remove('hidden');
           }
-              if (imageInput) imageInput.removeAttribute('required');
+          if (imageInput) imageInput.removeAttribute('required');
         }
 
         if (data.images.length > 1) {
-          const extraImages = data.images.slice(1, 15);
-              const extraBase64 = document.getElementById('extraImagesBase64');
-              const extraPreview = document.getElementById('extraImagesPreview');
-              if (extraBase64) {
-                extraBase64.value = JSON.stringify(extraImages);
+          const extraImages = data.images.slice(1);
+          const extraBase64 = document.getElementById('extraImagesBase64');
+          const extraPreview = document.getElementById('extraImagesPreview');
+          if (extraBase64) {
+            extraBase64.value = JSON.stringify(extraImages);
           }
-              if (extraPreview) {
-                extraPreview.innerHTML = extraImages.map(url =>
-                  `<img src="${url}" class="h-16 w-16 object-cover rounded-lg border border-white/20">`
-                ).join('');
+          if (extraPreview) {
+            extraPreview.innerHTML = extraImages.map(url =>
+              `<img src="${url}" class="h-16 w-16 object-cover rounded-lg border border-white/20">`
+            ).join('');
           }
         }
       }
@@ -482,12 +502,12 @@ const AdminApp = {
       // Highlight changed fields briefly
       document.querySelectorAll('#listing-form input, #listing-form select, #listing-form textarea').forEach(el => {
         if (el.value && el.type !== 'hidden' && el.type !== 'checkbox' && el.type !== 'file') {
-                el.style.transition = 'border-color 0.3s, box-shadow 0.3s';
-              el.style.borderColor = 'rgb(245, 158, 11)';
-              el.style.boxShadow = '0 0 0 2px rgba(245, 158, 11, 0.15)';
+          el.style.transition = 'border-color 0.3s, box-shadow 0.3s';
+          el.style.borderColor = 'rgb(245, 158, 11)';
+          el.style.boxShadow = '0 0 0 2px rgba(245, 158, 11, 0.15)';
           setTimeout(() => {
-                el.style.borderColor = '';
-              el.style.boxShadow = '';
+            el.style.borderColor = '';
+            el.style.boxShadow = '';
           }, 2000);
         }
       });
@@ -496,95 +516,95 @@ const AdminApp = {
     // URL fetch mode
     fetchBtn.addEventListener('click', async () => {
       const url = urlInput?.value?.trim();
-              if (!url) {
-                showError('Lütfen bir Sahibinden ilan URL\'si girin.', '');
-              return;
+      if (!url) {
+        showError('Lütfen bir Sahibinden ilan URL\'si girin.', '');
+        return;
       }
-              if (!url.includes('sahibinden.com')) {
-                showError('Lütfen geçerli bir Sahibinden.com bağlantısı girin.', '');
-              return;
+      if (!url.includes('sahibinden.com')) {
+        showError('Lütfen geçerli bir Sahibinden.com bağlantısı girin.', '');
+        return;
       }
 
-              showLoading();
+      showLoading();
 
-              try {
+      try {
         const apiBase = (window.location.protocol === 'http:' || window.location.protocol === 'https:')
-              ? ''
-              : 'http://localhost:3000';
+          ? ''
+          : 'http://localhost:3000';
 
-              const response = await fetch(`${apiBase}/api/scrape-sahibinden`, {
-                method: 'POST',
-              headers: {'Content-Type': 'application/json' },
-              body: JSON.stringify({url})
+        const response = await fetch(`${apiBase}/api/scrape-sahibinden`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url })
         });
 
-              const result = await response.json();
+        const result = await response.json();
 
-              if (result.success && result.data) {
-                fillFormWithData(result.data);
-              showSuccess();
+        if (result.success && result.data) {
+          fillFormWithData(result.data);
+          showSuccess();
         } else {
-                showError(
-                  result.error || 'Veriler çekilemedi.',
-                  result.tip || '',
-                  result.blocked
-                );
+          showError(
+            result.error || 'Veriler çekilemedi.',
+            result.tip || '',
+            result.blocked
+          );
         }
       } catch (err) {
-                showError(
-                  'Sunucuya bağlanılamadı: ' + err.message,
-                  'Sunucunuzun çalıştığından emin olun veya HTML yapıştırma modunu deneyin.',
-                  true
-                );
+        showError(
+          'Sunucuya bağlanılamadı: ' + err.message,
+          'Sunucunuzun çalıştığından emin olun veya HTML yapıştırma modunu deneyin.',
+          true
+        );
       }
     });
 
     // HTML paste mode (Dual: Server-side API with Client-side DOMParser Fallback)
     parseBtn?.addEventListener('click', async () => {
       const html = htmlInput?.value?.trim();
-              if (!html || html.length < 50) {
-                showError('Lütfen geçerli bir HTML içeriği veya sayfa kaynağı yapıştırın.', 'Minimum 50 karakter gereklidir.');
-              return;
+      if (!html || html.length < 50) {
+        showError('Lütfen geçerli bir HTML içeriği veya sayfa kaynağı yapıştırın.', 'Minimum 50 karakter gereklidir.');
+        return;
       }
 
-              showLoading();
+      showLoading();
 
-              try {
+      try {
         const apiBase = (window.location.protocol === 'http:' || window.location.protocol === 'https:')
-              ? ''
-              : 'http://localhost:3000';
+          ? ''
+          : 'http://localhost:3000';
 
-              const response = await fetch(`${apiBase}/api/scrape-sahibinden`, {
-                method: 'POST',
-              headers: {'Content-Type': 'application/json' },
-              body: JSON.stringify({html})
+        const response = await fetch(`${apiBase}/api/scrape-sahibinden`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ html })
         }).catch(() => null);
 
-              if (response && response.ok) {
+        if (response && response.ok) {
           const result = await response.json();
           if (result.success && result.data && (result.data.title || result.data.images.length > 0)) {
-                fillFormWithData(result.data);
-              showSuccess();
-              return;
+            fillFormWithData(result.data);
+            showSuccess();
+            return;
           }
         }
 
-              // Client-side Browser Fallback if API unavailable or partial result
-              const clientData = parseSahibindenHTMLClientSide(html);
+        // Client-side Browser Fallback if API unavailable or partial result
+        const clientData = parseSahibindenHTMLClientSide(html);
         if (clientData && (clientData.title || clientData.price || clientData.images.length > 0)) {
-                fillFormWithData(clientData);
-              showSuccess();
+          fillFormWithData(clientData);
+          showSuccess();
         } else {
-                showError('HTML içeriğinden ilan verileri çıkarılamadı.', 'Sayfa kaynağının tamamını (Ctrl+A -> Ctrl+C) kopyaladığınızdan emin olun.');
+          showError('HTML içeriğinden ilan verileri çıkarılamadı.', 'Sayfa kaynağının tamamını (Ctrl+A -> Ctrl+C) kopyaladığınızdan emin olun.');
         }
       } catch (err) {
         // Fallback to client-side parsing
         const clientData = parseSahibindenHTMLClientSide(html);
         if (clientData && (clientData.title || clientData.images.length > 0)) {
-                fillFormWithData(clientData);
-              showSuccess();
+          fillFormWithData(clientData);
+          showSuccess();
         } else {
-                showError('Hata oluştu: ' + err.message, 'Sayfa kaynağını tekrar kopyalayıp deneyin.');
+          showError('Hata oluştu: ' + err.message, 'Sayfa kaynağını tekrar kopyalayıp deneyin.');
         }
       }
     });
@@ -728,8 +748,8 @@ const AdminApp = {
     // Allow Enter key in URL input
     urlInput?.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') {
-                  e.preventDefault();
-                fetchBtn.click();
+        e.preventDefault();
+        fetchBtn.click();
       }
     });
   }
