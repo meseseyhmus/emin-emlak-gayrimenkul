@@ -1,64 +1,8 @@
 {
-  "version": 2,
-  "cleanUrls": true,
-  "builds": [
+  "rewrites": [
     {
-      "src": "server.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "**/*.html",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "css/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "js/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "assets/**",
-      "use": "@vercel/static"
-    },
-    {
-      "src": "data/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/admin/?$",
-      "dest": "/admin/index.html"
-    },
-    {
-      "src": "/admin/dashboard/?$",
-      "dest": "/admin/dashboard.html"
-    },
-    {
-      "src": "/admin/ilanlar/?$",
-      "dest": "/admin/ilanlar.html"
-    },
-    {
-      "src": "/admin/ilan-ekle/?$",
-      "dest": "/admin/ilan-ekle.html"
-    },
-    {
-      "src": "/admin/mesajlar/?$",
-      "dest": "/admin/mesajlar.html"
-    },
-    {
-      "src": "/admin/ayarlar/?$",
-      "dest": "/admin/ayarlar.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/api/(.*)",
+      "destination": "/api/index.js"
     }
   ]
 }
