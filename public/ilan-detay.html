@@ -46,14 +46,14 @@
       </nav>
     </header>
 
-    <main class="hidden pt-16" id="main-content">
+    <main class="hidden pt-20 lg:pt-24" id="main-content">
 
       <!-- ── Header (marble surface) ── -->
       <section class="bg-marble border-b border-ash/30 px-6 py-10 lg:px-10">
         <div class="mx-auto max-w-[1440px] reveal">
           <a href="ilanlar.html" class="mb-5 inline-flex items-center gap-2 font-brand text-[12px] uppercase tracking-[0.023em] text-steel transition hover:text-mint"><iconify-icon icon="lucide:arrow-left"></iconify-icon> Tüm İlanlara Dön</a>
           <div class="flex items-center gap-3 font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark"><span class="h-px w-8 bg-mint"></span> <span id="detail-type-cat"></span></div>
-          <h1 class="mt-4 font-brand text-[40px] leading-[1.19] tracking-[0.92px] uppercase text-navy md:text-[54px] md:leading-[1.13]" id="detail-title"></h1>
+          <h1 class="mt-4 font-brand text-[32px] sm:text-[40px] leading-[1.19] tracking-[0.92px] uppercase text-navy md:text-[54px] md:leading-[1.13]" id="detail-title"></h1>
           <p class="mt-4 flex items-center gap-2 font-body text-[14px] text-steel"><iconify-icon icon="lucide:map-pin" class="text-mint"></iconify-icon> <span id="detail-location"></span></p>
         </div>
       </section>
@@ -72,8 +72,8 @@
           <!-- Left column -->
           <div>
             <section class="border-b border-ash/30 pb-12">
-              <div class="mb-7 flex items-end justify-between">
-                <div><p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">İlan Detayları</p><h2 class="mt-3 font-brand text-[27px] uppercase tracking-[0.62px] text-navy">Mülk Özellikleri</h2></div>
+              <div class="mb-7 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3">
+                <div><p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">İlan Detayları</p><h2 class="mt-3 font-brand text-[24px] sm:text-[27px] uppercase tracking-[0.62px] text-navy">Mülk Özellikleri</h2></div>
                 <span class="font-brand text-[12px] uppercase tracking-[0.023em] text-ash" id="detail-id"></span>
               </div>
               <div class="grid grid-cols-2 gap-px overflow-hidden border border-ash/40 bg-ash/20 sm:grid-cols-4" id="detail-specs">
@@ -83,7 +83,7 @@
 
                         <section class="border-b border-ash/30 py-12 hidden" id="detail-video-section">
               <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">Sanal Tur</p>
-              <h2 class="mt-3 font-brand text-[27px] uppercase tracking-[0.62px] text-navy">Tanıtım Videosu</h2>
+              <h2 class="mt-3 font-brand text-[24px] sm:text-[27px] uppercase tracking-[0.62px] text-navy">Tanıtım Videosu</h2>
               <div class="mt-7" id="detail-video-container">
                 <!-- Video Iframe -->
               </div>
@@ -91,13 +91,13 @@
 
             <section class="border-b border-ash/30 py-12" id="detail-features-section">
               <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">Yaşam Konforu</p>
-              <h2 class="mt-3 font-brand text-[27px] uppercase tracking-[0.62px] text-navy">Öne Çıkan Özellikler</h2>
+              <h2 class="mt-3 font-brand text-[24px] sm:text-[27px] uppercase tracking-[0.62px] text-navy">Öne Çıkan Özellikler</h2>
               <div class="mt-7 grid gap-4 sm:grid-cols-2" id="detail-features"></div>
             </section>
 
             <section class="py-12">
               <p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">Mülk Hakkında</p>
-              <h2 class="mt-3 font-brand text-[27px] uppercase tracking-[0.62px] text-navy">Açıklama</h2>
+              <h2 class="mt-3 font-brand text-[24px] sm:text-[27px] uppercase tracking-[0.62px] text-navy">Açıklama</h2>
               <p class="mt-6 max-w-3xl font-body text-[16px] leading-[1.7] text-steel" id="detail-desc"></p>
             </section>
           </div>
@@ -132,8 +132,8 @@
       <!-- ── Related listings (white surface) ── -->
       <section class="bg-white px-6 py-16 lg:px-10">
         <div class="mx-auto max-w-[1440px]">
-          <div class="flex items-end justify-between">
-            <div><p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">Size Uygun Olabilir</p><h2 class="mt-3 font-brand text-[27px] uppercase tracking-[0.62px] text-navy">Benzer İlanlar</h2></div>
+          <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-3">
+            <div><p class="font-brand text-[12px] uppercase tracking-[0.023em] text-mint-dark">Size Uygun Olabilir</p><h2 class="mt-3 font-brand text-[24px] sm:text-[27px] uppercase tracking-[0.62px] text-navy">Benzer İlanlar</h2></div>
           </div>
           <div class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" id="relatedListingsGrid">
             <!-- JS Rendered -->
@@ -170,8 +170,8 @@
     });
   </script>
     <!-- WhatsApp Floating Button -->
-    <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);">
-      <iconify-icon icon="ic:baseline-whatsapp" class="text-3xl"></iconify-icon>
+    <a href="https://wa.me/905550137647?text=Merhaba,%20ilanlar%20hakkında%20bilgi%20almak%20istiyorum." target="_blank" class="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg transition hover:scale-110 hover:bg-[#128C7E]" style="box-shadow: 0 4px 14px rgba(37,211,102,0.4);">
+      <iconify-icon icon="ic:baseline-whatsapp" class="text-2xl sm:text-3xl"></iconify-icon>
     </a>
 </body>
 </html>
