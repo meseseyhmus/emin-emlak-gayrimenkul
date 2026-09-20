@@ -7,11 +7,14 @@ const cheerio = require('cheerio');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const rootDir = process.cwd();
+
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
-// Serve static frontend files
-app.use(express.static(path.join(__dirname, '/')));
+// Serve static frontend files from project root
+app.use(express.static(rootDir));
+app.use(express.static(__dirname));
 
 // =======================
 // API ENDPOINTS
@@ -489,13 +492,21 @@ app.post('/api/scrape-sahibinden', async (req, res) => {
   }
 });
 
-// Fallback route handlers for admin pages
-app.get(['/admin', '/admin/'], (req, res) => res.sendFile(path.join(__dirname, 'admin', 'index.html')));
-app.get(['/admin/dashboard', '/admin/dashboard.html'], (req, res) => res.sendFile(path.join(__dirname, 'admin', 'dashboard.html')));
-app.get(['/admin/ilanlar', '/admin/ilanlar.html'], (req, res) => res.sendFile(path.join(__dirname, 'admin', 'ilanlar.html')));
-app.get(['/admin/ilan-ekle', '/admin/ilan-ekle.html'], (req, res) => res.sendFile(path.join(__dirname, 'admin', 'ilan-ekle.html')));
-app.get(['/admin/mesajlar', '/admin/mesajlar.html'], (req, res) => res.sendFile(path.join(__dirname, 'admin', 'mesajlar.html')));
-app.get(['/admin/ayarlar', '/admin/ayarlar.html'], (req, res) => res.sendFile(path.join(__dirname, 'admin', 'ayarlar.html')));
+// Fallback route handlers for all pages (Public + Admin)
+app.get(['/', '/index', '/index.html'], (req, res) => res.sendFile(path.join(rootDir, 'index.html')));
+app.get(['/satilik', '/satilik.html'], (req, res) => res.sendFile(path.join(rootDir, 'satilik.html')));
+app.get(['/kiralik', '/kiralik.html'], (req, res) => res.sendFile(path.join(rootDir, 'kiralik.html')));
+app.get(['/ilanlar', '/ilanlar.html'], (req, res) => res.sendFile(path.join(rootDir, 'ilanlar.html')));
+app.get(['/hakkimizda', '/hakkimizda.html'], (req, res) => res.sendFile(path.join(rootDir, 'hakkimizda.html')));
+app.get(['/iletisim', '/iletisim.html'], (req, res) => res.sendFile(path.join(rootDir, 'iletisim.html')));
+app.get(['/ilan-detay', '/ilan-detay.html'], (req, res) => res.sendFile(path.join(rootDir, 'ilan-detay.html')));
+
+app.get(['/admin', '/admin/'], (req, res) => res.sendFile(path.join(rootDir, 'admin', 'index.html')));
+app.get(['/admin/dashboard', '/admin/dashboard.html'], (req, res) => res.sendFile(path.join(rootDir, 'admin', 'dashboard.html')));
+app.get(['/admin/ilanlar', '/admin/ilanlar.html'], (req, res) => res.sendFile(path.join(rootDir, 'admin', 'ilanlar.html')));
+app.get(['/admin/ilan-ekle', '/admin/ilan-ekle.html'], (req, res) => res.sendFile(path.join(rootDir, 'admin', 'ilan-ekle.html')));
+app.get(['/admin/mesajlar', '/admin/mesajlar.html'], (req, res) => res.sendFile(path.join(rootDir, 'admin', 'mesajlar.html')));
+app.get(['/admin/ayarlar', '/admin/ayarlar.html'], (req, res) => res.sendFile(path.join(rootDir, 'admin', 'ayarlar.html')));
 
 // Start server if not running in a serverless environment like Vercel
 if (process.env.NODE_ENV !== 'production') {
