@@ -51,40 +51,20 @@ app.post('/api/settings', async (req, res) => {
 // --- Listings ---
 app.get('/api/listings', async (req, res) => {
   try {
-    const rows = await db.query('SELECT * FROM listings');
-    let listings = rows.map(r => ({
-      ...r,
-      features: typeof r.features === 'string' ? JSON.parse(r.features || '[]') : (r.features || []),
-      imageUrls: typeof r.imageUrls === 'string' ? JSON.parse(r.imageUrls || '[]') : (r.imageUrls || []),
-      featured: r.featured === 1
-    }));
-
-    // Fallback to static JSON if database is empty on serverless environment (e.g. Vercel)
-    if (!listings || listings.length === 0) {
-      try {
-        const fs = require('fs');
-        const possiblePaths = [
-          path.join(process.cwd(), 'data', 'listings.json'),
-          path.join(__dirname, 'data', 'listings.json'),
-          path.join(__dirname, '..', 'data', 'listings.json')
-        ];
-        for (const jsonPath of possiblePaths) {
-          if (fs.existsSync(jsonPath)) {
-            const raw = fs.readFileSync(jsonPath, 'utf8');
-            const parsed = JSON.parse(raw);
-            if (parsed.listings && parsed.listings.length > 0) {
-              listings = parsed.listings;
-              break;
-            }
-          }
-        }
-      } catch (e) {
-        console.error('Fallback read error:', e);
-      }
+    let dbListings = [];
+    try {
+      const rows = await db.query('SELECT * FROM listings');
+      dbListings = rows.map(r => ({
+        ...r,
+        features: typeof r.features === 'string' ? JSON.parse(r.features || '[]') : (r.features || []),
+        imageUrls: typeof r.imageUrls === 'string' ? JSON.parse(r.imageUrls || '[]') : (r.imageUrls || []),
+        featured: r.featured === 1
+      }));
+    } catch (dbErr) {
+      console.warn('DB fetch warning:', dbErr.message);
     }
 
-    res.json(listings || []);
-  } catch (err) {
+    let jsonListings = [];
     try {
       const fs = require('fs');
       const possiblePaths = [
@@ -96,10 +76,25 @@ app.get('/api/listings', async (req, res) => {
         if (fs.existsSync(jsonPath)) {
           const raw = fs.readFileSync(jsonPath, 'utf8');
           const parsed = JSON.parse(raw);
-          return res.json(parsed.listings || []);
+          if (parsed.listings && parsed.listings.length > 0) {
+            jsonListings = parsed.listings;
+            break;
+          }
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      console.error('Fallback read error:', e);
+    }
+
+    // Merge DB listings with JSON listings (DB takes precedence if same ID)
+    const mergedMap = new Map();
+    jsonListings.forEach(l => mergedMap.set(String(l.id), l));
+    dbListings.forEach(l => mergedMap.set(String(l.id), l));
+
+    const finalListings = Array.from(mergedMap.values()).sort((a, b) => b.id - a.id);
+    res.json(finalListings);
+
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
