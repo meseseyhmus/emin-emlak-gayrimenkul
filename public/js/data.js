@@ -61,22 +61,78 @@ const DataManager = {
       }
     } catch (err) {}
 
+    // Normalize all listings
+    this._data.listings = (this._data.listings || []).map(l => this._normalizeListing(l)).filter(Boolean);
+
     return this._data;
+  },
+
+  _normalizeListing(l) {
+    if (!l) return null;
+    let extra = l.imageUrls !== undefined ? l.imageUrls : (l.imageurls !== undefined ? l.imageurls : []);
+    if (typeof extra === 'string') {
+      try { extra = JSON.parse(extra); } catch (e) { extra = []; }
+    }
+    if (!Array.isArray(extra)) extra = [];
+
+    let feats = l.features || [];
+    if (typeof feats === 'string') {
+      try { feats = JSON.parse(feats); } catch (e) { feats = []; }
+    }
+    if (!Array.isArray(feats)) feats = [];
+
+    const mainImg = l.image || l.image_url || '';
+    let imagesArr = l.images;
+    if (typeof imagesArr === 'string') {
+      try { imagesArr = JSON.parse(imagesArr); } catch (e) { imagesArr = null; }
+    }
+    if (!Array.isArray(imagesArr) || imagesArr.length === 0) {
+      imagesArr = [mainImg, ...extra].filter(img => img && typeof img === 'string' && img.trim() !== '');
+      imagesArr = [...new Set(imagesArr)];
+    }
+
+    return {
+      ...l,
+      id: String(l.id),
+      title: l.title || '',
+      price: Number(l.price) || 0,
+      type: l.type || 'satilik',
+      category: l.category || 'daire',
+      status: l.status || 'active',
+      rooms: l.rooms || '-',
+      area: Number(l.area || l.squaremeters || l.squareMeters) || 0,
+      squareMeters: Number(l.squaremeters || l.squareMeters || l.area) || 0,
+      floor: l.floor || '',
+      description: l.description || '',
+      city: l.city || '',
+      neighborhood: l.neighborhood || '',
+      location: l.location || (l.city ? `${l.city}${l.neighborhood ? ', ' + l.neighborhood : ''}` : ''),
+      agentName: l.agentName || l.agentname || 'Emin Emlak Gayrimenkul',
+      agentPhone: l.agentPhone || l.agentphone || '0555 013 7647',
+      image: mainImg || (imagesArr.length > 0 ? imagesArr[0] : ''),
+      images: imagesArr,
+      imageUrls: extra,
+      videoUrl: l.videoUrl || l.videourl || '',
+      features: feats,
+      featured: l.featured === true || l.featured === 1,
+      createdAt: l.createdAt || l.createdat || new Date().toISOString()
+    };
   },
 
   // Get all listings
   getAllListings() {
-    return this._data.listings || [];
+    return (this._data.listings || []).map(l => this._normalizeListing(l)).filter(Boolean);
   },
 
   // Get featured listings
   getFeaturedListings() {
-    return (this._data.listings || []).filter(l => l.featured && l.status === 'active');
+    return this.getAllListings().filter(l => l.featured && l.status === 'active');
   },
 
   // Get listing by ID
   getListing(id) {
-    return (this._data.listings || []).find(l => String(l.id) === String(id));
+    const found = this.getAllListings().find(l => String(l.id) === String(id));
+    return found ? this._normalizeListing(found) : null;
   },
 
   _saveToLocalStorage(listing) {

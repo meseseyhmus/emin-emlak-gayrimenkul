@@ -52,12 +52,54 @@ app.post('/api/settings', async (req, res) => {
 app.get('/api/listings', async (req, res) => {
   try {
     const rows = await db.query('SELECT * FROM listings');
-    let listings = rows.map(r => ({
-      ...r,
-      features: typeof r.features === 'string' ? JSON.parse(r.features || '[]') : (r.features || []),
-      imageUrls: typeof r.imageUrls === 'string' ? JSON.parse(r.imageUrls || '[]') : (r.imageUrls || []),
-      featured: r.featured === 1
-    }));
+    let listings = rows.map(r => {
+      const rawExtra = r.imageUrls !== undefined ? r.imageUrls : (r.imageurls !== undefined ? r.imageurls : '[]');
+      let parsedExtra = [];
+      if (typeof rawExtra === 'string') {
+        try { parsedExtra = JSON.parse(rawExtra || '[]'); } catch (e) { parsedExtra = []; }
+      } else if (Array.isArray(rawExtra)) {
+        parsedExtra = rawExtra;
+      }
+
+      const rawFeatures = r.features;
+      let parsedFeatures = [];
+      if (typeof rawFeatures === 'string') {
+        try { parsedFeatures = JSON.parse(rawFeatures || '[]'); } catch (e) { parsedFeatures = []; }
+      } else if (Array.isArray(rawFeatures)) {
+        parsedFeatures = rawFeatures;
+      }
+
+      const mainImg = r.image || r.image_url || '';
+      let allImages = [mainImg, ...parsedExtra].filter(img => img && typeof img === 'string' && img.trim() !== '');
+      allImages = [...new Set(allImages)];
+
+      return {
+        ...r,
+        id: String(r.id),
+        title: r.title || '',
+        price: Number(r.price) || 0,
+        type: r.type || 'satilik',
+        category: r.category || 'daire',
+        status: r.status || 'active',
+        rooms: r.rooms || '-',
+        area: Number(r.area || r.squaremeters || r.squareMeters) || 0,
+        squareMeters: Number(r.squaremeters || r.squareMeters || r.area) || 0,
+        floor: r.floor || '',
+        description: r.description || '',
+        city: r.city || '',
+        neighborhood: r.neighborhood || '',
+        location: r.location || (r.city ? `${r.city}${r.neighborhood ? ', ' + r.neighborhood : ''}` : ''),
+        agentName: r.agentName || r.agentname || 'Emin Emlak Gayrimenkul',
+        agentPhone: r.agentPhone || r.agentphone || '0555 013 7647',
+        image: mainImg || (allImages.length > 0 ? allImages[0] : ''),
+        images: allImages,
+        imageUrls: parsedExtra,
+        videoUrl: r.videoUrl || r.videourl || '',
+        features: parsedFeatures,
+        featured: r.featured === 1 || r.featured === true,
+        createdAt: r.createdAt || r.createdat || new Date().toISOString()
+      };
+    });
 
     // Fallback to static JSON if database is empty on serverless environment (e.g. Vercel)
     if (!listings || listings.length === 0) {

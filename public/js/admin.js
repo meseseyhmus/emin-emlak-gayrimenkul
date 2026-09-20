@@ -164,14 +164,27 @@ const AdminApp = {
     const imageBase64 = document.getElementById('imageBase64');
     const imagePreview = document.getElementById('imagePreview');
 
-    imageInput?.addEventListener('change', (e) => {
+    imageInput?.addEventListener('change', async (e) => {
       const file = e.target.files[0];
       if (file) {
-        compressImage(file, 1200, 0.7).then(base64 => {
+        const submitBtn = document.getElementById('submit-btn');
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<div class="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent"></div> Resim İşleniyor...`;
+        }
+        try {
+          const base64 = await compressImage(file, 1200, 0.7);
           imageBase64.value = base64;
           imagePreview.src = base64;
           imagePreview.classList.remove('hidden');
-        });
+        } catch (err) {
+          console.error(err);
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<iconify-icon icon="lucide:check-circle" class="text-lg"></iconify-icon> İlanı Kaydet & Yayınla`;
+          }
+        }
       }
     });
 
@@ -179,25 +192,34 @@ const AdminApp = {
     const extraBase64 = document.getElementById('extraImagesBase64');
     const extraPreview = document.getElementById('extraImagesPreview');
 
-    extraInput?.addEventListener('change', (e) => {
+    extraInput?.addEventListener('change', async (e) => {
       extraPreview.innerHTML = '';
       const files = Array.from(e.target.files).slice(0, 15);
-      const results = [];
-      let loaded = 0;
       if (files.length === 0) {
         extraBase64.value = '';
         return;
       }
-      files.forEach((file, index) => {
-        compressImage(file, 1200, 0.7).then(base64 => {
-          results[index] = base64;
-          extraPreview.innerHTML += `<img src="${base64}" class="h-16 w-16 object-cover rounded-lg border border-white/20">`;
-          loaded++;
-          if (loaded === files.length) {
-            extraBase64.value = JSON.stringify(results);
-          }
-        });
-      });
+
+      const submitBtn = document.getElementById('submit-btn');
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `<div class="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent"></div> ${files.length} Fotoğraf İşleniyor...`;
+      }
+
+      try {
+        const results = await Promise.all(files.map(file => compressImage(file, 1200, 0.7)));
+        extraBase64.value = JSON.stringify(results);
+        extraPreview.innerHTML = results.map(base64 =>
+          `<img src="${base64}" class="h-16 w-16 object-cover rounded-lg border border-white/20">`
+        ).join('');
+      } catch (err) {
+        console.error('Ek fotoğraf işleme hatası:', err);
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `<iconify-icon icon="lucide:check-circle" class="text-lg"></iconify-icon> İlanı Kaydet & Yayınla`;
+        }
+      }
     });
 
     const videoInput = document.getElementById('videoFile');

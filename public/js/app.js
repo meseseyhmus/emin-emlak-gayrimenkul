@@ -259,16 +259,29 @@ const App = {
         }
 
         videoSection.classList.remove('hidden');
-        if (embedUrl.startsWith('data:video/')) {
-          document.getElementById('detail-video-container').innerHTML = `
-            <video class="w-full aspect-video rounded-xl" controls controlsList="nodownload">
-              <source src="${embedUrl}" type="video/mp4">
+        const container = document.getElementById('detail-video-container');
+        if (embedUrl.startsWith('data:video/') || embedUrl.endsWith('.mp4')) {
+          container.innerHTML = `
+            <video class="w-full aspect-video rounded-xl bg-black" controls playsinline controlsList="nodownload">
+              <source src="${embedUrl}">
               Tarayıcınız video etiketini desteklemiyor.
             </video>
           `;
+        } else if (embedUrl.includes('drive.google.com')) {
+          container.innerHTML = `
+            <div class="space-y-3">
+              <iframe class="w-full aspect-video rounded-xl bg-black border border-graphite/40" src="${embedUrl}" allow="autoplay" allowfullscreen></iframe>
+              <div class="flex justify-end">
+                <a href="${listing.videoUrl}" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl bg-mint/20 text-mint border border-mint/40 px-4 py-2 text-xs font-bold hover:bg-mint hover:text-navy transition">
+                  <iconify-icon icon="lucide:external-link" class="text-sm"></iconify-icon>
+                  Videoyu Harici Pencerede / Google Drive'da Aç
+                </a>
+              </div>
+            </div>
+          `;
         } else {
-          document.getElementById('detail-video-container').innerHTML = `
-            <iframe class="w-full aspect-video rounded-xl" src="${embedUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          container.innerHTML = `
+            <iframe class="w-full aspect-video rounded-xl bg-black border border-graphite/40" src="${embedUrl}" title="Video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           `;
         }
       } else {
