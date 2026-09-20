@@ -190,7 +190,7 @@ const App = {
     let galleryHTML = `
       <div class="relative overflow-hidden rounded-xl bg-navy-deep shadow-xl border border-graphite/40">
         <!-- Main Image View -->
-        <div class="relative h-[380px] sm:h-[480px] md:h-[580px] lg:h-[620px] w-full overflow-hidden flex items-center justify-center bg-black/90 group">
+        <div class="relative aspect-[4/3] sm:aspect-auto sm:h-[480px] md:h-[580px] lg:h-[620px] w-full overflow-hidden flex items-center justify-center bg-black/90 group">
           <img id="slider-main-img" 
                src="${imageList[0]}" 
                alt="${Utils.sanitize(listing.title)}" 
@@ -259,9 +259,18 @@ const App = {
         }
 
         videoSection.classList.remove('hidden');
-        document.getElementById('detail-video-container').innerHTML = `
-          <iframe class="w-full aspect-video rounded-xl" src="${embedUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        `;
+        if (embedUrl.startsWith('data:video/')) {
+          document.getElementById('detail-video-container').innerHTML = `
+            <video class="w-full aspect-video rounded-xl" controls controlsList="nodownload">
+              <source src="${embedUrl}" type="video/mp4">
+              Tarayıcınız video etiketini desteklemiyor.
+            </video>
+          `;
+        } else {
+          document.getElementById('detail-video-container').innerHTML = `
+            <iframe class="w-full aspect-video rounded-xl" src="${embedUrl}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          `;
+        }
       } else {
         videoSection.classList.add('hidden');
       }
