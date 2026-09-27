@@ -1,0 +1,89 @@
+{
+  "listings": [
+    {
+      "id": "1789918932141",
+      "title": "MİDYAT YOLU CAD MUHTEŞEM KONUMDA MÜSTAKİL DAİRE",
+      "price": 4550000,
+      "type": "satilik",
+      "category": "mustakil",
+      "status": "active",
+      "bedrooms": 0,
+      "bathrooms": 0,
+      "squareMeters": 140,
+      "location": "Mardin, Nusaybin, ipekyolu mh.",
+      "city": "Mardin, Nusaybin",
+      "neighborhood": "ipekyolu mh.",
+      "rooms": "2+1",
+      "area": 140,
+      "floor": "1.kat",
+      "description": "NUSAYBİN MİDYAT YOLU CADDESİ’NDE SATILIK MÜSTAKİL EV & ARSA\n\nNusaybin’in gözde ve değer kazanan noktalarından biri olan Midyat Yolu Caddesi üzerinde bulunan müstakil ev ve arsamız satışa sunulmuştur.\n\n390 m² arsa üzerine kurulu olan taşınmazımız; geniş kullanım alanı, müstakil yaşam avantajı, bahçesi ve balkonu ile hem oturum hem de yatırım açısından değerlendirilebilecek niteliktedir.\n\nTaşınmaz içerisinde 2+1 daire bulunmaktadır.\nMüstakil bahçe alanı\n️ Balkon\n390 m² arsa alanı\nMüstakil yaşam imkânı\n\nDetaylı bilgi almak, taşınmazın mevcut durumunu yerinde görmek ve konum hakkında bilgi almak için bizimle iletişime geçebilirsiniz.\n\nEmin Emlak Gayrimenkul güvencesiyle\nYuvanız Emin Ellerde.",
+      "features": [
+        "EMİN EMLAK GAYRİMENKUL - Yetki Belge No: 4700044-001"
+      ],
+      "agentName": "Emin Emlak Gayrimenkul",
+      "agentPhone": "0555 013 7647",
+      "image": "https://i0.shbdn.com/photos/93/34/46/1340933446jc6.jpg",
+      "images": [
+        "https://i0.shbdn.com/photos/93/34/46/1340933446jc6.jpg",
+        "https://i0.shbdn.com/photos/93/34/46/x5_1340933446jc6.jpg"
+      ],
+      "imageUrls": [
+        "https://i0.shbdn.com/photos/93/34/46/x5_1340933446jc6.jpg"
+      ],
+      "videoUrl": "https://drive.google.com/file/d/1qvw3eZkoY-P6hdqtO7ByIDDN9s79vpON/view?usp=drive_link",
+      "featured": true,
+      "createdAt": "2026-09-20T15:42:12.141Z"
+    },
+    {
+      "id": "1340735832",
+      "title": "ŞEHRİN GÖBEĞİNDE MARDİN YOLU CAD. SATILIK DAİREMİZ",
+      "price": 5999000,
+      "type": "satilik",
+      "category": "daire",
+      "status": "active",
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "squareMeters": 180,
+      "area": 180,
+      "location": "Mardin, Nusaybin, 8 Mart Mah.",
+      "city": "Mardin, Nusaybin",
+      "neighborhood": "8 Mart Mah.",
+      "rooms": "3+1",
+      "floor": "2. Kat",
+      "description": "ŞEHRİN GELİŞİM BÖLGESİNDE, CADDE ÜZERİNDE 3+1 SATILIK DAİRE\n\n8 Mart Mahallesi - Mardin Yolu Caddesi - Medine Sitesi\n\nŞehrin gelişim gösteren bölgelerinden 8 Mart Mahallesi'nde, Mardin Yolu Caddesi Üzerinde bulunan Medine Sitesi'nde yer alan dairemiz satılıktır.\n\n• 3+1 daire\n• 180 m² brüt kullanım alanı\n• Hazır tapulu - hiçbir eksiği bulunmamaktadır\n• Geniş ve kullanışlı yaşam alanları\n• 2 adet balkon\n• Ebeveyn banyosu\n• Islak zeminlerde kaliteli seramik uygulama\n• Lamine parke\n• Cadde Üzerindeki avantajlı konum\n• Zincir marketlerin ve günlük ihtiyaç noktalarının bulunduğu merkezi çevre\n• Ulaşım açısından avantajlı konum\n\nHem oturum hem de yatırım amacıyla değerlendirilebilecek dairemiz, konumu ve geniş kullanım alanıyla dikkat çekmektedir.\n\nDetaylı bilgi ve yerinde görmek için bizimle iletişime geçebilirsiniz.\n\nEmin Emlak Gayrimenkul güvencesiyle.\nYuvanız Emin Ellerde.",
+      "agentName": "Emin Emlak Gayrimenkul (Emin Meşe)",
+      "agentPhone": "0555 013 7647",
+      "image": "assets/images/1340735832/photo_1.jpeg",
+      "images": [
+        "assets/images/1340735832/photo_1.jpeg"
+      ],
+      "imageUrls": [
+        "assets/images/1340735832/photo_1.jpeg"
+      ],
+      "videoUrl": "assets/images/1340735832/video_1.mp4",
+      "features": [
+        "Asansör",
+        "Açık Otopark",
+        "Doğalgaz Kombi",
+        "2 Adet Balkon",
+        "Ebeveyn Banyosu",
+        "Site İçerisinde (Medine Sitesi)",
+        "Çelik Kapı",
+        "Lamine Parke",
+        "Cadde Üzerinde"
+      ],
+      "featured": true,
+      "createdAt": "2026-09-18T15:11:42.386Z"
+    }
+  ],
+  "settings": {
+    "siteName": "Emin Emlak",
+    "siteSlogan": "Nusaybin'in Güvenilir Emlak Ofisi",
+    "phone": "0555 013 7647",
+    "email": "info@eminemlak.com",
+    "address": "Cumhuriyet Caddesi, Nusaybin / MARDİN",
+    "instagram": "https://www.instagram.com/emin.emlakmardin/",
+    "whatsapp": "905550137647",
+    "workingHours": "Pazartesi - Cumartesi: 09:00 - 19:00"
+  }
+}
