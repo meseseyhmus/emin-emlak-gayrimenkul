@@ -130,7 +130,27 @@ const App = {
     const id = this.getParam('id');
     const listing = DataManager.getListing(id);
     if (!listing) {
-      document.body.innerHTML = '<div class="flex h-screen items-center justify-center bg-navy font-brand text-[32px] uppercase tracking-[0.023em] text-white">İlan Bulunamadı</div>';
+      document.body.innerHTML = `
+        <div class="flex flex-col min-h-screen items-center justify-center bg-navy p-6 text-center font-body">
+          <div class="max-w-md rounded-2xl bg-navy-deep p-8 border border-graphite/40 shadow-2xl">
+            <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-mint/10 text-mint">
+              <iconify-icon icon="lucide:building-2" class="text-3xl"></iconify-icon>
+            </div>
+            <h1 class="font-brand text-[28px] uppercase tracking-wider text-white">İlan Bulunamadı</h1>
+            <p class="mt-3 text-[14px] text-white/60 leading-relaxed">
+              Aradığınız ilan yayından kaldırılmış, satılmış/kiralanmış veya bağlantı adresi hatalı olabilir. (İlan No: ${Utils.sanitize(id || 'Belirtilmedi')})
+            </p>
+            <div class="mt-8 flex flex-col sm:flex-row gap-3">
+              <a href="ilanlar.html" class="flex-1 rounded-xl bg-mint px-5 py-3 font-brand text-xs uppercase tracking-wider font-bold text-navy transition hover:bg-mint-dark">
+                Tüm İlanları İncele
+              </a>
+              <a href="index.html" class="flex-1 rounded-xl border border-white/20 px-5 py-3 font-brand text-xs uppercase tracking-wider text-white transition hover:bg-white/10">
+                Ana Sayfa
+              </a>
+            </div>
+          </div>
+        </div>
+      `;
       return;
     }
 
